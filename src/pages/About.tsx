@@ -5,14 +5,14 @@ const About = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-hero text-primary-foreground py-16 lg:py-24">
+      <section className="glass dark:glass-dark py-16 lg:py-24">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="max-w-3xl mx-auto text-center">
-            <Heart className="w-16 h-16 mx-auto mb-6 text-primary-light" />
+            <Heart className="w-16 h-16 mx-auto mb-6 text-primary" />
             <h1 className="font-poppins font-bold text-5xl lg:text-6xl mb-6">
               Meet the Founder
             </h1>
-            <p className="font-inter text-xl text-primary-foreground/90">
+            <p className="font-inter text-xl">
               Building a national movement for wellness, empowerment, and positive change
             </p>
           </div>
@@ -59,13 +59,13 @@ const About = () => {
       </section>
 
       {/* Mission & Values */}
-      <section className="bg-muted/30 py-16 lg:py-24">
+      <section className="glass dark:glass-dark py-16 lg:py-24">
         <div className="container mx-auto px-4 lg:px-8">
           <h2 className="font-poppins font-bold text-4xl text-center mb-12">
             Our <span className="text-primary">Mission & Values</span>
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-card p-8 rounded-xl shadow-card text-center">
+            <div className="glass-card dark:glass-card-dark p-8 rounded-xl text-center">
               <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
                 <Target className="w-7 h-7 text-primary" />
               </div>
@@ -74,7 +74,7 @@ const About = () => {
                 To empower individuals through education, inspiration, and community, fostering a healthier and more engaged nation.
               </p>
             </div>
-            <div className="bg-card p-8 rounded-xl shadow-card text-center">
+            <div className="glass-card dark:glass-card-dark p-8 rounded-xl text-center">
               <div className="w-14 h-14 rounded-full bg-secondary/10 flex items-center justify-center mx-auto mb-4">
                 <Award className="w-7 h-7 text-secondary" />
               </div>
@@ -83,7 +83,7 @@ const About = () => {
                 Integrity, inclusivity, and evidence-based information guide everything we do. We believe in authentic storytelling and real impact.
               </p>
             </div>
-            <div className="bg-card p-8 rounded-xl shadow-card text-center">
+            <div className="glass-card dark:glass-card-dark p-8 rounded-xl text-center">
               <div className="w-14 h-14 rounded-full bg-pink-500/10 flex items-center justify-center mx-auto mb-4">
                 <Users className="w-7 h-7 text-pink-500" />
               </div>

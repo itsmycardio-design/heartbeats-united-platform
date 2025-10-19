@@ -18,7 +18,7 @@ const Contact = () => {
   return (
     <div className="min-h-screen">
       {/* Hero */}
-      <section className="bg-gradient-to-br from-primary/10 to-secondary/5 py-16 lg:py-24 border-b border-border">
+      <section className="glass dark:glass-dark py-16 lg:py-24 border-b border-white/20">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="max-w-3xl mx-auto text-center">
             <Mail className="w-16 h-16 mx-auto mb-6 text-primary" />
@@ -35,7 +35,7 @@ const Contact = () => {
       {/* Contact Options */}
       <section className="container mx-auto px-4 lg:px-8 py-16">
         <div className="grid md:grid-cols-3 gap-8 mb-16">
-          <div className="text-center p-6 bg-card rounded-xl shadow-card">
+          <div className="text-center p-6 glass-card dark:glass-card-dark rounded-xl">
             <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
               <MessageSquare className="w-7 h-7 text-primary" />
             </div>
@@ -44,7 +44,7 @@ const Contact = () => {
               Collaborate with us on health awareness campaigns
             </p>
           </div>
-          <div className="text-center p-6 bg-card rounded-xl shadow-card">
+          <div className="text-center p-6 glass-card dark:glass-card-dark rounded-xl">
             <div className="w-14 h-14 rounded-full bg-secondary/10 flex items-center justify-center mx-auto mb-4">
               <Users className="w-7 h-7 text-secondary" />
             </div>
@@ -53,7 +53,7 @@ const Contact = () => {
               Book our founder for events and conferences
             </p>
           </div>
-          <div className="text-center p-6 bg-card rounded-xl shadow-card">
+          <div className="text-center p-6 glass-card dark:glass-card-dark rounded-xl">
             <div className="w-14 h-14 rounded-full bg-pink-500/10 flex items-center justify-center mx-auto mb-4">
               <Phone className="w-7 h-7 text-pink-500" />
             </div>
@@ -66,7 +66,7 @@ const Contact = () => {
 
         {/* Contact Form */}
         <div className="max-w-2xl mx-auto">
-          <div className="bg-card p-8 lg:p-12 rounded-2xl shadow-card-hover">
+          <div className="glass-card dark:glass-card-dark p-8 lg:p-12 rounded-2xl">
             <h2 className="font-poppins font-bold text-3xl mb-6 text-center">
               Send Us a <span className="text-primary">Message</span>
             </h2>
@@ -130,7 +130,7 @@ const Contact = () => {
       </section>
 
       {/* Social Links */}
-      <section className="bg-muted/30 py-16">
+      <section className="glass dark:glass-dark py-16">
         <div className="container mx-auto px-4 lg:px-8 text-center">
           <h2 className="font-poppins font-bold text-3xl mb-4">
             Follow Our <span className="text-primary">Journey</span>
@@ -143,7 +143,7 @@ const Contact = () => {
               <a
                 key={platform}
                 href="#"
-                className="px-6 py-3 bg-card hover:bg-primary/10 hover:text-primary rounded-lg font-inter font-medium transition-all shadow-card hover:shadow-card-hover"
+                className="px-6 py-3 glass-card dark:glass-card-dark hover:bg-primary/20 hover:text-primary rounded-lg font-inter font-medium transition-all hover:shadow-card-hover"
               >
                 {platform}
               </a>

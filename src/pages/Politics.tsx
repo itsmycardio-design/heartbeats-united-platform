@@ -9,7 +9,7 @@ const Politics = () => {
   return (
     <div className="min-h-screen">
       {/* Hero */}
-      <section className="bg-gradient-to-br from-purple-100 to-purple-50 dark:from-purple-900/20 dark:to-purple-900/5 py-16 lg:py-24 border-b border-border">
+      <section className="glass dark:glass-dark py-16 lg:py-24 border-b border-white/20">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="max-w-3xl">
             <div className="flex items-center gap-3 mb-6">
@@ -43,7 +43,7 @@ const Politics = () => {
           ].map((topic) => (
             <div
               key={topic.title}
-              className="p-6 bg-card rounded-xl shadow-card hover:shadow-card-hover transition-all"
+              className="p-6 glass-card dark:glass-card-dark rounded-xl hover:shadow-card-hover transition-all"
             >
               <h3 className="font-poppins font-semibold text-xl mb-2">{topic.title}</h3>
               <p className="font-inter text-sm text-muted-foreground">{topic.desc}</p>

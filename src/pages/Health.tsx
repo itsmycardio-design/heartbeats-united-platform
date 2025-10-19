@@ -9,7 +9,7 @@ const Health = () => {
   return (
     <div className="min-h-screen">
       {/* Hero */}
-      <section className="bg-gradient-to-br from-secondary/10 to-secondary/5 py-16 lg:py-24 border-b border-border">
+      <section className="glass dark:glass-dark py-16 lg:py-24 border-b border-white/20">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="max-w-3xl">
             <div className="flex items-center gap-3 mb-6">
@@ -39,7 +39,7 @@ const Health = () => {
             { label: "Expert Contributors", value: "25+" },
             { label: "Topics Covered", value: "100+" },
           ].map((stat) => (
-            <div key={stat.label} className="text-center p-6 bg-card rounded-xl shadow-card">
+            <div key={stat.label} className="text-center p-6 glass-card dark:glass-card-dark rounded-xl">
               <div className="font-poppins font-bold text-4xl text-secondary mb-2">
                 {stat.value}
               </div>

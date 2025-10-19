@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 
 export const Footer = () => {
   return (
-    <footer className="bg-muted/30 border-t border-border">
+    <footer className="glass dark:glass-dark border-t border-white/20">
       <div className="container mx-auto px-4 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* About Column */}
@@ -20,16 +20,16 @@ export const Footer = () => {
               National platform for fitness, wellness, leadership, and empowerment stories that inspire.
             </p>
             <div className="flex gap-3">
-              <a href="#" className="p-2 rounded-lg bg-background hover:bg-primary/10 hover:text-primary transition-all">
+              <a href="#" className="p-2 rounded-lg glass dark:glass-dark hover:bg-primary/20 hover:text-primary transition-all">
                 <Facebook className="w-5 h-5" />
               </a>
-              <a href="#" className="p-2 rounded-lg bg-background hover:bg-primary/10 hover:text-primary transition-all">
+              <a href="#" className="p-2 rounded-lg glass dark:glass-dark hover:bg-primary/20 hover:text-primary transition-all">
                 <Twitter className="w-5 h-5" />
               </a>
-              <a href="#" className="p-2 rounded-lg bg-background hover:bg-primary/10 hover:text-primary transition-all">
+              <a href="#" className="p-2 rounded-lg glass dark:glass-dark hover:bg-primary/20 hover:text-primary transition-all">
                 <Instagram className="w-5 h-5" />
               </a>
-              <a href="#" className="p-2 rounded-lg bg-background hover:bg-primary/10 hover:text-primary transition-all">
+              <a href="#" className="p-2 rounded-lg glass dark:glass-dark hover:bg-primary/20 hover:text-primary transition-all">
                 <Youtube className="w-5 h-5" />
               </a>
             </div>
@@ -119,7 +119,7 @@ export const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t border-border">
+        <div className="mt-12 pt-8 border-t border-white/20">
           <p className="text-center font-inter text-sm text-muted-foreground">
             © 2025 ItsMyCardio — All Rights Reserved. Built with 🩷 for national wellness.
           </p>
