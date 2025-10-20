@@ -10,7 +10,7 @@ const Lifestyle = () => {
   return (
     <div className="min-h-screen">
       {/* Hero */}
-      <section className="glass dark:glass-dark py-16 lg:py-24 border-b border-white/20">
+      <section className="bg-muted py-16 lg:py-24 border-b border-border">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="max-w-3xl">
             <div className="flex items-center gap-3 mb-6">
@@ -30,7 +30,7 @@ const Lifestyle = () => {
 
       {/* Inspiration Quote */}
       <section className="container mx-auto px-4 lg:px-8 py-12">
-        <div className="glass-card dark:glass-card-dark rounded-2xl p-8 lg:p-12 text-center">
+        <div className="bg-card border border-border rounded-2xl p-8 lg:p-12 text-center">
           <blockquote className="font-poppins text-2xl lg:text-3xl font-semibold mb-4">
             "The only way to do great work is to love what you do."
           </blockquote>

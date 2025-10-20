@@ -5,7 +5,7 @@ const About = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="glass dark:glass-dark py-16 lg:py-24">
+      <section className="bg-muted py-16 lg:py-24">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="max-w-3xl mx-auto text-center">
             <Heart className="w-16 h-16 mx-auto mb-6 text-primary" />
@@ -59,31 +59,19 @@ const About = () => {
       </section>
 
       {/* Mission & Values */}
-      <section className="glass dark:glass-dark py-16 lg:py-24">
+      <section className="bg-muted py-16 lg:py-24">
         <div className="container mx-auto px-4 lg:px-8">
           <h2 className="font-poppins font-bold text-4xl text-center mb-12">
             Our <span className="text-primary">Mission & Values</span>
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="glass-card dark:glass-card-dark p-8 rounded-xl text-center">
-              <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                <Target className="w-7 h-7 text-primary" />
-              </div>
-              <h3 className="font-poppins font-semibold text-xl mb-3">Our Mission</h3>
-              <p className="font-inter text-muted-foreground">
-                To empower individuals through education, inspiration, and community, fostering a healthier and more engaged nation.
-              </p>
+            <div className="bg-card border border-border p-8 rounded-xl text-center">
+...
             </div>
-            <div className="glass-card dark:glass-card-dark p-8 rounded-xl text-center">
-              <div className="w-14 h-14 rounded-full bg-secondary/10 flex items-center justify-center mx-auto mb-4">
-                <Award className="w-7 h-7 text-secondary" />
-              </div>
-              <h3 className="font-poppins font-semibold text-xl mb-3">Our Values</h3>
-              <p className="font-inter text-muted-foreground">
-                Integrity, inclusivity, and evidence-based information guide everything we do. We believe in authentic storytelling and real impact.
-              </p>
+            <div className="bg-card border border-border p-8 rounded-xl text-center">
+...
             </div>
-            <div className="glass-card dark:glass-card-dark p-8 rounded-xl text-center">
+            <div className="bg-card border border-border p-8 rounded-xl text-center">
               <div className="w-14 h-14 rounded-full bg-pink-500/10 flex items-center justify-center mx-auto mb-4">
                 <Users className="w-7 h-7 text-pink-500" />
               </div>

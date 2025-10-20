@@ -12,7 +12,7 @@ const Index = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative glass dark:glass-dark text-foreground overflow-hidden">
+      <section className="relative bg-muted border-b border-border overflow-hidden">
         <div className="relative container mx-auto px-4 lg:px-8 py-24 lg:py-32">
           <div className="max-w-3xl animate-fade-in">
             <h1 className="font-poppins font-bold text-5xl lg:text-7xl mb-6 leading-tight">
@@ -24,10 +24,10 @@ const Index = () => {
               Your national platform for fitness, wellness, leadership, and stories that inspire. Join thousands on a journey to better health and empowerment.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="glass-card dark:glass-card-dark hover:bg-primary/20 font-poppins font-semibold text-lg px-8">
+              <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 font-poppins font-semibold text-lg px-8">
                 Explore Stories
               </Button>
-              <Button size="lg" variant="outline" className="glass dark:glass-dark border-2 border-white/30 hover:bg-white/10 font-poppins font-semibold text-lg px-8">
+              <Button size="lg" variant="outline" className="border-2 font-poppins font-semibold text-lg px-8">
                 Join the Movement
               </Button>
             </div>
@@ -79,7 +79,7 @@ const Index = () => {
       </section>
 
       {/* Featured Posts */}
-      <section className="glass dark:glass-dark py-16 lg:py-24">
+      <section className="bg-muted py-16 lg:py-24">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="flex items-center justify-between mb-12 animate-fade-in">
             <div>
@@ -120,7 +120,7 @@ const Index = () => {
       </section>
 
       {/* Newsletter CTA */}
-      <section className="glass dark:glass-dark py-16 lg:py-24">
+      <section className="bg-muted py-16 lg:py-24">
         <div className="container mx-auto px-4 lg:px-8 text-center">
           <div className="max-w-2xl mx-auto animate-scale-in">
             <Mail className="w-16 h-16 mx-auto mb-6 text-primary" />
@@ -134,9 +134,9 @@ const Index = () => {
               <Input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 glass-card dark:glass-card-dark border-white/30 h-12 font-inter"
+                className="flex-1 border-border h-12 font-inter"
               />
-              <Button className="glass-card dark:glass-card-dark hover:bg-primary/20 font-poppins font-semibold h-12 px-8">
+              <Button className="bg-primary text-primary-foreground hover:bg-primary/90 font-poppins font-semibold h-12 px-8">
                 Subscribe
               </Button>
             </div>

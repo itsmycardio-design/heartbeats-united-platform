@@ -19,7 +19,7 @@ export const CategoryCard = ({
   return (
     <Link
       to={path}
-      className="group glass-card dark:glass-card-dark rounded-xl p-6 hover:shadow-card-hover transition-all duration-300 animate-scale-in"
+      className="group bg-card border border-border rounded-xl p-6 hover:shadow-hover transition-all duration-300 animate-scale-in"
     >
       <div className={`w-14 h-14 rounded-lg ${color} flex items-center justify-center mb-4 transition-transform group-hover:scale-110`}>
         <Icon className="w-7 h-7 text-background" />

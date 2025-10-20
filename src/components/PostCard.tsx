@@ -35,7 +35,7 @@ export const PostCard = ({
   };
 
   return (
-    <article className="group glass-card dark:glass-card-dark rounded-xl overflow-hidden hover:shadow-card-hover transition-all duration-300 animate-fade-in">
+    <article className="group bg-card border border-border rounded-xl overflow-hidden hover:shadow-hover transition-all duration-300 animate-fade-in">
       <Link to={`/blog/${id}`} className="block">
         {/* Image */}
         <div className="relative h-52 overflow-hidden bg-muted">
@@ -75,7 +75,7 @@ export const PostCard = ({
           </p>
 
           {/* Footer */}
-          <div className="flex items-center justify-between pt-4 border-t border-white/20">
+          <div className="flex items-center justify-between pt-4 border-t border-border">
             <span className="font-inter text-sm text-muted-foreground">
               By {author}
             </span>

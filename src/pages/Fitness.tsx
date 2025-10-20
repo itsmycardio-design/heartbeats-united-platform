@@ -8,7 +8,7 @@ const Fitness = () => {
   return (
     <div className="min-h-screen">
       {/* Hero */}
-      <section className="glass dark:glass-dark py-16 lg:py-24 border-b border-white/20">
+      <section className="bg-muted py-16 lg:py-24 border-b border-border">
         <div className="container mx-auto px-4 lg:px-8">
           <div className="max-w-3xl">
             <div className="flex items-center gap-3 mb-6">
@@ -34,8 +34,8 @@ const Fitness = () => {
               key={cat}
               className={`px-6 py-2 rounded-full font-inter font-medium transition-all ${
                 cat === "All"
-                  ? "glass-card dark:glass-card-dark text-primary font-semibold"
-                  : "glass dark:glass-dark hover:bg-primary/20 hover:text-primary"
+                  ? "bg-primary text-primary-foreground font-semibold"
+                  : "bg-card border border-border hover:bg-primary/20 hover:text-primary"
               }`}
             >
               {cat}

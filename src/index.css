@@ -8,8 +8,8 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 7%;
-    --foreground: 0 0% 98%;
+    --background: 0 0% 100%;
+    --foreground: 0 0% 0%;
 
     --card: 0 0% 100%;
     --card-foreground: 0 0% 0%;
@@ -17,21 +17,21 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 0%;
 
-    /* Passionate Red - Primary Brand Color */
-    --primary: 356 76% 56%;
+    /* Fresh Green - Primary Brand Color */
+    --primary: 142 76% 36%;
     --primary-foreground: 0 0% 100%;
-    --primary-light: 356 76% 70%;
-    --primary-dark: 356 76% 45%;
+    --primary-light: 142 76% 50%;
+    --primary-dark: 142 76% 28%;
 
-    /* Trust Blue - Accent Color */
-    --secondary: 201 100% 36%;
+    /* Accent Green */
+    --secondary: 142 50% 45%;
     --secondary-foreground: 0 0% 100%;
-    --secondary-light: 201 100% 50%;
+    --secondary-light: 142 50% 60%;
 
     --muted: 0 0% 96%;
     --muted-foreground: 0 0% 45%;
 
-    --accent: 201 100% 36%;
+    --accent: 142 76% 36%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
@@ -39,13 +39,13 @@ All colors MUST be HSL.
 
     --border: 0 0% 90%;
     --input: 0 0% 90%;
-    --ring: 356 76% 56%;
+    --ring: 142 76% 36%;
 
     --radius: 0.75rem;
 
     /* Custom Design Tokens */
-    --gradient-hero: linear-gradient(135deg, hsl(356 76% 56% / 0.95), hsl(356 76% 45% / 0.85));
-    --gradient-card: linear-gradient(180deg, transparent, hsl(0 0% 0% / 0.05));
+    --gradient-hero: linear-gradient(135deg, hsl(142 76% 36%), hsl(142 76% 28%));
+    --gradient-card: linear-gradient(180deg, transparent, hsl(0 0% 0% / 0.02));
     --shadow-card: 0 4px 20px hsl(0 0% 0% / 0.08);
     --shadow-hover: 0 8px 30px hsl(0 0% 0% / 0.12);
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -61,38 +61,38 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 0 0% 7%;
-    --foreground: 0 0% 98%;
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
 
-    --card: 0 0% 10%;
-    --card-foreground: 0 0% 98%;
+    --card: 0 0% 7%;
+    --card-foreground: 0 0% 100%;
 
-    --popover: 0 0% 10%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 0 0% 7%;
+    --popover-foreground: 0 0% 100%;
 
-    --primary: 356 76% 56%;
-    --primary-foreground: 0 0% 100%;
-    --primary-light: 356 76% 70%;
-    --primary-dark: 356 76% 45%;
+    --primary: 142 76% 45%;
+    --primary-foreground: 0 0% 0%;
+    --primary-light: 142 76% 60%;
+    --primary-dark: 142 76% 35%;
 
-    --secondary: 201 100% 45%;
-    --secondary-foreground: 0 0% 100%;
-    --secondary-light: 201 100% 60%;
+    --secondary: 142 50% 50%;
+    --secondary-foreground: 0 0% 0%;
+    --secondary-light: 142 50% 65%;
 
     --muted: 0 0% 15%;
     --muted-foreground: 0 0% 65%;
 
-    --accent: 201 100% 45%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 142 76% 45%;
+    --accent-foreground: 0 0% 0%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
     --border: 0 0% 20%;
     --input: 0 0% 20%;
-    --ring: 356 76% 56%;
+    --ring: 142 76% 45%;
 
-    --gradient-hero: linear-gradient(135deg, hsl(356 76% 56% / 0.9), hsl(356 76% 40% / 0.8));
+    --gradient-hero: linear-gradient(135deg, hsl(142 76% 45%), hsl(142 76% 35%));
     --gradient-card: linear-gradient(180deg, transparent, hsl(0 0% 100% / 0.03));
     --shadow-card: 0 4px 20px hsl(0 0% 0% / 0.3);
     --shadow-hover: 0 8px 30px hsl(0 0% 0% / 0.4);
@@ -114,38 +114,7 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply text-foreground;
-    background-image: url('/images/background.jpg');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
+    @apply bg-background text-foreground;
   }
 }
 
-/* Glassmorphism Utilities */
-@layer utilities {
-  .glass {
-    background: rgba(0, 0, 0, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-  }
-
-  .glass-dark {
-    background: rgba(0, 0, 0, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
-  }
-
-  .glass-card {
-    background: rgba(0, 0, 0, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-  }
-
-  .glass-card-dark {
-    background: rgba(0, 0, 0, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-  }
-}
