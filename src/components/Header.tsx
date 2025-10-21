@@ -1,7 +1,16 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Heart } from "lucide-react";
+import { Menu, X, Heart, User, LogOut, Settings, LayoutDashboard } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/contexts/AuthContext";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const navigation = [
   { name: "Home", path: "/" },
@@ -17,6 +26,7 @@ const navigation = [
 export const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const { user, signOut, isAdmin } = useAuth();
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -49,11 +59,44 @@ export const Header = () => {
             ))}
           </div>
 
-          {/* CTA Button */}
+          {/* User Menu / Auth Button */}
           <div className="hidden lg:block">
-            <Button className="bg-gradient-to-r from-primary to-primary-dark hover:opacity-90 font-poppins font-semibold">
-              Subscribe
-            </Button>
+            {user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="icon">
+                    <User className="h-5 w-5" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  {isAdmin && (
+                    <DropdownMenuItem asChild>
+                      <Link to="/admin" className="flex items-center cursor-pointer">
+                        <LayoutDashboard className="mr-2 h-4 w-4" />
+                        Admin Dashboard
+                      </Link>
+                    </DropdownMenuItem>
+                  )}
+                  <DropdownMenuItem asChild>
+                    <Link to="/settings" className="flex items-center cursor-pointer">
+                      <Settings className="mr-2 h-4 w-4" />
+                      Settings
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={signOut} className="cursor-pointer">
+                    <LogOut className="mr-2 h-4 w-4" />
+                    Sign Out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Button asChild className="bg-gradient-to-r from-primary to-primary-dark hover:opacity-90 font-poppins font-semibold">
+                <Link to="/auth">Sign In</Link>
+              </Button>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -87,9 +130,42 @@ export const Header = () => {
                   {item.name}
                 </Link>
               ))}
-              <Button className="mt-4 bg-gradient-to-r from-primary to-primary-dark hover:opacity-90 font-poppins font-semibold">
-                Subscribe
-              </Button>
+              {user ? (
+                <>
+                  {isAdmin && (
+                    <Link
+                      to="/admin"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="px-4 py-3 rounded-lg font-inter text-sm font-medium transition-all text-foreground hover:text-primary hover:bg-muted"
+                    >
+                      Admin Dashboard
+                    </Link>
+                  )}
+                  <Link
+                    to="/settings"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="px-4 py-3 rounded-lg font-inter text-sm font-medium transition-all text-foreground hover:text-primary hover:bg-muted"
+                  >
+                    Settings
+                  </Link>
+                  <Button
+                    onClick={() => {
+                      signOut();
+                      setMobileMenuOpen(false);
+                    }}
+                    className="mt-4 w-full"
+                    variant="outline"
+                  >
+                    Sign Out
+                  </Button>
+                </>
+              ) : (
+                <Button asChild className="mt-4 bg-gradient-to-r from-primary to-primary-dark hover:opacity-90 font-poppins font-semibold">
+                  <Link to="/auth" onClick={() => setMobileMenuOpen(false)}>
+                    Sign In
+                  </Link>
+                </Button>
+              )}
             </div>
           </div>
         )}
