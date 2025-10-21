@@ -1,5 +1,6 @@
 import { Heart, Target, Award, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import founderImage from "@/assets/founder-isaac.jpg";
 
 const About = () => {
   return (
@@ -24,17 +25,23 @@ const About = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="order-2 lg:order-1">
             <h2 className="font-poppins font-bold text-4xl mb-6">
-              Our <span className="text-primary">Story</span>
+              Isaac Ashika Amwayi
             </h2>
+            <p className="font-poppins text-2xl text-primary mb-6">
+              Your Go-To Writer for Impactful Words
+            </p>
             <div className="space-y-4 font-inter text-lg text-muted-foreground">
               <p>
-                ItsMyCardio was born from a passion to create positive change in the lives of people across the nation. What started as a personal journey into fitness and wellness has evolved into a comprehensive platform addressing health, leadership, and empowerment.
+                Isaac Ashika Amwayi is a passionate and highly skilled writer known for turning ideas into powerful written expressions. With a gift for communication and a reputation built across various writing fields, Isaac brings excellence to every project he undertakes.
               </p>
               <p>
-                Our founder believes that true wellness encompasses physical health, mental strength, and social empowerment. Through evidence-based content and inspiring stories, we aim to be your trusted companion on the journey to a healthier, more empowered life.
+                His expertise spans article writing, academic papers, blog content, research projects, proposals, and more. Beyond traditional writing, Isaac shines in areas like scriptwriting, social media management, speech writing, manifesto drafting, and campaign planning.
               </p>
               <p>
-                Today, ItsMyCardio reaches thousands of readers monthly, featuring expert contributors from various fields including medicine, fitness, politics, and personal development.
+                His work is defined by clarity, depth, and creativity — all rooted in a strong understanding of the audience's needs. What sets Isaac apart is his belief that writing is more than just words; it's a tool for influence, transformation, and connection.
+              </p>
+              <p>
+                Whether he's crafting academic papers, digital content, political speeches, or campaign narratives, Isaac blends intellect, authenticity, and purpose to deliver content that resonates. Dedicated, versatile, and passionate, Isaac continues to set the standard for purposeful writing that inspires, informs, and drives change.
               </p>
             </div>
             <div className="mt-8 flex gap-4">
@@ -49,8 +56,8 @@ const About = () => {
           <div className="order-1 lg:order-2">
             <div className="aspect-square rounded-2xl bg-gradient-to-br from-primary/20 to-secondary/20 overflow-hidden">
               <img
-                src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80"
-                alt="Founder"
+                src={founderImage}
+                alt="Isaac Ashika Amwayi - Founder"
                 className="w-full h-full object-cover"
               />
             </div>
