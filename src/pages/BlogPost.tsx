@@ -4,10 +4,14 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { posts } from "@/data/posts";
 import { PostCard } from "@/components/PostCard";
+import { usePageView } from "@/hooks/usePageView";
 
 const BlogPost = () => {
   const { id } = useParams();
   const post = posts.find((p) => p.id === id);
+  
+  // Track page view
+  usePageView(`/blog/${id}`, id);
 
   if (!post) {
     return (

@@ -4,8 +4,11 @@ import { PostCard } from "@/components/PostCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { posts } from "@/data/posts";
+import { usePageView } from "@/hooks/usePageView";
 
 const Index = () => {
+  usePageView("/");
+  
   const featuredPosts = posts.filter((post) => post.featured).slice(0, 3);
   const trendingPosts = posts.slice(3, 6);
 

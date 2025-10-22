@@ -59,6 +59,41 @@ export type Database = {
         }
         Relationships: []
       }
+      page_views: {
+        Row: {
+          id: string
+          page_path: string
+          post_id: string | null
+          session_id: string | null
+          user_id: string | null
+          viewed_at: string | null
+        }
+        Insert: {
+          id?: string
+          page_path: string
+          post_id?: string | null
+          session_id?: string | null
+          user_id?: string | null
+          viewed_at?: string | null
+        }
+        Update: {
+          id?: string
+          page_path?: string
+          post_id?: string | null
+          session_id?: string | null
+          user_id?: string | null
+          viewed_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "page_views_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "blog_posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null

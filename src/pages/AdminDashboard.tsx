@@ -9,8 +9,11 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
-import { Pencil, Trash2, Plus } from "lucide-react";
+import { Pencil, Trash2, Plus, BarChart } from "lucide-react";
+import { ImageUpload } from "@/components/ImageUpload";
+import { Analytics } from "@/components/Analytics";
 
 interface BlogPost {
   id: string;
@@ -173,15 +176,26 @@ const AdminDashboard = () => {
   return (
     <div className="min-h-screen bg-muted py-8">
       <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="font-poppins font-bold text-4xl">Admin Dashboard</h1>
-          {!showForm && (
-            <Button onClick={() => setShowForm(true)}>
-              <Plus className="w-4 h-4 mr-2" />
-              New Post
-            </Button>
-          )}
-        </div>
+        <h1 className="font-poppins font-bold text-4xl mb-8">Admin Dashboard</h1>
+
+        <Tabs defaultValue="posts" className="space-y-6">
+          <TabsList>
+            <TabsTrigger value="posts">Blog Posts</TabsTrigger>
+            <TabsTrigger value="analytics">
+              <BarChart className="w-4 h-4 mr-2" />
+              Analytics
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="posts" className="space-y-6">
+            <div className="flex justify-end">
+              {!showForm && (
+                <Button onClick={() => setShowForm(true)}>
+                  <Plus className="w-4 h-4 mr-2" />
+                  New Post
+                </Button>
+              )}
+            </div>
 
         {showForm && (
           <Card className="mb-8">
@@ -263,17 +277,10 @@ const AdminDashboard = () => {
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="image">Image URL</Label>
-                  <Input
-                    id="image"
-                    value={formData.image}
-                    onChange={(e) =>
-                      setFormData({ ...formData, image: e.target.value })
-                    }
-                    required
-                  />
-                </div>
+                <ImageUpload
+                  currentImage={formData.image}
+                  onImageUploaded={(url) => setFormData({ ...formData, image: url })}
+                />
 
                 <div className="flex items-center space-x-6">
                   <div className="flex items-center space-x-2">
@@ -386,6 +393,12 @@ const AdminDashboard = () => {
             ))
           )}
         </div>
+          </TabsContent>
+
+          <TabsContent value="analytics">
+            <Analytics />
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );
