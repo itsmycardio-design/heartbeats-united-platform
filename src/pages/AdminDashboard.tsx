@@ -77,6 +77,13 @@ const AdminDashboard = () => {
     e.preventDefault();
 
     try {
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (!user) {
+        toast.error("You must be logged in to perform this action");
+        return;
+      }
+
       if (editingPost) {
         const { error } = await supabase
           .from("blog_posts")
@@ -88,7 +95,10 @@ const AdminDashboard = () => {
       } else {
         const { error } = await supabase
           .from("blog_posts")
-          .insert([formData]);
+          .insert([{
+            ...formData,
+            author_id: user.id
+          }]);
 
         if (error) throw error;
         toast.success("Post created successfully");
@@ -97,7 +107,7 @@ const AdminDashboard = () => {
       resetForm();
       fetchPosts();
     } catch (error: any) {
-      toast.error(error.message);
+      toast.error(error.message || "An error occurred");
     }
   };
 
@@ -303,48 +313,78 @@ const AdminDashboard = () => {
         )}
 
         <div className="grid gap-4">
-          {posts.map((post) => (
-            <Card key={post.id}>
-              <CardContent className="p-6">
-                <div className="flex justify-between items-start">
-                  <div className="flex-1">
-                    <h3 className="font-poppins font-semibold text-xl mb-2">
-                      {post.title}
-                    </h3>
-                    <p className="text-muted-foreground mb-2">{post.excerpt}</p>
-                    <div className="flex gap-4 text-sm text-muted-foreground">
-                      <span>Category: {post.category}</span>
-                      <span>{post.read_time}</span>
-                      {post.featured && (
-                        <span className="text-primary">Featured</span>
-                      )}
-                      {post.published ? (
-                        <span className="text-primary">Published</span>
-                      ) : (
-                        <span>Draft</span>
-                      )}
-                    </div>
-                  </div>
-                  <div className="flex gap-2">
-                    <Button
-                      size="icon"
-                      variant="outline"
-                      onClick={() => handleEdit(post)}
-                    >
-                      <Pencil className="w-4 h-4" />
-                    </Button>
-                    <Button
-                      size="icon"
-                      variant="outline"
-                      onClick={() => handleDelete(post.id)}
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </Button>
-                  </div>
-                </div>
+          {posts.length === 0 ? (
+            <Card>
+              <CardContent className="p-12 text-center">
+                <p className="text-muted-foreground text-lg">
+                  No blog posts yet. Create your first post to get started!
+                </p>
               </CardContent>
             </Card>
-          ))}
+          ) : (
+            posts.map((post) => (
+              <Card key={post.id}>
+                <CardContent className="p-6">
+                  <div className="flex gap-4">
+                    {post.image && (
+                      <img 
+                        src={post.image} 
+                        alt={post.title}
+                        className="w-32 h-32 object-cover rounded-lg"
+                      />
+                    )}
+                    <div className="flex-1">
+                      <h3 className="font-poppins font-semibold text-xl mb-2">
+                        {post.title}
+                      </h3>
+                      <p className="text-muted-foreground mb-3 line-clamp-2">{post.excerpt}</p>
+                      <div className="flex flex-wrap gap-3 text-sm">
+                        <span className="px-2 py-1 bg-secondary rounded-md">
+                          {post.category}
+                        </span>
+                        <span className="text-muted-foreground">{post.read_time}</span>
+                        {post.featured && (
+                          <span className="px-2 py-1 bg-primary/10 text-primary rounded-md">
+                            Featured
+                          </span>
+                        )}
+                        {post.published ? (
+                          <span className="px-2 py-1 bg-green-500/10 text-green-600 rounded-md">
+                            Published
+                          </span>
+                        ) : (
+                          <span className="px-2 py-1 bg-yellow-500/10 text-yellow-600 rounded-md">
+                            Draft
+                          </span>
+                        )}
+                        <span className="text-muted-foreground text-xs ml-auto">
+                          Created: {new Date(post.created_at).toLocaleDateString()}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <Button
+                        size="icon"
+                        variant="outline"
+                        onClick={() => handleEdit(post)}
+                        title="Edit post"
+                      >
+                        <Pencil className="w-4 h-4" />
+                      </Button>
+                      <Button
+                        size="icon"
+                        variant="outline"
+                        onClick={() => handleDelete(post.id)}
+                        title="Delete post"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))
+          )}
         </div>
       </div>
     </div>
