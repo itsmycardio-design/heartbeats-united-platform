@@ -1,10 +1,18 @@
 import { Brain } from "lucide-react";
 import { PostCard } from "@/components/PostCard";
 import { Button } from "@/components/ui/button";
-import { posts } from "@/data/posts";
+import { useBlogPosts } from "@/hooks/useBlogPosts";
 
 const Politics = () => {
-  const politicsPosts = posts.filter((post) => post.category === "Politics");
+  const { posts, loading } = useBlogPosts("politics");
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-lg">Loading...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen">
@@ -58,7 +66,7 @@ const Politics = () => {
           Latest <span className="text-purple-600 dark:text-purple-400">Articles</span>
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {politicsPosts.map((post) => (
+          {posts.map((post) => (
             <PostCard key={post.id} {...post} />
           ))}
         </div>

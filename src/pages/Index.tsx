@@ -3,14 +3,23 @@ import { CategoryCard } from "@/components/CategoryCard";
 import { PostCard } from "@/components/PostCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { posts } from "@/data/posts";
 import { usePageView } from "@/hooks/usePageView";
+import { useBlogPosts } from "@/hooks/useBlogPosts";
 
 const Index = () => {
   usePageView("/");
   
-  const featuredPosts = posts.filter((post) => post.featured).slice(0, 3);
-  const trendingPosts = posts.slice(3, 6);
+  const { posts: allPosts, loading } = useBlogPosts();
+  const featuredPosts = allPosts.filter((post) => post.featured).slice(0, 3);
+  const trendingPosts = allPosts.slice(0, 6).filter(post => !post.featured).slice(0, 3);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-lg">Loading...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen">

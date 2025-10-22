@@ -7,10 +7,10 @@ interface PostCardProps {
   title: string;
   excerpt: string;
   category: string;
-  date: string;
-  readTime: string;
+  created_at: string;
+  read_time: string;
   image: string;
-  author?: string;
+  author_id?: string;
 }
 
 export const PostCard = ({
@@ -18,20 +18,26 @@ export const PostCard = ({
   title,
   excerpt,
   category,
-  date,
-  readTime,
+  created_at,
+  read_time,
   image,
-  author = "ItsMyCardio Team",
 }: PostCardProps) => {
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
+  };
+
   const getCategoryColor = (cat: string) => {
-    const colors: Record<string, string> = {
-      Fitness: "bg-primary/10 text-primary border-primary/20",
-      Health: "bg-secondary/10 text-secondary border-secondary/20",
-      Politics: "bg-purple-100 text-purple-700 border-purple-200 dark:bg-purple-900/20 dark:text-purple-300",
-      Lifestyle: "bg-pink-100 text-pink-700 border-pink-200 dark:bg-pink-900/20 dark:text-pink-300",
-      Inspiration: "bg-amber-100 text-amber-700 border-amber-200 dark:bg-amber-900/20 dark:text-amber-300",
+    const categoryMap: Record<string, string> = {
+      fitness: "bg-primary/10 text-primary border-primary/20",
+      health: "bg-secondary/10 text-secondary border-secondary/20",
+      politics: "bg-purple-100 text-purple-700 border-purple-200 dark:bg-purple-900/20 dark:text-purple-300",
+      lifestyle: "bg-pink-100 text-pink-700 border-pink-200 dark:bg-pink-900/20 dark:text-pink-300",
     };
-    return colors[cat] || "bg-muted text-muted-foreground";
+    return categoryMap[cat.toLowerCase()] || "bg-muted text-muted-foreground";
   };
 
   return (
@@ -46,7 +52,7 @@ export const PostCard = ({
           />
           <div className="absolute inset-0 bg-gradient-card" />
           <Badge className={`absolute top-4 left-4 ${getCategoryColor(category)} font-poppins font-medium`}>
-            {category}
+            {category.charAt(0).toUpperCase() + category.slice(1)}
           </Badge>
         </div>
 
@@ -56,11 +62,11 @@ export const PostCard = ({
           <div className="flex items-center gap-4 mb-3 font-inter text-xs text-muted-foreground">
             <div className="flex items-center gap-1">
               <Calendar className="w-3.5 h-3.5" />
-              <span>{date}</span>
+              <span>{formatDate(created_at)}</span>
             </div>
             <div className="flex items-center gap-1">
               <Clock className="w-3.5 h-3.5" />
-              <span>{readTime}</span>
+              <span>{read_time}</span>
             </div>
           </div>
 
@@ -77,7 +83,7 @@ export const PostCard = ({
           {/* Footer */}
           <div className="flex items-center justify-between pt-4 border-t border-border">
             <span className="font-inter text-sm text-muted-foreground">
-              By {author}
+              By ItsMyCardio Team
             </span>
             <div className="flex items-center gap-1 text-primary font-inter text-sm font-medium group-hover:gap-2 transition-all">
               Read More

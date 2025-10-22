@@ -3,16 +3,25 @@ import { Search } from "lucide-react";
 import { PostCard } from "@/components/PostCard";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { posts } from "@/data/posts";
+import { useBlogPosts } from "@/hooks/useBlogPosts";
 
 const Blog = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const categories = ["All", "Fitness", "Health", "Politics", "Lifestyle", "Inspiration"];
+  const { posts, loading } = useBlogPosts();
+  const categories = ["All", "fitness", "health", "politics", "lifestyle"];
 
   const filteredPosts =
     selectedCategory === "All"
       ? posts
       : posts.filter((post) => post.category === selectedCategory);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-lg">Loading...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen">
@@ -57,7 +66,7 @@ const Blog = () => {
               }`}
               onClick={() => setSelectedCategory(cat)}
             >
-              {cat}
+              {cat === "All" ? cat : cat.charAt(0).toUpperCase() + cat.slice(1)}
             </Badge>
           ))}
         </div>

@@ -1,11 +1,17 @@
 import { Users } from "lucide-react";
 import { PostCard } from "@/components/PostCard";
-import { posts } from "@/data/posts";
+import { useBlogPosts } from "@/hooks/useBlogPosts";
 
 const Lifestyle = () => {
-  const lifestylePosts = posts.filter((post) => 
-    post.category === "Lifestyle" || post.category === "Inspiration"
-  );
+  const { posts, loading } = useBlogPosts("lifestyle");
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-lg">Loading...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen">
@@ -44,7 +50,7 @@ const Lifestyle = () => {
           Stories That <span className="text-pink-600 dark:text-pink-400">Inspire</span>
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {lifestylePosts.map((post) => (
+          {posts.map((post) => (
             <PostCard key={post.id} {...post} />
           ))}
         </div>

@@ -1,9 +1,17 @@
 import { Activity } from "lucide-react";
 import { PostCard } from "@/components/PostCard";
-import { posts } from "@/data/posts";
+import { useBlogPosts } from "@/hooks/useBlogPosts";
 
 const Fitness = () => {
-  const fitnessPosts = posts.filter((post) => post.category === "Fitness");
+  const { posts, loading } = useBlogPosts("fitness");
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-lg">Loading...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen">
@@ -47,7 +55,7 @@ const Fitness = () => {
       {/* Posts Grid */}
       <section className="container mx-auto px-4 lg:px-8 pb-16 lg:pb-24">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {fitnessPosts.map((post) => (
+          {posts.map((post) => (
             <PostCard key={post.id} {...post} />
           ))}
         </div>
