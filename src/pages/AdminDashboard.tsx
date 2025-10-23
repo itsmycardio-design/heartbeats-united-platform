@@ -14,6 +14,12 @@ import { toast } from "sonner";
 import { Pencil, Trash2, Plus, BarChart } from "lucide-react";
 import { ImageUpload } from "@/components/ImageUpload";
 import { Analytics } from "@/components/Analytics";
+import { MessagesTab } from "@/components/admin/MessagesTab";
+import { SubscribersTab } from "@/components/admin/SubscribersTab";
+import { WritersTab } from "@/components/admin/WritersTab";
+import { ThemeSettingsTab } from "@/components/admin/ThemeSettingsTab";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 
 interface BlogPost {
   id: string;
@@ -29,7 +35,7 @@ interface BlogPost {
 }
 
 const AdminDashboard = () => {
-  const { isAdmin, loading: authLoading } = useAuth();
+  const { user, isAdmin, isWriter, loading: authLoading } = useAuth();
   const navigate = useNavigate();
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
@@ -48,17 +54,17 @@ const AdminDashboard = () => {
   });
 
   useEffect(() => {
-    if (!authLoading && !isAdmin) {
+    if (!authLoading && !isAdmin && !isWriter) {
       navigate("/");
       toast.error("You don't have permission to access this page");
     }
-  }, [isAdmin, authLoading, navigate]);
+  }, [isAdmin, isWriter, authLoading, navigate]);
 
   useEffect(() => {
-    if (isAdmin) {
+    if (isAdmin || isWriter) {
       fetchPosts();
     }
-  }, [isAdmin]);
+  }, [isAdmin, isWriter]);
 
   const fetchPosts = async () => {
     try {
@@ -169,22 +175,33 @@ const AdminDashboard = () => {
     );
   }
 
-  if (!isAdmin) {
+  if (!isAdmin && !isWriter) {
     return null;
   }
 
   return (
-    <div className="min-h-screen bg-muted py-8">
-      <div className="container mx-auto px-4">
-        <h1 className="font-poppins font-bold text-4xl mb-8">Admin Dashboard</h1>
+    <div className="min-h-screen bg-background">
+      <Header />
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-4xl font-bold mb-8">
+          {isAdmin ? "Admin" : "Writer"} Dashboard
+        </h1>
 
         <Tabs defaultValue="posts" className="space-y-6">
           <TabsList>
             <TabsTrigger value="posts">Blog Posts</TabsTrigger>
-            <TabsTrigger value="analytics">
-              <BarChart className="w-4 h-4 mr-2" />
-              Analytics
-            </TabsTrigger>
+            {isAdmin && (
+              <>
+                <TabsTrigger value="messages">Messages</TabsTrigger>
+                <TabsTrigger value="subscribers">Subscribers</TabsTrigger>
+                <TabsTrigger value="writers">Writers</TabsTrigger>
+                <TabsTrigger value="analytics">
+                  <BarChart className="w-4 h-4 mr-2" />
+                  Analytics
+                </TabsTrigger>
+                <TabsTrigger value="settings">Theme Settings</TabsTrigger>
+              </>
+            )}
           </TabsList>
 
           <TabsContent value="posts" className="space-y-6">
@@ -395,11 +412,32 @@ const AdminDashboard = () => {
         </div>
           </TabsContent>
 
-          <TabsContent value="analytics">
-            <Analytics />
-          </TabsContent>
+          {isAdmin && (
+            <>
+              <TabsContent value="messages">
+                <MessagesTab />
+              </TabsContent>
+
+              <TabsContent value="subscribers">
+                <SubscribersTab />
+              </TabsContent>
+
+              <TabsContent value="writers">
+                <WritersTab />
+              </TabsContent>
+
+              <TabsContent value="analytics">
+                <Analytics />
+              </TabsContent>
+
+              <TabsContent value="settings">
+                <ThemeSettingsTab />
+              </TabsContent>
+            </>
+          )}
         </Tabs>
       </div>
+      <Footer />
     </div>
   );
 };

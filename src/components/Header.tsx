@@ -26,7 +26,7 @@ const navigation = [
 export const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
-  const { user, signOut, isAdmin } = useAuth();
+  const { user, signOut, isAdmin, isWriter } = useAuth();
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -71,11 +71,11 @@ export const Header = () => {
                 <DropdownMenuContent align="end">
                   <DropdownMenuLabel>My Account</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  {isAdmin && (
+                  {(isAdmin || isWriter) && (
                     <DropdownMenuItem asChild>
                       <Link to="/admin" className="flex items-center cursor-pointer">
                         <LayoutDashboard className="mr-2 h-4 w-4" />
-                        Admin Dashboard
+                        {isAdmin ? "Admin" : "Writer"} Dashboard
                       </Link>
                     </DropdownMenuItem>
                   )}
@@ -132,13 +132,13 @@ export const Header = () => {
               ))}
               {user ? (
                 <>
-                  {isAdmin && (
+                  {(isAdmin || isWriter) && (
                     <Link
                       to="/admin"
                       onClick={() => setMobileMenuOpen(false)}
                       className="px-4 py-3 rounded-lg font-inter text-sm font-medium transition-all text-foreground hover:text-primary hover:bg-muted"
                     >
-                      Admin Dashboard
+                      {isAdmin ? "Admin" : "Writer"} Dashboard
                     </Link>
                   )}
                   <Link

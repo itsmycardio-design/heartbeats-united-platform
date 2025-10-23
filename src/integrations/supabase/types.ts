@@ -59,6 +59,36 @@ export type Database = {
         }
         Relationships: []
       }
+      contact_messages: {
+        Row: {
+          created_at: string | null
+          email: string
+          id: string
+          is_read: boolean | null
+          message: string
+          name: string
+          subject: string
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          id?: string
+          is_read?: boolean | null
+          message: string
+          name: string
+          subject: string
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          id?: string
+          is_read?: boolean | null
+          message?: string
+          name?: string
+          subject?: string
+        }
+        Relationships: []
+      }
       page_views: {
         Row: {
           id: string
@@ -121,6 +151,57 @@ export type Database = {
         }
         Relationships: []
       }
+      subscribers: {
+        Row: {
+          email: string
+          id: string
+          is_active: boolean | null
+          subscribed_at: string | null
+        }
+        Insert: {
+          email: string
+          id?: string
+          is_active?: boolean | null
+          subscribed_at?: string | null
+        }
+        Update: {
+          email?: string
+          id?: string
+          is_active?: boolean | null
+          subscribed_at?: string | null
+        }
+        Relationships: []
+      }
+      theme_settings: {
+        Row: {
+          font_family: string | null
+          id: string
+          primary_color: string | null
+          secondary_color: string | null
+          site_logo: string | null
+          site_name: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          font_family?: string | null
+          id?: string
+          primary_color?: string | null
+          secondary_color?: string | null
+          site_logo?: string | null
+          site_name?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          font_family?: string | null
+          id?: string
+          primary_color?: string | null
+          secondary_color?: string | null
+          site_logo?: string | null
+          site_name?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string | null
@@ -156,7 +237,7 @@ export type Database = {
       }
     }
     Enums: {
-      app_role: "admin" | "user"
+      app_role: "admin" | "user" | "writer"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -284,7 +365,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["admin", "user"],
+      app_role: ["admin", "user", "writer"],
     },
   },
 } as const

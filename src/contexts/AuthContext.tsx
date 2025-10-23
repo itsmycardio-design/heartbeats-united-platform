@@ -11,6 +11,7 @@ interface AuthContextType {
   signUp: (email: string, password: string, fullName: string) => Promise<{ error: any }>;
   signOut: () => Promise<void>;
   isAdmin: boolean;
+  isWriter: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -28,6 +29,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isWriter, setIsWriter] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -37,13 +39,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setSession(session);
         setUser(session?.user ?? null);
         
-        // Check admin role when session changes
+        // Check admin and writer role when session changes
         if (session?.user) {
           setTimeout(() => {
             checkAdminRole(session.user.id);
+            checkWriterRole(session.user.id);
           }, 0);
         } else {
           setIsAdmin(false);
+          setIsWriter(false);
         }
       }
     );
@@ -56,6 +60,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (session?.user) {
         setTimeout(() => {
           checkAdminRole(session.user.id);
+          checkWriterRole(session.user.id);
         }, 0);
       }
       setLoading(false);
@@ -81,6 +86,26 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     } catch (error) {
       console.error('Error checking admin role:', error);
       setIsAdmin(false);
+    }
+  };
+
+  const checkWriterRole = async (userId: string) => {
+    try {
+      const { data, error } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', userId)
+        .eq('role', 'writer')
+        .maybeSingle();
+
+      if (!error && data) {
+        setIsWriter(true);
+      } else {
+        setIsWriter(false);
+      }
+    } catch (error) {
+      console.error('Error checking writer role:', error);
+      setIsWriter(false);
     }
   };
 
@@ -117,6 +142,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const signOut = async () => {
     await supabase.auth.signOut();
     setIsAdmin(false);
+    setIsWriter(false);
     navigate('/');
   };
 
@@ -130,6 +156,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         signUp,
         signOut,
         isAdmin,
+        isWriter,
       }}
     >
       {children}
