@@ -18,8 +18,6 @@ import { MessagesTab } from "@/components/admin/MessagesTab";
 import { SubscribersTab } from "@/components/admin/SubscribersTab";
 import { WritersTab } from "@/components/admin/WritersTab";
 import { ThemeSettingsTab } from "@/components/admin/ThemeSettingsTab";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
 
 interface BlogPost {
   id: string;
@@ -180,12 +178,10 @@ const AdminDashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      <div className="container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold mb-8">
-          {isAdmin ? "Admin" : "Writer"} Dashboard
-        </h1>
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-4xl font-bold mb-8">
+        {isAdmin ? "Admin" : "Writer"} Dashboard
+      </h1>
 
         <Tabs defaultValue="posts" className="space-y-6">
           <TabsList>
@@ -436,8 +432,6 @@ const AdminDashboard = () => {
             </>
           )}
         </Tabs>
-      </div>
-      <Footer />
     </div>
   );
 };
