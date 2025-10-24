@@ -2,17 +2,37 @@ import { Mail, MessageSquare, Users, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
+import { useState } from "react";
 
 const Contact = () => {
-  const { toast } = useToast();
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Message Sent!",
-      description: "Thank you for reaching out. We'll get back to you soon.",
-    });
+    setLoading(true);
+
+    try {
+      const { error } = await supabase
+        .from("contact_messages")
+        .insert([formData]);
+
+      if (error) throw error;
+
+      toast.success("Message sent successfully! We'll get back to you soon.");
+      setFormData({ name: "", email: "", subject: "", message: "" });
+    } catch (error: any) {
+      toast.error(error.message || "Failed to send message");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -68,6 +88,9 @@ const Contact = () => {
                     required
                     placeholder="Your full name"
                     className="font-inter"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    disabled={loading}
                   />
                 </div>
                 <div>
@@ -79,6 +102,9 @@ const Contact = () => {
                     type="email"
                     placeholder="your@email.com"
                     className="font-inter"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    disabled={loading}
                   />
                 </div>
               </div>
@@ -91,6 +117,9 @@ const Contact = () => {
                   required
                   placeholder="What's this about?"
                   className="font-inter"
+                  value={formData.subject}
+                  onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                  disabled={loading}
                 />
               </div>
 
@@ -103,14 +132,18 @@ const Contact = () => {
                   placeholder="Tell us more about your inquiry..."
                   rows={6}
                   className="font-inter resize-none"
+                  value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  disabled={loading}
                 />
               </div>
 
               <Button
                 type="submit"
+                disabled={loading}
                 className="w-full bg-gradient-to-r from-primary to-primary-dark hover:opacity-90 font-poppins font-semibold text-lg h-12"
               >
-                Send Message
+                {loading ? "Sending..." : "Send Message"}
               </Button>
             </form>
           </div>

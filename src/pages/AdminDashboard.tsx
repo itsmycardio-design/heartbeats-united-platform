@@ -18,6 +18,7 @@ import { MessagesTab } from "@/components/admin/MessagesTab";
 import { SubscribersTab } from "@/components/admin/SubscribersTab";
 import { WritersTab } from "@/components/admin/WritersTab";
 import { ThemeSettingsTab } from "@/components/admin/ThemeSettingsTab";
+import { FounderSettingsTab } from "@/components/admin/FounderSettingsTab";
 
 interface BlogPost {
   id: string;
@@ -135,6 +136,24 @@ const AdminDashboard = () => {
     }
   };
 
+  const handleDeleteAll = async () => {
+    if (!confirm("⚠️ WARNING: This will delete ALL blog posts permanently. Are you absolutely sure?")) return;
+    if (!confirm("This action CANNOT be undone. Type 'DELETE' to confirm.")) return;
+
+    try {
+      const { error } = await supabase
+        .from("blog_posts")
+        .delete()
+        .neq("id", "00000000-0000-0000-0000-000000000000"); // Delete all posts
+
+      if (error) throw error;
+      toast.success("All posts deleted successfully");
+      fetchPosts();
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+  };
+
   const handleEdit = (post: BlogPost) => {
     setEditingPost(post);
     setFormData({
@@ -196,18 +215,33 @@ const AdminDashboard = () => {
                   Analytics
                 </TabsTrigger>
                 <TabsTrigger value="settings">Theme Settings</TabsTrigger>
+                <TabsTrigger value="founder">Founder Settings</TabsTrigger>
               </>
             )}
           </TabsList>
 
           <TabsContent value="posts" className="space-y-6">
-            <div className="flex justify-end">
-              {!showForm && (
-                <Button onClick={() => setShowForm(true)}>
-                  <Plus className="w-4 h-4 mr-2" />
-                  New Post
-                </Button>
-              )}
+            <div className="flex justify-between items-center">
+              <div>
+                {isAdmin && posts.length > 0 && (
+                  <Button 
+                    variant="destructive" 
+                    onClick={handleDeleteAll}
+                    className="mr-2"
+                  >
+                    <Trash2 className="w-4 h-4 mr-2" />
+                    Delete All Posts
+                  </Button>
+                )}
+              </div>
+              <div>
+                {!showForm && (
+                  <Button onClick={() => setShowForm(true)}>
+                    <Plus className="w-4 h-4 mr-2" />
+                    New Post
+                  </Button>
+                )}
+              </div>
             </div>
 
         {showForm && (
@@ -428,6 +462,10 @@ const AdminDashboard = () => {
 
               <TabsContent value="settings">
                 <ThemeSettingsTab />
+              </TabsContent>
+
+              <TabsContent value="founder">
+                <FounderSettingsTab />
               </TabsContent>
             </>
           )}

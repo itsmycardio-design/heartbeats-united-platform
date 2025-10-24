@@ -89,6 +89,36 @@ export type Database = {
         }
         Relationships: []
       }
+      founder_settings: {
+        Row: {
+          bio: string
+          created_at: string | null
+          id: string
+          image_url: string | null
+          name: string
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          bio?: string
+          created_at?: string | null
+          id?: string
+          image_url?: string | null
+          name?: string
+          title?: string
+          updated_at?: string | null
+        }
+        Update: {
+          bio?: string
+          created_at?: string | null
+          id?: string
+          image_url?: string | null
+          name?: string
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       page_views: {
         Row: {
           id: string

@@ -2,8 +2,39 @@ import { Link } from "react-router-dom";
 import { Heart, Facebook, Twitter, Instagram, Youtube, Mail } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 export const Footer = () => {
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+
+    setLoading(true);
+    try {
+      const { error } = await supabase
+        .from("subscribers")
+        .insert([{ email }]);
+
+      if (error) throw error;
+
+      toast.success("Successfully subscribed to the newsletter!");
+      setEmail("");
+    } catch (error: any) {
+      if (error.message.includes("duplicate")) {
+        toast.error("This email is already subscribed!");
+      } else {
+        toast.error("Failed to subscribe. Please try again.");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <footer className="bg-card border-t border-border mt-20">
       <div className="container mx-auto px-4 lg:px-8 py-12">
@@ -105,16 +136,24 @@ export const Footer = () => {
             <p className="font-inter text-sm text-muted-foreground mb-4">
               Get weekly inspiration and wellness tips delivered to your inbox.
             </p>
-            <div className="flex gap-2">
+            <form onSubmit={handleNewsletterSubmit} className="flex gap-2">
               <Input
                 type="email"
                 placeholder="Your email"
                 className="flex-1 font-inter text-sm"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                disabled={loading}
               />
-              <Button className="bg-gradient-to-r from-primary to-primary-dark hover:opacity-90 shrink-0">
+              <Button 
+                type="submit"
+                disabled={loading}
+                className="bg-gradient-to-r from-primary to-primary-dark hover:opacity-90 shrink-0"
+              >
                 <Mail className="w-4 h-4" />
               </Button>
-            </div>
+            </form>
           </div>
         </div>
 

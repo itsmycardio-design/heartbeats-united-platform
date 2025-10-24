@@ -1,8 +1,64 @@
 import { Heart, Target, Award, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import founderImage from "@/assets/founder-isaac.jpg";
 
+interface FounderSettings {
+  name: string;
+  title: string;
+  bio: string;
+  image_url: string;
+}
+
 const About = () => {
+  const [founder, setFounder] = useState<FounderSettings>({
+    name: "Isaac Ashika Amwayi",
+    title: "Your Go-To Writer for Impactful Words",
+    bio: "Isaac Ashika Amwayi is a passionate and highly skilled writer known for turning ideas into powerful written expressions.",
+    image_url: founderImage
+  });
+
+  useEffect(() => {
+    fetchFounderSettings();
+    
+    // Subscribe to realtime updates
+    const channel = supabase
+      .channel('founder-settings-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'founder_settings'
+        },
+        () => {
+          fetchFounderSettings();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
+  const fetchFounderSettings = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("founder_settings")
+        .select("*")
+        .limit(1)
+        .maybeSingle();
+
+      if (error) throw error;
+      if (data) {
+        setFounder(data);
+      }
+    } catch (error) {
+      console.error("Error fetching founder settings:", error);
+    }
+  };
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -25,24 +81,13 @@ const About = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="order-2 lg:order-1">
             <h2 className="font-poppins font-bold text-4xl mb-6">
-              Isaac Ashika Amwayi
+              {founder.name}
             </h2>
             <p className="font-poppins text-2xl text-primary mb-6">
-              Your Go-To Writer for Impactful Words
+              {founder.title}
             </p>
             <div className="space-y-4 font-inter text-lg text-muted-foreground">
-              <p>
-                Isaac Ashika Amwayi is a passionate and highly skilled writer known for turning ideas into powerful written expressions. With a gift for communication and a reputation built across various writing fields, Isaac brings excellence to every project he undertakes.
-              </p>
-              <p>
-                His expertise spans article writing, academic papers, blog content, research projects, proposals, and more. Beyond traditional writing, Isaac shines in areas like scriptwriting, social media management, speech writing, manifesto drafting, and campaign planning.
-              </p>
-              <p>
-                His work is defined by clarity, depth, and creativity — all rooted in a strong understanding of the audience's needs. What sets Isaac apart is his belief that writing is more than just words; it's a tool for influence, transformation, and connection.
-              </p>
-              <p>
-                Whether he's crafting academic papers, digital content, political speeches, or campaign narratives, Isaac blends intellect, authenticity, and purpose to deliver content that resonates. Dedicated, versatile, and passionate, Isaac continues to set the standard for purposeful writing that inspires, informs, and drives change.
-              </p>
+              <p style={{ whiteSpace: 'pre-wrap' }}>{founder.bio}</p>
             </div>
             <div className="mt-8 flex gap-4">
               <Button className="bg-gradient-to-r from-primary to-primary-dark hover:opacity-90 font-poppins font-semibold">
@@ -56,8 +101,8 @@ const About = () => {
           <div className="order-1 lg:order-2">
             <div className="aspect-square rounded-2xl bg-gradient-to-br from-primary/20 to-secondary/20 overflow-hidden">
               <img
-                src={founderImage}
-                alt="Isaac Ashika Amwayi - Founder"
+                src={founder.image_url || founderImage}
+                alt={`${founder.name} - Founder`}
                 className="w-full h-full object-cover"
               />
             </div>

@@ -22,6 +22,26 @@ export const SubscribersTab = () => {
 
   useEffect(() => {
     fetchSubscribers();
+
+    // Subscribe to realtime updates
+    const channel = supabase
+      .channel('subscribers-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'subscribers'
+        },
+        () => {
+          fetchSubscribers();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, []);
 
   const fetchSubscribers = async () => {

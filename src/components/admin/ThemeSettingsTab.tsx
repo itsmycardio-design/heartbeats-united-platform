@@ -23,6 +23,26 @@ export const ThemeSettingsTab = () => {
 
   useEffect(() => {
     fetchSettings();
+
+    // Subscribe to realtime updates
+    const channel = supabase
+      .channel('theme-settings-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'theme_settings'
+        },
+        () => {
+          fetchSettings();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, []);
 
   const fetchSettings = async () => {
