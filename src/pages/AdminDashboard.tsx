@@ -19,6 +19,8 @@ import { SubscribersTab } from "@/components/admin/SubscribersTab";
 import { WritersTab } from "@/components/admin/WritersTab";
 import { ThemeSettingsTab } from "@/components/admin/ThemeSettingsTab";
 import { FounderSettingsTab } from "@/components/admin/FounderSettingsTab";
+import { OverviewTab } from "@/components/admin/OverviewTab";
+import { SiteSettingsTab } from "@/components/admin/SiteSettingsTab";
 
 interface BlogPost {
   id: string;
@@ -202,8 +204,9 @@ const AdminDashboard = () => {
         {isAdmin ? "Admin" : "Writer"} Dashboard
       </h1>
 
-        <Tabs defaultValue="posts" className="space-y-6">
-          <TabsList>
+        <Tabs defaultValue="overview" className="space-y-6">
+          <TabsList className="flex-wrap h-auto">
+            {isAdmin && <TabsTrigger value="overview">Overview</TabsTrigger>}
             <TabsTrigger value="posts">Blog Posts</TabsTrigger>
             {isAdmin && (
               <>
@@ -214,7 +217,8 @@ const AdminDashboard = () => {
                   <BarChart className="w-4 h-4 mr-2" />
                   Analytics
                 </TabsTrigger>
-                <TabsTrigger value="settings">Theme Settings</TabsTrigger>
+                <TabsTrigger value="theme">Theme Settings</TabsTrigger>
+                <TabsTrigger value="site">Site Settings</TabsTrigger>
                 <TabsTrigger value="founder">Founder Settings</TabsTrigger>
               </>
             )}
@@ -444,6 +448,10 @@ const AdminDashboard = () => {
 
           {isAdmin && (
             <>
+              <TabsContent value="overview">
+                <OverviewTab />
+              </TabsContent>
+
               <TabsContent value="messages">
                 <MessagesTab />
               </TabsContent>
@@ -460,8 +468,12 @@ const AdminDashboard = () => {
                 <Analytics />
               </TabsContent>
 
-              <TabsContent value="settings">
+              <TabsContent value="theme">
                 <ThemeSettingsTab />
+              </TabsContent>
+
+              <TabsContent value="site">
+                <SiteSettingsTab />
               </TabsContent>
 
               <TabsContent value="founder">

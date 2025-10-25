@@ -181,6 +181,51 @@ export type Database = {
         }
         Relationships: []
       }
+      site_settings: {
+        Row: {
+          created_at: string | null
+          favicon: string | null
+          id: string
+          maintenance_mode: boolean | null
+          meta_description: string | null
+          meta_keywords: string | null
+          robots_txt: string | null
+          site_description: string | null
+          site_logo: string | null
+          site_name: string
+          site_tagline: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          favicon?: string | null
+          id?: string
+          maintenance_mode?: boolean | null
+          meta_description?: string | null
+          meta_keywords?: string | null
+          robots_txt?: string | null
+          site_description?: string | null
+          site_logo?: string | null
+          site_name?: string
+          site_tagline?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          favicon?: string | null
+          id?: string
+          maintenance_mode?: boolean | null
+          meta_description?: string | null
+          meta_keywords?: string | null
+          robots_txt?: string | null
+          site_description?: string | null
+          site_logo?: string | null
+          site_name?: string
+          site_tagline?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       subscribers: {
         Row: {
           email: string
