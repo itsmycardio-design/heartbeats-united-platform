@@ -1,10 +1,17 @@
 import { useParams, Link } from "react-router-dom";
-import { Calendar, Clock, ArrowLeft, Share2 } from "lucide-react";
+import { Calendar, Clock, ArrowLeft, Share2, Facebook, MessageCircle, Twitter, Linkedin, Copy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { PostCard } from "@/components/PostCard";
 import { usePageView } from "@/hooks/usePageView";
 import { useBlogPost, useBlogPosts } from "@/hooks/useBlogPosts";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { toast } from "sonner";
 
 const BlogPost = () => {
   const { id } = useParams();
@@ -58,6 +65,40 @@ const BlogPost = () => {
       lifestyle: "bg-pink-100 text-pink-700 border-pink-200 dark:bg-pink-900/20 dark:text-pink-300",
     };
     return categoryMap[cat.toLowerCase()] || "bg-muted text-muted-foreground";
+  };
+
+  const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
+  const shareTitle = post?.title || '';
+  const shareText = post?.excerpt || '';
+
+  const handleShare = (platform: string) => {
+    const encodedUrl = encodeURIComponent(shareUrl);
+    const encodedTitle = encodeURIComponent(shareTitle);
+    const encodedText = encodeURIComponent(shareText);
+
+    let url = '';
+    switch (platform) {
+      case 'facebook':
+        url = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`;
+        break;
+      case 'twitter':
+        url = `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`;
+        break;
+      case 'whatsapp':
+        url = `https://wa.me/?text=${encodedTitle}%20${encodedUrl}`;
+        break;
+      case 'linkedin':
+        url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`;
+        break;
+      case 'copy':
+        navigator.clipboard.writeText(shareUrl);
+        toast.success("Link copied to clipboard!");
+        return;
+    }
+
+    if (url) {
+      window.open(url, '_blank', 'width=600,height=400');
+    }
   };
 
   return (
@@ -116,10 +157,36 @@ const BlogPost = () => {
 
         {/* Share Button */}
         <div className="flex items-center gap-4 mb-12 pb-8 border-b border-border">
-          <Button variant="outline" className="gap-2">
-            <Share2 className="w-4 h-4" />
-            Share Article
-          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="gap-2">
+                <Share2 className="w-4 h-4" />
+                Share Article
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="w-48">
+              <DropdownMenuItem onClick={() => handleShare('facebook')} className="gap-2 cursor-pointer">
+                <Facebook className="w-4 h-4" />
+                Facebook
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleShare('twitter')} className="gap-2 cursor-pointer">
+                <Twitter className="w-4 h-4" />
+                Twitter
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleShare('whatsapp')} className="gap-2 cursor-pointer">
+                <MessageCircle className="w-4 h-4" />
+                WhatsApp
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleShare('linkedin')} className="gap-2 cursor-pointer">
+                <Linkedin className="w-4 h-4" />
+                LinkedIn
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleShare('copy')} className="gap-2 cursor-pointer">
+                <Copy className="w-4 h-4" />
+                Copy Link
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
 
         {/* Article Body */}

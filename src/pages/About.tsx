@@ -113,23 +113,74 @@ const About = () => {
       {/* Mission & Values */}
       <section className="bg-muted py-16 lg:py-24">
         <div className="container mx-auto px-4 lg:px-8">
-          <h2 className="font-poppins font-bold text-4xl text-center mb-12">
-            Our <span className="text-primary">Mission & Values</span>
+          <h2 className="font-poppins font-bold text-4xl text-center mb-16">
+            Our <span className="text-primary">Mission & Vision</span>
           </h2>
+          
+          {/* Mission */}
+          <div className="max-w-4xl mx-auto mb-12">
+            <div className="bg-card border border-border p-8 rounded-xl">
+              <div className="flex items-start gap-4 mb-4">
+                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                  <Target className="w-6 h-6 text-primary" />
+                </div>
+                <div>
+                  <h3 className="font-poppins font-bold text-2xl mb-4">Our Mission</h3>
+                  <p className="font-inter text-lg text-muted-foreground leading-relaxed">
+                    To empower individuals and communities across Kenya through insightful, inspiring, and impactful content that promotes wellness, education, and positive transformation. We strive to be the leading voice in fitness, health, politics, and lifestyle, fostering a movement of informed, engaged, and empowered citizens who actively contribute to building a healthier, more vibrant nation.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Vision */}
+          <div className="max-w-4xl mx-auto mb-16">
+            <div className="bg-card border border-border p-8 rounded-xl">
+              <div className="flex items-start gap-4 mb-4">
+                <div className="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center shrink-0">
+                  <Heart className="w-6 h-6 text-secondary" />
+                </div>
+                <div>
+                  <h3 className="font-poppins font-bold text-2xl mb-4">Our Vision</h3>
+                  <p className="font-inter text-lg text-muted-foreground leading-relaxed">
+                    To become Kenya's most trusted and influential platform for wellness and empowerment, inspiring millions to lead healthier, more purposeful lives. We envision a nation where every individual has access to quality information, resources, and support to achieve their full potential in mind, body, and spirit—creating a ripple effect of positive change that transforms communities and shapes a brighter future for generations to come.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Core Values */}
+          <h3 className="font-poppins font-bold text-3xl text-center mb-8">
+            Our Core <span className="text-primary">Values</span>
+          </h3>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-card border border-border p-8 rounded-xl text-center">
-...
+              <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                <Heart className="w-7 h-7 text-primary" />
+              </div>
+              <h3 className="font-poppins font-semibold text-xl mb-3">Empowerment</h3>
+              <p className="font-inter text-muted-foreground">
+                We believe in empowering every individual with knowledge, inspiration, and tools to transform their lives and communities.
+              </p>
             </div>
             <div className="bg-card border border-border p-8 rounded-xl text-center">
-...
+              <div className="w-14 h-14 rounded-full bg-secondary/10 flex items-center justify-center mx-auto mb-4">
+                <Award className="w-7 h-7 text-secondary" />
+              </div>
+              <h3 className="font-poppins font-semibold text-xl mb-3">Excellence</h3>
+              <p className="font-inter text-muted-foreground">
+                We are committed to delivering high-quality, well-researched, and impactful content that sets the standard for excellence.
+              </p>
             </div>
             <div className="bg-card border border-border p-8 rounded-xl text-center">
               <div className="w-14 h-14 rounded-full bg-pink-500/10 flex items-center justify-center mx-auto mb-4">
                 <Users className="w-7 h-7 text-pink-500" />
               </div>
-              <h3 className="font-poppins font-semibold text-xl mb-3">Our Community</h3>
+              <h3 className="font-poppins font-semibold text-xl mb-3">Community</h3>
               <p className="font-inter text-muted-foreground">
-                A diverse community of readers, contributors, and partners united in the pursuit of wellness and positive change.
+                We foster a vibrant, inclusive community of readers, contributors, and partners united in the pursuit of wellness and positive change.
               </p>
             </div>
           </div>

@@ -56,18 +56,30 @@ const Contact = () => {
       <section className="container mx-auto px-4 lg:px-8 py-16">
         <div className="grid md:grid-cols-3 gap-8 mb-16">
           <div className="text-center p-6 bg-card border border-border rounded-xl">
-...
+            <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+              <Mail className="w-7 h-7 text-primary" />
+            </div>
+            <h3 className="font-poppins font-semibold text-xl mb-2">Email</h3>
+            <a href="mailto:info@its-MyCardio.co.ke" className="font-inter text-sm text-primary hover:underline">
+              info@its-MyCardio.co.ke
+            </a>
           </div>
           <div className="text-center p-6 bg-card border border-border rounded-xl">
-...
+            <div className="w-14 h-14 rounded-full bg-secondary/10 flex items-center justify-center mx-auto mb-4">
+              <Phone className="w-7 h-7 text-secondary" />
+            </div>
+            <h3 className="font-poppins font-semibold text-xl mb-2">Phone</h3>
+            <a href="tel:0732555063" className="font-inter text-sm text-primary hover:underline">
+              0732 555 063
+            </a>
           </div>
           <div className="text-center p-6 bg-card border border-border rounded-xl">
             <div className="w-14 h-14 rounded-full bg-pink-500/10 flex items-center justify-center mx-auto mb-4">
-              <Phone className="w-7 h-7 text-pink-500" />
+              <MessageSquare className="w-7 h-7 text-pink-500" />
             </div>
-            <h3 className="font-poppins font-semibold text-xl mb-2">Media</h3>
+            <h3 className="font-poppins font-semibold text-xl mb-2">Message</h3>
             <p className="font-inter text-sm text-muted-foreground">
-              Press inquiries and media kit requests
+              Send us a message below
             </p>
           </div>
         </div>
