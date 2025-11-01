@@ -13,6 +13,7 @@ export interface BlogPost {
   published: boolean;
   created_at: string;
   author_id?: string;
+  author_name?: string;
 }
 
 export const useBlogPosts = (category?: string, featuredOnly?: boolean) => {
@@ -47,7 +48,13 @@ export const useBlogPosts = (category?: string, featuredOnly?: boolean) => {
     try {
       let query = supabase
         .from("blog_posts")
-        .select("*")
+        .select(`
+          *,
+          profiles:author_id (
+            full_name,
+            email
+          )
+        `)
         .eq("published", true)
         .order("created_at", { ascending: false });
 
@@ -62,7 +69,14 @@ export const useBlogPosts = (category?: string, featuredOnly?: boolean) => {
       const { data, error } = await query;
 
       if (error) throw error;
-      setPosts(data || []);
+      
+      // Map the data to include author_name
+      const postsWithAuthors = (data || []).map((post: any) => ({
+        ...post,
+        author_name: post.profiles?.full_name || post.profiles?.email || "Ukweli Media Team"
+      }));
+      
+      setPosts(postsWithAuthors);
     } catch (error) {
       console.error("Error fetching posts:", error);
     } finally {
@@ -85,13 +99,29 @@ export const useBlogPost = (id: string) => {
     try {
       const { data, error } = await supabase
         .from("blog_posts")
-        .select("*")
+        .select(`
+          *,
+          profiles:author_id (
+            full_name,
+            email
+          )
+        `)
         .eq("id", id)
         .eq("published", true)
         .maybeSingle();
 
       if (error) throw error;
-      setPost(data);
+      
+      // Map the data to include author_name
+      if (data) {
+        const postWithAuthor = {
+          ...data,
+          author_name: (data as any).profiles?.full_name || (data as any).profiles?.email || "Ukweli Media Team"
+        };
+        setPost(postWithAuthor);
+      } else {
+        setPost(null);
+      }
     } catch (error) {
       console.error("Error fetching post:", error);
     } finally {

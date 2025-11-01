@@ -11,6 +11,7 @@ interface PostCardProps {
   read_time: string;
   image: string;
   author_id?: string;
+  author_name?: string;
 }
 
 export const PostCard = ({
@@ -21,6 +22,7 @@ export const PostCard = ({
   created_at,
   read_time,
   image,
+  author_name,
 }: PostCardProps) => {
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString("en-US", {
@@ -83,7 +85,7 @@ export const PostCard = ({
           {/* Footer */}
           <div className="flex items-center justify-between pt-4 border-t border-border">
             <span className="font-inter text-sm text-muted-foreground">
-              By ItsMyCardio Team
+              By {author_name || "Ukweli Media Team"}
             </span>
             <div className="flex items-center gap-1 text-primary font-inter text-sm font-medium group-hover:gap-2 transition-all">
               Read More

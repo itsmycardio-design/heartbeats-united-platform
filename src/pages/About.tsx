@@ -67,10 +67,10 @@ const About = () => {
           <div className="max-w-3xl mx-auto text-center">
             <Heart className="w-16 h-16 mx-auto mb-6 text-primary" />
             <h1 className="font-poppins font-bold text-5xl lg:text-6xl mb-6">
-              Meet the Founder
+              About Ukweli Media Hub
             </h1>
             <p className="font-inter text-xl">
-              Building a national movement for wellness, empowerment, and positive change
+              Kenya's trusted source for authentic news, empowering stories, and community transformation
             </p>
           </div>
         </div>
@@ -127,7 +127,7 @@ const About = () => {
                 <div>
                   <h3 className="font-poppins font-bold text-2xl mb-4">Our Mission</h3>
                   <p className="font-inter text-lg text-muted-foreground leading-relaxed">
-                    To empower individuals and communities across Kenya through insightful, inspiring, and impactful content that promotes wellness, education, and positive transformation. We strive to be the leading voice in fitness, health, politics, and lifestyle, fostering a movement of informed, engaged, and empowered citizens who actively contribute to building a healthier, more vibrant nation.
+                    Ukweli Media Hub is committed to delivering truth-centered journalism and empowering content that transforms lives across Kenya. We provide authentic, well-researched stories covering fitness, health, politics, and lifestyle—fostering informed communities, inspiring positive action, and amplifying voices that matter. Our mission is to be the trusted platform where Kenyans find reliable information, meaningful perspectives, and the tools to build healthier, more engaged communities.
                   </p>
                 </div>
               </div>
@@ -144,7 +144,7 @@ const About = () => {
                 <div>
                   <h3 className="font-poppins font-bold text-2xl mb-4">Our Vision</h3>
                   <p className="font-inter text-lg text-muted-foreground leading-relaxed">
-                    To become Kenya's most trusted and influential platform for wellness and empowerment, inspiring millions to lead healthier, more purposeful lives. We envision a nation where every individual has access to quality information, resources, and support to achieve their full potential in mind, body, and spirit—creating a ripple effect of positive change that transforms communities and shapes a brighter future for generations to come.
+                    To be East Africa's leading media platform for truth, empowerment, and community transformation. We envision a Kenya where every citizen has access to reliable, unbiased information that enables informed decision-making, promotes wellness, and drives positive social change. Through authentic storytelling and impactful journalism, we aim to create a ripple effect of transformation—building stronger communities, inspiring leadership, and shaping a brighter, more equitable future for all Kenyans.
                   </p>
                 </div>
               </div>

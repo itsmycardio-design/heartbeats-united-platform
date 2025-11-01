@@ -17,6 +17,7 @@ import { Analytics } from "@/components/Analytics";
 import { MessagesTab } from "@/components/admin/MessagesTab";
 import { SubscribersTab } from "@/components/admin/SubscribersTab";
 import { WritersTab } from "@/components/admin/WritersTab";
+import { CommentsTab } from "@/components/admin/CommentsTab";
 import { ThemeSettingsTab } from "@/components/admin/ThemeSettingsTab";
 import { FounderSettingsTab } from "@/components/admin/FounderSettingsTab";
 import { OverviewTab } from "@/components/admin/OverviewTab";
@@ -210,6 +211,7 @@ const AdminDashboard = () => {
             <TabsTrigger value="posts">Blog Posts</TabsTrigger>
             {isAdmin && (
               <>
+                <TabsTrigger value="comments">Comments</TabsTrigger>
                 <TabsTrigger value="messages">Messages</TabsTrigger>
                 <TabsTrigger value="subscribers">Subscribers</TabsTrigger>
                 <TabsTrigger value="writers">Writers</TabsTrigger>
@@ -450,6 +452,10 @@ const AdminDashboard = () => {
             <>
               <TabsContent value="overview">
                 <OverviewTab />
+              </TabsContent>
+
+              <TabsContent value="comments">
+                <CommentsTab />
               </TabsContent>
 
               <TabsContent value="messages">

@@ -44,11 +44,11 @@ export const Footer = () => {
             <Link to="/" className="flex items-center gap-2 font-poppins font-bold text-xl mb-4">
               <Heart className="w-6 h-6 text-primary" />
               <span className="bg-gradient-to-r from-primary to-primary-dark bg-clip-text text-transparent">
-                ItsMyCardio
+                Ukweli Media Hub
               </span>
             </Link>
             <p className="font-inter text-sm text-muted-foreground mb-4">
-              National platform for fitness, wellness, leadership, and empowerment stories that inspire.
+              Ukweli Media Hub is Kenya's trusted platform delivering authentic news, insightful analysis, and empowering stories across fitness, health, politics, and lifestyle.
             </p>
             <div className="flex gap-3">
               <a href="#" className="p-2 rounded-lg bg-muted hover:bg-primary/20 hover:text-primary transition-all">
@@ -160,7 +160,10 @@ export const Footer = () => {
         {/* Bottom Bar */}
         <div className="mt-12 pt-8 border-t border-border">
           <p className="text-center font-inter text-sm text-muted-foreground">
-            © 2025 ItsMyCardio — All Rights Reserved. Built with 🩷 for national wellness.
+            © 2025 Ukweli Media Hub — All Rights Reserved. Truth in Every Story.
+          </p>
+          <p className="text-center font-inter text-xs text-muted-foreground mt-2">
+            Developed by Laban Panda Khisa
           </p>
         </div>
       </div>

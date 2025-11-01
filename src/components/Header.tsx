@@ -38,7 +38,7 @@ export const Header = () => {
           <Link to="/" className="flex items-center gap-2 font-poppins font-bold text-xl group">
             <Heart className="w-6 h-6 text-primary transition-transform group-hover:scale-110" />
             <span className="bg-gradient-to-r from-primary to-primary-dark bg-clip-text text-transparent">
-              ItsMyCardio
+              Ukweli Media Hub
             </span>
           </Link>
 

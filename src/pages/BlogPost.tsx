@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { PostCard } from "@/components/PostCard";
 import { usePageView } from "@/hooks/usePageView";
 import { useBlogPost, useBlogPosts } from "@/hooks/useBlogPosts";
+import { Comments } from "@/components/Comments";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -142,7 +143,7 @@ const BlogPost = () => {
             <Clock className="w-4 h-4" />
             <span>{post.read_time}</span>
           </div>
-          <span>By ItsMyCardio Team</span>
+          <span>By {post.author_name || "Ukweli Media Team"}</span>
         </div>
 
         {/* Title */}
@@ -202,15 +203,15 @@ const BlogPost = () => {
           <div className="flex items-start gap-6">
             <div className="w-20 h-20 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
               <span className="font-poppins font-bold text-2xl text-primary">
-                IC
+                {post.author_name?.charAt(0).toUpperCase() || "U"}
               </span>
             </div>
             <div>
               <h3 className="font-poppins font-bold text-xl mb-2">
-                ItsMyCardio Team
+                {post.author_name || "Ukweli Media Team"}
               </h3>
               <p className="font-inter text-muted-foreground mb-4">
-                Contributing author passionate about wellness, empowerment, and creating positive change in communities across the nation.
+                Contributing writer passionate about truth, empowerment, and creating positive change in communities across Kenya.
               </p>
               <Link to="/about">
                 <Button variant="outline" size="sm">View Profile</Button>
@@ -218,6 +219,9 @@ const BlogPost = () => {
             </div>
           </div>
         </div>
+
+        {/* Comments Section */}
+        <Comments postId={post.id} />
       </article>
 
       {/* Related Posts */}
