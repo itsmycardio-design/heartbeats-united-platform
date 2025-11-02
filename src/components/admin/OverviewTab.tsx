@@ -164,17 +164,28 @@ export const OverviewTab = () => {
         </CardHeader>
         <CardContent>
           <div className="flex flex-wrap gap-3">
-            <Button onClick={() => navigate("/admin")} className="gap-2">
+            <Button onClick={() => {
+              navigate("/admin");
+              // Trigger new post form
+              setTimeout(() => {
+                const newPostBtn = document.querySelector('[data-action="new-post"]') as HTMLButtonElement;
+                newPostBtn?.click();
+              }, 100);
+            }} className="gap-2">
               <Plus className="w-4 h-4" />
               New Post
             </Button>
-            <Button variant="outline" className="gap-2">
-              <Upload className="w-4 h-4" />
-              Upload Media
-            </Button>
-            <Button variant="outline" className="gap-2">
+            <Button variant="outline" onClick={() => navigate("/admin?tab=posts")} className="gap-2">
               <FolderOpen className="w-4 h-4" />
-              Manage Categories
+              View All Posts
+            </Button>
+            <Button variant="outline" onClick={() => navigate("/admin?tab=messages")} className="gap-2">
+              <MessageSquare className="w-4 h-4" />
+              View Messages
+            </Button>
+            <Button variant="outline" onClick={() => navigate("/admin?tab=comments")} className="gap-2">
+              <MessageSquare className="w-4 h-4" />
+              Manage Comments
             </Button>
           </div>
         </CardContent>

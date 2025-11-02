@@ -43,6 +43,10 @@ const AdminDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
   const [showForm, setShowForm] = useState(false);
+  
+  // Get tab from URL params
+  const [searchParams] = useState(() => new URLSearchParams(window.location.search));
+  const initialTab = searchParams.get('tab') || 'overview';
 
   const [formData, setFormData] = useState({
     title: "",
@@ -205,7 +209,7 @@ const AdminDashboard = () => {
         {isAdmin ? "Admin" : "Writer"} Dashboard
       </h1>
 
-        <Tabs defaultValue="overview" className="space-y-6">
+        <Tabs defaultValue={initialTab} className="space-y-6">
           <TabsList className="flex-wrap h-auto">
             {isAdmin && <TabsTrigger value="overview">Overview</TabsTrigger>}
             <TabsTrigger value="posts">Blog Posts</TabsTrigger>
@@ -242,7 +246,7 @@ const AdminDashboard = () => {
               </div>
               <div>
                 {!showForm && (
-                  <Button onClick={() => setShowForm(true)}>
+                  <Button onClick={() => setShowForm(true)} data-action="new-post">
                     <Plus className="w-4 h-4 mr-2" />
                     New Post
                   </Button>

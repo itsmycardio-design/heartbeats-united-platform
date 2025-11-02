@@ -8,7 +8,7 @@ import { useBlogPosts } from "@/hooks/useBlogPosts";
 const Blog = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const { posts, loading } = useBlogPosts();
-  const categories = ["All", "fitness", "health", "politics", "lifestyle"];
+  const categories = ["All", "fitness", "health", "politics", "lifestyle", "education", "inspiration", "quotes"];
 
   const filteredPosts =
     selectedCategory === "All"
@@ -85,11 +85,17 @@ const Blog = () => {
           </select>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredPosts.map((post) => (
-            <PostCard key={post.id} {...post} />
-          ))}
-        </div>
+        {filteredPosts.length === 0 ? (
+          <div className="text-center py-12">
+            <p className="text-muted-foreground text-lg">No articles found in this category.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredPosts.map((post) => (
+              <PostCard key={post.id} {...post} />
+            ))}
+          </div>
+        )}
       </section>
 
       {/* Sidebar Section */}
