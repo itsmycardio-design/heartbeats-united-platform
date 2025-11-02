@@ -19,6 +19,10 @@ import Auth from "./pages/Auth";
 import AdminDashboard from "./pages/AdminDashboard";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
+import Partnership from "./pages/Partnership";
+import Education from "./pages/Education";
+import Inspiration from "./pages/Inspiration";
+import Quotes from "./pages/Quotes";
 
 const queryClient = new QueryClient();
 
@@ -45,6 +49,10 @@ const App = () => (
                 <Route path="/auth" element={<Auth />} />
                 <Route path="/admin" element={<AdminDashboard />} />
                 <Route path="/settings" element={<Settings />} />
+                <Route path="/partnership" element={<Partnership />} />
+                <Route path="/education" element={<Education />} />
+                <Route path="/inspiration" element={<Inspiration />} />
+                <Route path="/quotes" element={<Quotes />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </main>

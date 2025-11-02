@@ -79,34 +79,76 @@ const Index = () => {
 
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative bg-muted border-b border-border overflow-hidden">
+      {/* Hero Section with Animated Background */}
+      <section className="relative bg-gradient-to-br from-primary/5 via-secondary/5 to-purple-500/5 border-b border-border overflow-hidden min-h-[600px] flex items-center">
+        {/* Animated background elements */}
+        <div className="absolute inset-0">
+          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+          <div className="absolute top-1/2 right-1/3 w-48 h-48 bg-purple-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+        </div>
+
         <div className="relative container mx-auto px-4 lg:px-8 py-24 lg:py-32">
-          <div className="max-w-3xl animate-fade-in">
-            <h1 className="font-poppins font-bold text-5xl lg:text-7xl mb-6 leading-tight">
-              Empowering Hearts,
-              <br />
-              <span className="text-primary">Transforming Lives</span>
-            </h1>
-            <p className="font-inter text-lg lg:text-xl mb-8">
-              Your national platform for fitness, wellness, leadership, and stories that inspire. Join thousands on a journey to better health and empowerment.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button 
-                size="lg" 
-                onClick={handleExploreStories}
-                className="bg-primary text-primary-foreground hover:bg-primary/90 font-poppins font-semibold text-lg px-8"
-              >
-                Explore Stories
-              </Button>
-              <Button 
-                size="lg" 
-                variant="outline" 
-                onClick={handleJoinMovement}
-                className="border-2 font-poppins font-semibold text-lg px-8"
-              >
-                Join the Movement
-              </Button>
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Content */}
+            <div className="animate-fade-in">
+              <h1 className="font-poppins font-bold text-5xl lg:text-7xl mb-6 leading-tight">
+                Welcome to <span className="text-primary">Ukweli Media Hub</span>
+              </h1>
+              <p className="font-inter text-lg lg:text-xl mb-8 text-muted-foreground">
+                Your trusted source for authentic news, wellness insights, and inspiring stories. We bring you truth, empowerment, and community-driven content across fitness, health, politics, and lifestyle.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button 
+                  size="lg" 
+                  onClick={handleExploreStories}
+                  className="bg-primary text-primary-foreground hover:bg-primary/90 font-poppins font-semibold text-lg px-8"
+                >
+                  Explore Stories
+                </Button>
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  onClick={handleJoinMovement}
+                  className="border-2 font-poppins font-semibold text-lg px-8"
+                >
+                  Join the Movement
+                </Button>
+              </div>
+            </div>
+
+            {/* Latest Articles Preview */}
+            <div className="space-y-4 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+              <h3 className="font-poppins font-semibold text-2xl mb-4">Latest Stories</h3>
+              <div className="space-y-3">
+                {allPosts.slice(0, 3).map((post, index) => (
+                  <div 
+                    key={post.id}
+                    onClick={() => navigate(`/blog/${post.id}`)}
+                    className="bg-card border border-border p-4 rounded-lg hover:shadow-lg transition-all cursor-pointer group"
+                    style={{ animationDelay: `${0.3 + index * 0.1}s` }}
+                  >
+                    <div className="flex gap-3">
+                      {post.image && (
+                        <img 
+                          src={post.image} 
+                          alt={post.title}
+                          className="w-20 h-20 object-cover rounded-lg"
+                        />
+                      )}
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-poppins font-semibold text-sm mb-1 line-clamp-2 group-hover:text-primary transition-colors">
+                          {post.title}
+                        </h4>
+                        <div className="flex gap-2 text-xs text-muted-foreground">
+                          <span className="px-2 py-1 bg-secondary/10 rounded-md">{post.category}</span>
+                          <span>{post.read_time}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>

@@ -309,10 +309,13 @@ const AdminDashboard = () => {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="fitness">Fitness</SelectItem>
-                        <SelectItem value="health">Health</SelectItem>
-                        <SelectItem value="lifestyle">Lifestyle</SelectItem>
-                        <SelectItem value="politics">Politics</SelectItem>
+                        <SelectItem value="fitness">Fitness & Wellness</SelectItem>
+                        <SelectItem value="health">Health & Education</SelectItem>
+                        <SelectItem value="lifestyle">Lifestyle & Inspiration</SelectItem>
+                        <SelectItem value="politics">Politics & Leadership</SelectItem>
+                        <SelectItem value="education">Education</SelectItem>
+                        <SelectItem value="inspiration">Inspiration</SelectItem>
+                        <SelectItem value="quotes">Quotes</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>

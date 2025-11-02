@@ -20,6 +20,7 @@ const navigation = [
   { name: "Lifestyle & Inspiration", path: "/lifestyle" },
   { name: "About", path: "/about" },
   { name: "Blog", path: "/blog" },
+  { name: "Partner with Us", path: "/partnership" },
   { name: "Contact", path: "/contact" },
 ];
 

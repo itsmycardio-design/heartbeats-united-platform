@@ -31,7 +31,10 @@ const Health = () => {
             <p className="font-inter text-lg text-muted-foreground mb-6">
               Focused on health education, cardio awareness, and wellness facts that empower you to make informed decisions.
             </p>
-            <Button className="bg-gradient-to-r from-secondary to-secondary-light hover:opacity-90 font-poppins font-semibold">
+            <Button 
+              onClick={() => window.location.href = '/partnership'}
+              className="bg-gradient-to-r from-secondary to-secondary-light hover:opacity-90 font-poppins font-semibold"
+            >
               Partner with Us in Promoting Health Awareness
             </Button>
           </div>
