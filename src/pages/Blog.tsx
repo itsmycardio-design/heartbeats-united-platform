@@ -104,12 +104,52 @@ const Blog = () => {
           <div className="grid md:grid-cols-3 gap-8">
             {/* Popular Tags */}
             <div className="bg-card border border-border p-6 rounded-xl">
-...
+              <h3 className="font-poppins font-semibold text-xl mb-4">Popular Tags</h3>
+              <div className="flex flex-wrap gap-2">
+                {categories.filter(cat => cat !== "All").map((cat) => {
+                  const count = posts.filter(post => post.category === cat).length;
+                  return count > 0 ? (
+                    <Badge
+                      key={cat}
+                      variant="outline"
+                      className="cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors"
+                      onClick={() => setSelectedCategory(cat)}
+                    >
+                      {cat.charAt(0).toUpperCase() + cat.slice(1)} ({count})
+                    </Badge>
+                  ) : null;
+                })}
+              </div>
             </div>
 
             {/* Latest Posts */}
             <div className="bg-card border border-border p-6 rounded-xl">
-...
+              <h3 className="font-poppins font-semibold text-xl mb-4">Latest Posts</h3>
+              <div className="space-y-4">
+                {posts.slice(0, 3).map((post) => (
+                  <a
+                    key={post.id}
+                    href={`/blog/${post.id}`}
+                    className="flex gap-3 group"
+                  >
+                    {post.image && (
+                      <img
+                        src={post.image}
+                        alt={post.title}
+                        className="w-16 h-16 rounded-lg object-cover"
+                      />
+                    )}
+                    <div className="flex-1 min-w-0">
+                      <h4 className="font-inter font-medium text-sm line-clamp-2 group-hover:text-primary transition-colors">
+                        {post.title}
+                      </h4>
+                      <p className="text-xs text-muted-foreground mt-1">
+                        {new Date(post.created_at).toLocaleDateString()}
+                      </p>
+                    </div>
+                  </a>
+                ))}
+              </div>
             </div>
 
             {/* Subscribe */}
