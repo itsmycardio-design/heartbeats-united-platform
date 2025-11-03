@@ -48,13 +48,7 @@ export const useBlogPosts = (category?: string, featuredOnly?: boolean) => {
     try {
       let query = supabase
         .from("blog_posts")
-        .select(`
-          *,
-          profiles:author_id (
-            full_name,
-            email
-          )
-        `)
+        .select("*")
         .eq("published", true)
         .order("created_at", { ascending: false });
 
@@ -73,7 +67,7 @@ export const useBlogPosts = (category?: string, featuredOnly?: boolean) => {
       // Map the data to include author_name
       const postsWithAuthors = (data || []).map((post: any) => ({
         ...post,
-        author_name: post.profiles?.full_name || post.profiles?.email || "Ukweli Media Team"
+        author_name: "Ukweli Media Team"
       }));
       
       setPosts(postsWithAuthors);
@@ -99,13 +93,7 @@ export const useBlogPost = (id: string) => {
     try {
       const { data, error } = await supabase
         .from("blog_posts")
-        .select(`
-          *,
-          profiles:author_id (
-            full_name,
-            email
-          )
-        `)
+        .select("*")
         .eq("id", id)
         .eq("published", true)
         .maybeSingle();
@@ -116,7 +104,7 @@ export const useBlogPost = (id: string) => {
       if (data) {
         const postWithAuthor = {
           ...data,
-          author_name: (data as any).profiles?.full_name || (data as any).profiles?.email || "Ukweli Media Team"
+          author_name: "Ukweli Media Team"
         };
         setPost(postWithAuthor);
       } else {
