@@ -56,7 +56,7 @@ const AdminDashboard = () => {
     image: "",
     read_time: "5 min read",
     featured: false,
-    published: false,
+    published: true,
   });
 
   useEffect(() => {
