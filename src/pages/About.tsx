@@ -2,6 +2,7 @@ import { Heart, Target, Award, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { Link } from "react-router-dom";
 import founderImage from "@/assets/founder-isaac.jpg";
 
 interface FounderSettings {
@@ -90,12 +91,16 @@ const About = () => {
               <p style={{ whiteSpace: 'pre-wrap' }}>{founder.bio}</p>
             </div>
             <div className="mt-8 flex gap-4">
-              <Button className="bg-gradient-to-r from-primary to-primary-dark hover:opacity-90 font-poppins font-semibold">
-                Book Me for Speaking
-              </Button>
-              <Button variant="outline" className="font-poppins font-semibold">
-                View Media Kit
-              </Button>
+              <Link to="/speaker">
+                <Button className="bg-gradient-to-r from-primary to-primary-dark hover:opacity-90 font-poppins font-semibold">
+                  Book Me for Speaking
+                </Button>
+              </Link>
+              <Link to="/media-kit">
+                <Button variant="outline" className="font-poppins font-semibold">
+                  View Media Kit
+                </Button>
+              </Link>
             </div>
           </div>
           <div className="order-1 lg:order-2">

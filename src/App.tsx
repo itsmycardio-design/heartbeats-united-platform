@@ -23,6 +23,8 @@ import Partnership from "./pages/Partnership";
 import Education from "./pages/Education";
 import Inspiration from "./pages/Inspiration";
 import Quotes from "./pages/Quotes";
+import Speaker from "./pages/Speaker";
+import MediaKit from "./pages/MediaKit";
 
 const queryClient = new QueryClient();
 
@@ -53,6 +55,8 @@ const App = () => (
                 <Route path="/education" element={<Education />} />
                 <Route path="/inspiration" element={<Inspiration />} />
                 <Route path="/quotes" element={<Quotes />} />
+                <Route path="/speaker" element={<Speaker />} />
+                <Route path="/media-kit" element={<MediaKit />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </main>
