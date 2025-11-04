@@ -36,31 +36,31 @@ export const Footer = () => {
   };
 
   return (
-    <footer className="bg-card border-t border-border mt-20">
+    <footer className="bg-black border-t border-border mt-20">
       <div className="container mx-auto px-4 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* About Column */}
           <div>
             <Link to="/" className="flex items-center gap-2 font-poppins font-bold text-xl mb-4">
-              <Heart className="w-6 h-6 text-primary" />
-              <span className="bg-gradient-to-r from-primary to-primary-dark bg-clip-text text-transparent">
+              <Heart className="w-6 h-6 text-[hsl(var(--footer-red))]" />
+              <span className="text-[hsl(var(--footer-gold))]">
                 Ukweli Media Hub
               </span>
             </Link>
-            <p className="font-inter text-sm text-muted-foreground mb-4">
+            <p className="font-inter text-sm text-[hsl(var(--footer-gold))] mb-4">
               Ukweli Media Hub is Kenya's trusted platform delivering authentic news, insightful analysis, and empowering stories across fitness, health, politics, and lifestyle.
             </p>
             <div className="flex gap-3">
-              <a href="#" className="p-2 rounded-lg bg-muted hover:bg-primary/20 hover:text-primary transition-all">
+              <a href="#" className="p-2 rounded-lg bg-white/10 hover:bg-[hsl(var(--footer-red))]/20 text-[hsl(var(--footer-red))] transition-all">
                 <Facebook className="w-5 h-5" />
               </a>
-              <a href="#" className="p-2 rounded-lg bg-muted hover:bg-primary/20 hover:text-primary transition-all">
+              <a href="#" className="p-2 rounded-lg bg-white/10 hover:bg-[hsl(var(--footer-red))]/20 text-[hsl(var(--footer-red))] transition-all">
                 <Twitter className="w-5 h-5" />
               </a>
-              <a href="#" className="p-2 rounded-lg bg-muted hover:bg-primary/20 hover:text-primary transition-all">
+              <a href="#" className="p-2 rounded-lg bg-white/10 hover:bg-[hsl(var(--footer-red))]/20 text-[hsl(var(--footer-red))] transition-all">
                 <Instagram className="w-5 h-5" />
               </a>
-              <a href="#" className="p-2 rounded-lg bg-muted hover:bg-primary/20 hover:text-primary transition-all">
+              <a href="#" className="p-2 rounded-lg bg-white/10 hover:bg-[hsl(var(--footer-red))]/20 text-[hsl(var(--footer-red))] transition-all">
                 <Youtube className="w-5 h-5" />
               </a>
             </div>
@@ -68,30 +68,30 @@ export const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="font-poppins font-semibold text-lg mb-4">Quick Links</h3>
+            <h3 className="font-poppins font-semibold text-lg mb-4 text-[hsl(var(--footer-red))]">Quick Links</h3>
             <ul className="space-y-2 font-inter text-sm">
               <li>
-                <Link to="/fitness" className="text-muted-foreground hover:text-primary transition-colors">
+                <Link to="/fitness" className="text-[hsl(var(--footer-gold))] hover:text-[hsl(var(--footer-red))] transition-colors">
                   Fitness & Wellness
                 </Link>
               </li>
               <li>
-                <Link to="/health" className="text-muted-foreground hover:text-primary transition-colors">
+                <Link to="/health" className="text-[hsl(var(--footer-gold))] hover:text-[hsl(var(--footer-red))] transition-colors">
                   Health & Education
                 </Link>
               </li>
               <li>
-                <Link to="/politics" className="text-muted-foreground hover:text-primary transition-colors">
+                <Link to="/politics" className="text-[hsl(var(--footer-gold))] hover:text-[hsl(var(--footer-red))] transition-colors">
                   Politics & Leadership
                 </Link>
               </li>
               <li>
-                <Link to="/lifestyle" className="text-muted-foreground hover:text-primary transition-colors">
+                <Link to="/lifestyle" className="text-[hsl(var(--footer-gold))] hover:text-[hsl(var(--footer-red))] transition-colors">
                   Lifestyle & Inspiration
                 </Link>
               </li>
               <li>
-                <Link to="/about" className="text-muted-foreground hover:text-primary transition-colors">
+                <Link to="/about" className="text-[hsl(var(--footer-gold))] hover:text-[hsl(var(--footer-red))] transition-colors">
                   About
                 </Link>
               </li>
@@ -100,30 +100,30 @@ export const Footer = () => {
 
           {/* Resources */}
           <div>
-            <h3 className="font-poppins font-semibold text-lg mb-4">Resources</h3>
+            <h3 className="font-poppins font-semibold text-lg mb-4 text-[hsl(var(--footer-red))]">Resources</h3>
             <ul className="space-y-2 font-inter text-sm">
               <li>
-                <Link to="/blog" className="text-muted-foreground hover:text-primary transition-colors">
+                <Link to="/blog" className="text-[hsl(var(--footer-gold))] hover:text-[hsl(var(--footer-red))] transition-colors">
                   Blog
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="text-muted-foreground hover:text-primary transition-colors">
+                <Link to="/contact" className="text-[hsl(var(--footer-gold))] hover:text-[hsl(var(--footer-red))] transition-colors">
                   Contact Us
                 </Link>
               </li>
               <li>
-                <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                <a href="#" className="text-[hsl(var(--footer-gold))] hover:text-[hsl(var(--footer-red))] transition-colors">
                   Privacy Policy
                 </a>
               </li>
               <li>
-                <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                <a href="#" className="text-[hsl(var(--footer-gold))] hover:text-[hsl(var(--footer-red))] transition-colors">
                   Terms of Service
                 </a>
               </li>
               <li>
-                <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                <a href="#" className="text-[hsl(var(--footer-gold))] hover:text-[hsl(var(--footer-red))] transition-colors">
                   Media Kit
                 </a>
               </li>
@@ -132,8 +132,8 @@ export const Footer = () => {
 
           {/* Newsletter */}
           <div>
-            <h3 className="font-poppins font-semibold text-lg mb-4">Join the Heartbeat</h3>
-            <p className="font-inter text-sm text-muted-foreground mb-4">
+            <h3 className="font-poppins font-semibold text-lg mb-4 text-[hsl(var(--footer-red))]">Join the Heartbeat</h3>
+            <p className="font-inter text-sm text-[hsl(var(--footer-gold))] mb-4">
               Get weekly inspiration and wellness tips delivered to your inbox.
             </p>
             <form onSubmit={handleNewsletterSubmit} className="flex gap-2">
@@ -158,11 +158,11 @@ export const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t border-border">
-          <p className="text-center font-inter text-sm text-muted-foreground">
+        <div className="mt-12 pt-8 border-t border-white/10">
+          <p className="text-center font-inter text-sm text-[hsl(var(--footer-gold))]">
             © 2025 Ukweli Media Hub — All Rights Reserved. Truth in Every Story.
           </p>
-          <p className="text-center font-inter text-xs text-muted-foreground mt-2">
+          <p className="text-center font-inter text-xs text-[hsl(var(--footer-red))] mt-2">
             Developed by Laban Panda Khisa
           </p>
         </div>
