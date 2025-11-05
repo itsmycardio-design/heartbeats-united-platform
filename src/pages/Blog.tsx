@@ -1,14 +1,49 @@
-import { useState } from "react";
-import { Search } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Search, RefreshCw } from "lucide-react";
 import { PostCard } from "@/components/PostCard";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { useBlogPosts } from "@/hooks/useBlogPosts";
+import { toast } from "@/hooks/use-toast";
 
 const Blog = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const { posts, loading } = useBlogPosts();
+  const { posts, loading, refetch } = useBlogPosts();
+  const [error, setError] = useState(false);
   const categories = ["All", "fitness", "health", "politics", "lifestyle", "education", "inspiration", "quotes"];
+
+  useEffect(() => {
+    if (posts.length === 0 && !loading) {
+      setError(true);
+    } else {
+      setError(false);
+    }
+  }, [posts, loading]);
+
+  const handleRetry = async () => {
+    setError(false);
+    toast({
+      title: "Retrying...",
+      description: "Fetching blog posts again.",
+    });
+    try {
+      await refetch();
+      if (posts.length > 0) {
+        toast({
+          title: "Success!",
+          description: "Blog posts loaded successfully.",
+        });
+      }
+    } catch (err) {
+      toast({
+        title: "Error",
+        description: "Failed to load blog posts. Please try again.",
+        variant: "destructive",
+      });
+      setError(true);
+    }
+  };
 
   const filteredPosts =
     selectedCategory === "All"
@@ -85,7 +120,17 @@ const Blog = () => {
           </select>
         </div>
 
-        {filteredPosts.length === 0 ? (
+        {error && filteredPosts.length === 0 ? (
+          <div className="text-center py-12">
+            <p className="text-muted-foreground text-lg mb-4">
+              Failed to load articles. Please check your connection.
+            </p>
+            <Button onClick={handleRetry} variant="outline" className="gap-2">
+              <RefreshCw className="w-4 h-4" />
+              Retry
+            </Button>
+          </div>
+        ) : filteredPosts.length === 0 ? (
           <div className="text-center py-12">
             <p className="text-muted-foreground text-lg">No articles found in this category.</p>
           </div>
