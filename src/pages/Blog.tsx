@@ -9,6 +9,7 @@ import { toast } from "@/hooks/use-toast";
 
 const Blog = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
   const { posts, loading, refetch } = useBlogPosts();
   const [error, setError] = useState(false);
   const categories = ["All", "fitness", "health", "politics", "lifestyle", "education", "inspiration", "quotes"];
@@ -45,10 +46,15 @@ const Blog = () => {
     }
   };
 
-  const filteredPosts =
-    selectedCategory === "All"
-      ? posts
-      : posts.filter((post) => post.category === selectedCategory);
+  const filteredPosts = posts.filter((post) => {
+    const matchesCategory = selectedCategory === "All" || post.category === selectedCategory;
+    const matchesSearch = searchQuery === "" || 
+      post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      post.content.toLowerCase().includes(searchQuery.toLowerCase());
+    
+    return matchesCategory && matchesSearch;
+  });
 
   if (loading) {
     return (
@@ -78,6 +84,8 @@ const Blog = () => {
                 type="text"
                 placeholder="Search articles..."
                 className="pl-12 h-12 font-inter"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
           </div>
@@ -110,9 +118,16 @@ const Blog = () => {
       {/* Posts Grid */}
       <section className="container mx-auto px-4 lg:px-8 py-16 lg:py-24">
         <div className="flex items-center justify-between mb-8">
-          <h2 className="font-poppins font-semibold text-2xl">
-            {filteredPosts.length} {selectedCategory !== "All" && selectedCategory} Articles
-          </h2>
+          <div>
+            <h2 className="font-poppins font-semibold text-2xl">
+              {filteredPosts.length} {selectedCategory !== "All" && selectedCategory} Articles
+            </h2>
+            {searchQuery && (
+              <p className="text-sm text-muted-foreground mt-1">
+                Showing results for "{searchQuery}"
+              </p>
+            )}
+          </div>
           <select className="px-4 py-2 rounded-lg border border-border bg-card font-inter text-sm">
             <option>Latest First</option>
             <option>Oldest First</option>
