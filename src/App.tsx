@@ -17,6 +17,7 @@ import BlogPost from "./pages/BlogPost";
 import Contact from "./pages/Contact";
 import Auth from "./pages/Auth";
 import AdminDashboard from "./pages/AdminDashboard";
+import WritersDashboard from "./pages/WritersDashboard";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 import Partnership from "./pages/Partnership";
@@ -50,6 +51,7 @@ const App = () => (
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/auth" element={<Auth />} />
                 <Route path="/admin" element={<AdminDashboard />} />
+                <Route path="/writer" element={<WritersDashboard />} />
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/partnership" element={<Partnership />} />
                 <Route path="/education" element={<Education />} />

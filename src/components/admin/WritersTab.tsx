@@ -3,7 +3,9 @@ import { supabase } from "@/integrations/supabase/client";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Trash2, UserCog } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Trash2, UserPlus } from "lucide-react";
 import { toast } from "sonner";
 import { format } from "date-fns";
 
@@ -15,12 +17,23 @@ interface Writer {
   role: string;
 }
 
+interface User {
+  id: string;
+  email: string;
+  full_name: string;
+}
+
 export const WritersTab = () => {
   const [writers, setWriters] = useState<Writer[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState("");
+  const [searchEmail, setSearchEmail] = useState("");
 
   useEffect(() => {
     fetchWriters();
+    fetchUsers();
   }, []);
 
   const fetchWriters = async () => {
@@ -58,6 +71,57 @@ export const WritersTab = () => {
     }
   };
 
+  const fetchUsers = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("id, email, full_name")
+        .order("email");
+
+      if (error) throw error;
+      setUsers(data || []);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
+
+  const addWriter = async () => {
+    if (!selectedUserId) {
+      toast.error("Please select a user");
+      return;
+    }
+
+    try {
+      // Check if user already has writer role
+      const { data: existing } = await supabase
+        .from("user_roles")
+        .select("id")
+        .eq("user_id", selectedUserId)
+        .eq("role", "writer")
+        .single();
+
+      if (existing) {
+        toast.error("User already has writer role");
+        return;
+      }
+
+      const { error } = await supabase
+        .from("user_roles")
+        .insert([{ user_id: selectedUserId, role: "writer" }]);
+
+      if (error) throw error;
+      
+      await fetchWriters();
+      setShowAddForm(false);
+      setSelectedUserId("");
+      setSearchEmail("");
+      toast.success("Writer role added successfully");
+    } catch (error: any) {
+      console.error("Error adding writer:", error);
+      toast.error("Failed to add writer role");
+    }
+  };
+
   const removeWriter = async (userId: string) => {
     if (!confirm("Remove writer role from this user?")) return;
 
@@ -77,6 +141,12 @@ export const WritersTab = () => {
     }
   };
 
+  const filteredUsers = users.filter(user => 
+    !writers.some(w => w.id === user.id) &&
+    (searchEmail === "" || user.email.toLowerCase().includes(searchEmail.toLowerCase()) || 
+     user.full_name?.toLowerCase().includes(searchEmail.toLowerCase()))
+  );
+
   if (loading) {
     return <div className="text-center py-8">Loading writers...</div>;
   }
@@ -84,21 +154,75 @@ export const WritersTab = () => {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold">Writers</h2>
-        <Badge variant="secondary">{writers.length} Writers</Badge>
+        <div>
+          <h2 className="text-2xl font-bold">Writers</h2>
+          <p className="text-sm text-muted-foreground mt-1">
+            Manage users who can create and publish blog posts
+          </p>
+        </div>
+        <div className="flex items-center gap-3">
+          <Badge variant="secondary">{writers.length} Writers</Badge>
+          <Button onClick={() => setShowAddForm(!showAddForm)}>
+            <UserPlus className="w-4 h-4 mr-2" />
+            Add Writer
+          </Button>
+        </div>
       </div>
 
-      <Card className="p-6 bg-muted/50">
-        <div className="flex items-start gap-3">
-          <UserCog className="h-5 w-5 text-muted-foreground mt-0.5" />
-          <div className="space-y-1">
-            <p className="font-medium">Manage Writer Roles</p>
-            <p className="text-sm text-muted-foreground">
-              To add a writer role, go to your backend and manually assign the 'writer' role to a user in the user_roles table.
-            </p>
+      {showAddForm && (
+        <Card className="p-6">
+          <h3 className="font-semibold mb-4">Add Writer Role</h3>
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="search">Search Users</Label>
+              <Input
+                id="search"
+                placeholder="Search by email or name..."
+                value={searchEmail}
+                onChange={(e) => setSearchEmail(e.target.value)}
+              />
+            </div>
+            
+            {searchEmail && (
+              <div className="max-h-48 overflow-y-auto space-y-2 border rounded-lg p-2">
+                {filteredUsers.length === 0 ? (
+                  <p className="text-sm text-muted-foreground text-center py-4">
+                    No users found
+                  </p>
+                ) : (
+                  filteredUsers.slice(0, 10).map((user) => (
+                    <div
+                      key={user.id}
+                      className={`p-3 rounded-lg cursor-pointer transition-colors ${
+                        selectedUserId === user.id
+                          ? "bg-primary text-primary-foreground"
+                          : "bg-muted hover:bg-muted/80"
+                      }`}
+                      onClick={() => setSelectedUserId(user.id)}
+                    >
+                      <p className="font-medium">{user.full_name || "No name"}</p>
+                      <p className="text-sm opacity-90">{user.email}</p>
+                    </div>
+                  ))
+                )}
+              </div>
+            )}
+
+            <div className="flex gap-2">
+              <Button onClick={addWriter} disabled={!selectedUserId}>
+                Add Writer Role
+              </Button>
+              <Button variant="outline" onClick={() => {
+                setShowAddForm(false);
+                setSelectedUserId("");
+                setSearchEmail("");
+              }}>
+                Cancel
+              </Button>
+            </div>
           </div>
-        </div>
-      </Card>
+        </Card>
+      )}
 
       {writers.length === 0 ? (
         <Card className="p-8 text-center text-muted-foreground">

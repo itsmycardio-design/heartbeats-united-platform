@@ -75,11 +75,19 @@ export const Header = () => {
                 <DropdownMenuContent align="end">
                   <DropdownMenuLabel>My Account</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  {(isAdmin || isWriter) && (
+                  {isAdmin && (
                     <DropdownMenuItem asChild>
                       <Link to="/admin" className="flex items-center cursor-pointer">
                         <LayoutDashboard className="mr-2 h-4 w-4" />
-                        {isAdmin ? "Admin" : "Writer"} Dashboard
+                        Admin Dashboard
+                      </Link>
+                    </DropdownMenuItem>
+                  )}
+                  {isWriter && !isAdmin && (
+                    <DropdownMenuItem asChild>
+                      <Link to="/writer" className="flex items-center cursor-pointer">
+                        <LayoutDashboard className="mr-2 h-4 w-4" />
+                        Writer Dashboard
                       </Link>
                     </DropdownMenuItem>
                   )}
@@ -136,13 +144,22 @@ export const Header = () => {
               ))}
               {user ? (
                 <>
-                  {(isAdmin || isWriter) && (
+                  {isAdmin && (
                     <Link
                       to="/admin"
                       onClick={() => setMobileMenuOpen(false)}
                       className="px-4 py-3 rounded-lg font-inter text-sm font-medium transition-all text-foreground hover:text-primary hover:bg-muted"
                     >
-                      {isAdmin ? "Admin" : "Writer"} Dashboard
+                      Admin Dashboard
+                    </Link>
+                  )}
+                  {isWriter && !isAdmin && (
+                    <Link
+                      to="/writer"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="px-4 py-3 rounded-lg font-inter text-sm font-medium transition-all text-foreground hover:text-primary hover:bg-muted"
+                    >
+                      Writer Dashboard
                     </Link>
                   )}
                   <Link
