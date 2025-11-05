@@ -45,6 +45,7 @@ export const useBlogPosts = (category?: string, featuredOnly?: boolean) => {
   }, [category, featuredOnly]);
 
   const fetchPosts = async () => {
+    setLoading(true);
     try {
       let query = supabase
         .from("blog_posts")
@@ -68,16 +69,34 @@ export const useBlogPosts = (category?: string, featuredOnly?: boolean) => {
       const { data, error } = await query;
 
       if (error) throw error;
-      
-      // Map the data to include author_name
+
       const postsWithAuthors = (data || []).map((post: any) => ({
         ...post,
-        author_name: post.profiles?.full_name || "Ukweli Media Team"
+        author_name: (post as any).profiles?.full_name || "Ukweli Media Team",
       }));
-      
+
       setPosts(postsWithAuthors);
-    } catch (error) {
-      console.error("Error fetching posts:", error);
+    } catch (err) {
+      console.error("Error fetching posts:", err);
+      // Fallback: fetch without join so posts still appear
+      try {
+        let simpleQuery = supabase
+          .from("blog_posts")
+          .select("*")
+          .eq("published", true)
+          .order("created_at", { ascending: false });
+
+        if (category) simpleQuery = simpleQuery.eq("category", category);
+        if (featuredOnly) simpleQuery = simpleQuery.eq("featured", true);
+
+        const { data: simpleData, error: simpleError } = await simpleQuery;
+        if (simpleError) throw simpleError;
+
+        setPosts((simpleData || []).map((p: any) => ({ ...p, author_name: "Ukweli Media Team" })));
+      } catch (fallbackErr) {
+        console.error("Fallback fetch failed:", fallbackErr);
+        setPosts([]);
+      }
     } finally {
       setLoading(false);
     }
@@ -95,6 +114,7 @@ export const useBlogPost = (id: string) => {
   }, [id]);
 
   const fetchPost = async () => {
+    setLoading(true);
     try {
       const { data, error } = await supabase
         .from("blog_posts")
@@ -109,19 +129,33 @@ export const useBlogPost = (id: string) => {
         .maybeSingle();
 
       if (error) throw error;
-      
-      // Map the data to include author_name
+
       if (data) {
         const postWithAuthor = {
           ...data,
-          author_name: (data as any).profiles?.full_name || "Ukweli Media Team"
+          author_name: (data as any).profiles?.full_name || "Ukweli Media Team",
         };
         setPost(postWithAuthor);
       } else {
         setPost(null);
       }
-    } catch (error) {
-      console.error("Error fetching post:", error);
+    } catch (err) {
+      console.error("Error fetching post:", err);
+      // Fallback without join
+      try {
+        const { data: simpleData, error: simpleError } = await supabase
+          .from("blog_posts")
+          .select("*")
+          .eq("id", id)
+          .eq("published", true)
+          .maybeSingle();
+
+        if (simpleError) throw simpleError;
+        setPost(simpleData ? { ...simpleData, author_name: "Ukweli Media Team" } : null);
+      } catch (fallbackErr) {
+        console.error("Fallback single fetch failed:", fallbackErr);
+        setPost(null);
+      }
     } finally {
       setLoading(false);
     }
