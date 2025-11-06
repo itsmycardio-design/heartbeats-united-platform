@@ -34,6 +34,8 @@ interface BlogPost {
   featured: boolean;
   published: boolean;
   created_at: string;
+  author_id?: string;
+  author_name?: string;
 }
 
 const AdminDashboard = () => {
@@ -76,11 +78,22 @@ const AdminDashboard = () => {
     try {
       const { data, error } = await supabase
         .from("blog_posts")
-        .select("*")
+        .select(`
+          *,
+          profiles:author_id (
+            full_name
+          )
+        `)
         .order("created_at", { ascending: false });
 
       if (error) throw error;
-      setPosts(data || []);
+      
+      const postsWithAuthors = (data || []).map((post: any) => ({
+        ...post,
+        author_name: post.profiles?.full_name || "Unknown Author",
+      }));
+      
+      setPosts(postsWithAuthors);
     } catch (error: any) {
       toast.error("Failed to fetch posts");
     } finally {
@@ -410,6 +423,11 @@ const AdminDashboard = () => {
                           {post.category}
                         </span>
                         <span className="text-muted-foreground">{post.read_time}</span>
+                        {post.author_name && (
+                          <span className="px-2 py-1 bg-blue-500/10 text-blue-600 rounded-md">
+                            By {post.author_name}
+                          </span>
+                        )}
                         {post.featured && (
                           <span className="px-2 py-1 bg-primary/10 text-primary rounded-md">
                             Featured
