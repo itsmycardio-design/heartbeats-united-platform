@@ -38,29 +38,44 @@ export const WritersTab = () => {
 
   const fetchWriters = async () => {
     try {
-      const { data, error } = await supabase
+      // Fetch writer roles first (avoid relying on DB FK introspection)
+      const { data: roles, error: rolesError } = await supabase
         .from("user_roles")
-        .select(`
-          user_id,
-          role,
-          profiles (
-            id,
-            email,
-            full_name,
-            created_at
-          )
-        `)
+        .select("user_id, role")
         .eq("role", "writer");
 
-      if (error) throw error;
+      if (rolesError) throw rolesError;
 
-      const writersData = (data || []).map((item: any) => ({
-        id: item.profiles.id,
-        email: item.profiles.email,
-        full_name: item.profiles.full_name,
-        created_at: item.profiles.created_at,
-        role: item.role,
-      }));
+      const userIds = (roles || []).map((r: any) => r.user_id).filter(Boolean);
+
+      if (userIds.length === 0) {
+        setWriters([]);
+        return;
+      }
+
+      // Then fetch profiles for those user ids in a single query
+      const { data: profiles, error: profilesError } = await supabase
+        .from("profiles")
+        .select("id, email, full_name, created_at")
+        .in("id", userIds);
+
+      if (profilesError) throw profilesError;
+
+      const profilesMap = new Map((profiles || []).map((p: any) => [p.id, p]));
+
+      const writersData: Writer[] = userIds
+        .map((id: string) => {
+          const p = profilesMap.get(id);
+          if (!p) return null;
+          return {
+            id: p.id,
+            email: p.email,
+            full_name: p.full_name,
+            created_at: p.created_at,
+            role: "writer",
+          } as Writer;
+        })
+        .filter(Boolean) as Writer[];
 
       setWriters(writersData);
     } catch (error) {
@@ -98,7 +113,7 @@ export const WritersTab = () => {
         .select("id")
         .eq("user_id", selectedUserId)
         .eq("role", "writer")
-        .single();
+        .maybeSingle();
 
       if (existing) {
         toast.error("User already has writer role");
