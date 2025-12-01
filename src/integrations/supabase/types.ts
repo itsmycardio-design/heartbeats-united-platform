@@ -24,10 +24,12 @@ export type Database = {
           featured: boolean | null
           id: string
           image: string
+          media_files: Json | null
           published: boolean | null
           read_time: string
           title: string
           updated_at: string | null
+          video_url: string | null
         }
         Insert: {
           author_id?: string | null
@@ -38,10 +40,12 @@ export type Database = {
           featured?: boolean | null
           id?: string
           image: string
+          media_files?: Json | null
           published?: boolean | null
           read_time?: string
           title: string
           updated_at?: string | null
+          video_url?: string | null
         }
         Update: {
           author_id?: string | null
@@ -52,10 +56,12 @@ export type Database = {
           featured?: boolean | null
           id?: string
           image?: string
+          media_files?: Json | null
           published?: boolean | null
           read_time?: string
           title?: string
           updated_at?: string | null
+          video_url?: string | null
         }
         Relationships: [
           {

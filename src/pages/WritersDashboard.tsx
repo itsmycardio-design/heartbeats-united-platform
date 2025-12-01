@@ -12,6 +12,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { toast } from "sonner";
 import { Pencil, Trash2, Plus, FileText } from "lucide-react";
 import { ImageUpload } from "@/components/ImageUpload";
+import { MediaUpload } from "@/components/MediaUpload";
+
+interface MediaFile {
+  url: string;
+  type: "image" | "video";
+  caption?: string;
+}
 
 interface BlogPost {
   id: string;
@@ -24,6 +31,8 @@ interface BlogPost {
   featured: boolean;
   published: boolean;
   created_at: string;
+  media_files?: MediaFile[];
+  video_url?: string;
 }
 
 const WritersDashboard = () => {
@@ -43,6 +52,8 @@ const WritersDashboard = () => {
     read_time: "5 min read",
     featured: false,
     published: false,
+    media_files: [] as MediaFile[],
+    video_url: "",
   });
 
   useEffect(() => {
@@ -69,7 +80,15 @@ const WritersDashboard = () => {
         .order("created_at", { ascending: false });
 
       if (error) throw error;
-      setPosts(data || []);
+      
+      // Convert Json type to MediaFile[] type
+      const postsWithMedia = (data || []).map(post => ({
+        ...post,
+        media_files: (post.media_files as any as MediaFile[]) || [],
+        video_url: post.video_url || "",
+      }));
+      
+      setPosts(postsWithMedia);
     } catch (error: any) {
       toast.error("Failed to fetch your posts");
     } finally {
@@ -86,10 +105,16 @@ const WritersDashboard = () => {
         return;
       }
 
+      // Convert MediaFile[] to Json compatible format
+      const dataToSubmit = {
+        ...formData,
+        media_files: formData.media_files as any,
+      };
+
       if (editingPost) {
         const { error } = await supabase
           .from("blog_posts")
-          .update(formData)
+          .update(dataToSubmit)
           .eq("id", editingPost.id)
           .eq("author_id", user.id);
 
@@ -99,7 +124,7 @@ const WritersDashboard = () => {
         const { error } = await supabase
           .from("blog_posts")
           .insert([{
-            ...formData,
+            ...dataToSubmit,
             author_id: user.id
           }]);
 
@@ -143,6 +168,8 @@ const WritersDashboard = () => {
       read_time: post.read_time,
       featured: post.featured,
       published: post.published,
+      media_files: post.media_files || [],
+      video_url: post.video_url || "",
     });
     setShowForm(true);
   };
@@ -158,6 +185,8 @@ const WritersDashboard = () => {
       read_time: "5 min read",
       featured: false,
       published: false,
+      media_files: [],
+      video_url: "",
     });
     setShowForm(false);
   };
@@ -282,6 +311,12 @@ const WritersDashboard = () => {
                 <ImageUpload
                   currentImage={formData.image}
                   onImageUploaded={(url) => setFormData({ ...formData, image: url })}
+                />
+
+                <MediaUpload
+                  currentMedia={formData.media_files}
+                  onMediaChange={(media) => setFormData({ ...formData, media_files: media })}
+                  maxFiles={10}
                 />
 
                 <div className="flex items-center space-x-6">
