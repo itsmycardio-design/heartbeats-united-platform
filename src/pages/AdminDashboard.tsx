@@ -13,6 +13,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
 import { Pencil, Trash2, Plus, BarChart } from "lucide-react";
 import { ImageUpload } from "@/components/ImageUpload";
+import { MediaUpload } from "@/components/MediaUpload";
 import { Analytics } from "@/components/Analytics";
 import { MessagesTab } from "@/components/admin/MessagesTab";
 import { SubscribersTab } from "@/components/admin/SubscribersTab";
@@ -22,6 +23,12 @@ import { ThemeSettingsTab } from "@/components/admin/ThemeSettingsTab";
 import { FounderSettingsTab } from "@/components/admin/FounderSettingsTab";
 import { OverviewTab } from "@/components/admin/OverviewTab";
 import { SiteSettingsTab } from "@/components/admin/SiteSettingsTab";
+
+interface MediaFile {
+  url: string;
+  type: "image" | "video";
+  caption?: string;
+}
 
 interface BlogPost {
   id: string;
@@ -36,6 +43,8 @@ interface BlogPost {
   created_at: string;
   author_id?: string;
   author_name?: string;
+  media_files?: MediaFile[];
+  video_url?: string;
 }
 
 const AdminDashboard = () => {
@@ -59,6 +68,8 @@ const AdminDashboard = () => {
     read_time: "5 min read",
     featured: false,
     published: true,
+    media_files: [] as MediaFile[],
+    video_url: "",
   });
 
   useEffect(() => {
@@ -91,6 +102,8 @@ const AdminDashboard = () => {
       const postsWithAuthors = (data || []).map((post: any) => ({
         ...post,
         author_name: post.profiles?.full_name || "Unknown Author",
+        media_files: (post.media_files as any as MediaFile[]) || [],
+        video_url: post.video_url || "",
       }));
       
       setPosts(postsWithAuthors);
@@ -112,10 +125,16 @@ const AdminDashboard = () => {
         return;
       }
 
+      // Convert MediaFile[] to Json compatible format
+      const dataToSubmit = {
+        ...formData,
+        media_files: formData.media_files as any,
+      };
+
       if (editingPost) {
         const { error } = await supabase
           .from("blog_posts")
-          .update(formData)
+          .update(dataToSubmit)
           .eq("id", editingPost.id);
 
         if (error) throw error;
@@ -124,7 +143,7 @@ const AdminDashboard = () => {
         const { error } = await supabase
           .from("blog_posts")
           .insert([{
-            ...formData,
+            ...dataToSubmit,
             author_id: user.id
           }]);
 
@@ -185,6 +204,8 @@ const AdminDashboard = () => {
       read_time: post.read_time,
       featured: post.featured,
       published: post.published,
+      media_files: post.media_files || [],
+      video_url: post.video_url || "",
     });
     setShowForm(true);
   };
@@ -200,6 +221,8 @@ const AdminDashboard = () => {
       read_time: "5 min read",
       featured: false,
       published: false,
+      media_files: [],
+      video_url: "",
     });
     setShowForm(false);
   };
@@ -353,6 +376,12 @@ const AdminDashboard = () => {
                 <ImageUpload
                   currentImage={formData.image}
                   onImageUploaded={(url) => setFormData({ ...formData, image: url })}
+                />
+
+                <MediaUpload
+                  currentMedia={formData.media_files}
+                  onMediaChange={(media) => setFormData({ ...formData, media_files: media })}
+                  maxFiles={10}
                 />
 
                 <div className="flex items-center space-x-6">
