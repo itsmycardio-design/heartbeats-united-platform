@@ -200,14 +200,14 @@ const MediaKit = () => {
             For speaking engagements, media inquiries, or partnership opportunities
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
-            <a href="mailto:contact@ukwelimedia.com" className="flex items-center gap-2 font-inter text-lg text-muted-foreground hover:text-primary transition-colors">
+            <a href="mailto:info@its-mycardio.co.ke" className="flex items-center gap-2 font-inter text-lg text-muted-foreground hover:text-primary transition-colors">
               <Mail className="w-5 h-5" />
-              contact@ukwelimedia.com
+              info@its-mycardio.co.ke
             </a>
             <span className="hidden sm:inline text-muted-foreground">•</span>
-            <a href="tel:+254700000000" className="flex items-center gap-2 font-inter text-lg text-muted-foreground hover:text-primary transition-colors">
+            <a href="tel:+254732555063" className="flex items-center gap-2 font-inter text-lg text-muted-foreground hover:text-primary transition-colors">
               <Phone className="w-5 h-5" />
-              +254 700 000 000
+              0732 555 063
             </a>
           </div>
           <div className="flex gap-4 justify-center">
