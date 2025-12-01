@@ -60,8 +60,8 @@ const Contact = () => {
               <Mail className="w-7 h-7 text-primary" />
             </div>
             <h3 className="font-poppins font-semibold text-xl mb-2">Email</h3>
-            <a href="mailto:info@its-MyCardio.co.ke" className="font-inter text-sm text-primary hover:underline">
-              info@its-MyCardio.co.ke
+            <a href="mailto:info@its-mycardio.co.ke" className="font-inter text-sm text-primary hover:underline">
+              info@its-mycardio.co.ke
             </a>
           </div>
           <div className="text-center p-6 bg-card border border-border rounded-xl">
