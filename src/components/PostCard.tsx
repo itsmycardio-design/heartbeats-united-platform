@@ -12,6 +12,7 @@ interface PostCardProps {
   image: string;
   author_id?: string;
   author_name?: string;
+  variant?: "default" | "horizontal" | "compact";
 }
 
 export const PostCard = ({
@@ -23,6 +24,7 @@ export const PostCard = ({
   read_time,
   image,
   author_name,
+  variant = "default",
 }: PostCardProps) => {
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString("en-US", {
@@ -32,65 +34,131 @@ export const PostCard = ({
     });
   };
 
-  const getCategoryColor = (cat: string) => {
+  const getCategoryClass = (cat: string) => {
     const categoryMap: Record<string, string> = {
-      fitness: "bg-primary/10 text-primary border-primary/20",
-      health: "bg-secondary/10 text-secondary border-secondary/20",
-      politics: "bg-purple-100 text-purple-700 border-purple-200 dark:bg-purple-900/20 dark:text-purple-300",
-      lifestyle: "bg-pink-100 text-pink-700 border-pink-200 dark:bg-pink-900/20 dark:text-pink-300",
+      fitness: "category-fitness",
+      health: "category-health",
+      politics: "category-politics",
+      lifestyle: "category-lifestyle",
+      education: "category-education",
+      inspiration: "category-inspiration",
+      quotes: "category-quotes",
     };
     return categoryMap[cat.toLowerCase()] || "bg-muted text-muted-foreground";
   };
 
-  return (
-    <article className="group bg-card border border-border rounded-xl overflow-hidden hover:shadow-hover transition-all duration-300 animate-fade-in">
-      <Link to={`/blog/${id}`} className="block">
-        {/* Image */}
-        <div className="relative h-52 overflow-hidden bg-muted">
+  if (variant === "horizontal") {
+    return (
+      <article className="group bg-card border border-border rounded-lg overflow-hidden shadow-card hover:shadow-hover transition-all duration-300">
+        <Link to={`/blog/${id}`} className="flex flex-col md:flex-row">
+          <div className="relative w-full md:w-64 h-48 md:h-auto overflow-hidden flex-shrink-0">
+            <img
+              src={image}
+              alt={title}
+              loading="lazy"
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+            <Badge className={`absolute top-3 left-3 ${getCategoryClass(category)} font-inter text-xs`}>
+              {category.charAt(0).toUpperCase() + category.slice(1)}
+            </Badge>
+          </div>
+          <div className="flex flex-col justify-between p-5 flex-1">
+            <div>
+              <h3 className="font-poppins font-bold text-lg mb-2 line-clamp-2 group-hover:text-primary transition-colors">
+                {title}
+              </h3>
+              <p className="font-inter text-sm text-muted-foreground line-clamp-2 mb-3">
+                {excerpt}
+              </p>
+            </div>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3 text-xs text-muted-foreground font-inter">
+                <span>{formatDate(created_at)}</span>
+                <span>•</span>
+                <span>{read_time}</span>
+              </div>
+              <span className="text-primary text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all">
+                Read <ArrowRight className="w-3.5 h-3.5" />
+              </span>
+            </div>
+          </div>
+        </Link>
+      </article>
+    );
+  }
+
+  if (variant === "compact") {
+    return (
+      <article className="group">
+        <Link to={`/blog/${id}`} className="flex gap-3">
           <img
             src={image}
             alt={title}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            loading="lazy"
+            className="w-20 h-20 rounded-md object-cover flex-shrink-0"
           />
-          <div className="absolute inset-0 bg-gradient-card" />
-          <Badge className={`absolute top-4 left-4 ${getCategoryColor(category)} font-poppins font-medium`}>
+          <div className="flex-1 min-w-0">
+            <h4 className="font-inter text-sm font-medium line-clamp-2 group-hover:text-primary transition-colors">
+              {title}
+            </h4>
+            <p className="text-xs text-muted-foreground mt-1.5">
+              {formatDate(created_at)}
+            </p>
+          </div>
+        </Link>
+      </article>
+    );
+  }
+
+  return (
+    <article className="group bg-card border border-border rounded-lg overflow-hidden shadow-card hover:shadow-hover transition-all duration-300 animate-fade-in">
+      <Link to={`/blog/${id}`} className="block">
+        {/* Image */}
+        <div className="relative h-48 overflow-hidden">
+          <img
+            src={image}
+            alt={title}
+            loading="lazy"
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <Badge className={`absolute top-3 left-3 ${getCategoryClass(category)} font-inter text-xs font-medium`}>
             {category.charAt(0).toUpperCase() + category.slice(1)}
           </Badge>
         </div>
 
         {/* Content */}
-        <div className="p-6">
+        <div className="p-5">
           {/* Meta */}
-          <div className="flex items-center gap-4 mb-3 font-inter text-xs text-muted-foreground">
+          <div className="flex items-center gap-3 mb-2 font-inter text-xs text-muted-foreground">
             <div className="flex items-center gap-1">
-              <Calendar className="w-3.5 h-3.5" />
+              <Calendar className="w-3 h-3" />
               <span>{formatDate(created_at)}</span>
             </div>
             <div className="flex items-center gap-1">
-              <Clock className="w-3.5 h-3.5" />
+              <Clock className="w-3 h-3" />
               <span>{read_time}</span>
             </div>
           </div>
 
           {/* Title */}
-          <h3 className="font-poppins font-bold text-xl mb-3 line-clamp-2 group-hover:text-primary transition-colors">
+          <h3 className="font-poppins font-bold text-lg mb-2 line-clamp-2 group-hover:text-primary transition-colors leading-tight">
             {title}
           </h3>
 
           {/* Excerpt */}
-          <p className="font-inter text-sm text-muted-foreground line-clamp-3 mb-4">
+          <p className="font-inter text-sm text-muted-foreground line-clamp-2 mb-4">
             {excerpt}
           </p>
 
           {/* Footer */}
-          <div className="flex items-center justify-between pt-4 border-t border-border">
-            <span className="font-inter text-sm text-muted-foreground">
-              By {author_name || "Ukweli Media Team"}
+          <div className="flex items-center justify-between pt-3 border-t border-border">
+            <span className="font-inter text-xs text-muted-foreground">
+              {author_name || "Ukweli Media"}
             </span>
-            <div className="flex items-center gap-1 text-primary font-inter text-sm font-medium group-hover:gap-2 transition-all">
+            <span className="flex items-center gap-1 text-primary font-inter text-xs font-medium group-hover:gap-2 transition-all">
               Read More
-              <ArrowRight className="w-4 h-4" />
-            </div>
+              <ArrowRight className="w-3 h-3" />
+            </span>
           </div>
         </div>
       </Link>
