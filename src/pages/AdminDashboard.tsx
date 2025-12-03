@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -11,7 +11,8 @@ import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
-import { Pencil, Trash2, Plus, BarChart } from "lucide-react";
+import { Pencil, Trash2, Plus, BarChart, Quote, Newspaper, Eye } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import { ImageUpload } from "@/components/ImageUpload";
 import { MediaUpload } from "@/components/MediaUpload";
 import { Analytics } from "@/components/Analytics";
@@ -50,14 +51,16 @@ interface BlogPost {
 const AdminDashboard = () => {
   const { user, isAdmin, isWriter, loading: authLoading } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
   const [showForm, setShowForm] = useState(false);
+  const [postType, setPostType] = useState<"article" | "quote">("article");
   
   // Get tab from URL params
-  const [searchParams] = useState(() => new URLSearchParams(window.location.search));
   const initialTab = searchParams.get('tab') || 'overview';
+  const urlPostType = searchParams.get('type');
 
   const [formData, setFormData] = useState({
     title: "",
@@ -84,6 +87,13 @@ const AdminDashboard = () => {
       fetchPosts();
     }
   }, [isAdmin, isWriter]);
+
+  useEffect(() => {
+    if (urlPostType === 'quote') {
+      setPostType('quote');
+      setFormData(prev => ({ ...prev, category: 'quotes' }));
+    }
+  }, [urlPostType]);
 
   const fetchPosts = async () => {
     try {
@@ -125,9 +135,13 @@ const AdminDashboard = () => {
         return;
       }
 
-      // Convert MediaFile[] to Json compatible format
+      // For quotes, use title as the quote text, and set defaults for other fields
+      const isQuote = formData.category === "quotes";
       const dataToSubmit = {
         ...formData,
+        excerpt: isQuote ? formData.title : formData.excerpt, // For quotes, excerpt = title
+        content: isQuote ? formData.title : formData.content, // For quotes, content = title
+        read_time: isQuote ? "1 min read" : formData.read_time,
         media_files: formData.media_files as any,
       };
 
@@ -138,7 +152,7 @@ const AdminDashboard = () => {
           .eq("id", editingPost.id);
 
         if (error) throw error;
-        toast.success("Post updated successfully");
+        toast.success(isQuote ? "Quote updated successfully" : "Post updated successfully");
       } else {
         const { error } = await supabase
           .from("blog_posts")
@@ -148,7 +162,7 @@ const AdminDashboard = () => {
           }]);
 
         if (error) throw error;
-        toast.success("Post created successfully");
+        toast.success(isQuote ? "Quote created successfully" : "Post created successfully");
       }
 
       resetForm();
@@ -212,6 +226,7 @@ const AdminDashboard = () => {
 
   const resetForm = () => {
     setEditingPost(null);
+    setPostType("article");
     setFormData({
       title: "",
       excerpt: "",
@@ -226,6 +241,16 @@ const AdminDashboard = () => {
     });
     setShowForm(false);
   };
+
+  const handleNewPost = (type: "article" | "quote") => {
+    setPostType(type);
+    if (type === "quote") {
+      setFormData(prev => ({ ...prev, category: "quotes" }));
+    }
+    setShowForm(true);
+  };
+
+  const isQuoteForm = formData.category === "quotes";
 
   if (authLoading || loading) {
     return (
@@ -280,12 +305,18 @@ const AdminDashboard = () => {
                   </Button>
                 )}
               </div>
-              <div>
+              <div className="flex gap-2">
                 {!showForm && (
-                  <Button onClick={() => setShowForm(true)} data-action="new-post">
-                    <Plus className="w-4 h-4 mr-2" />
-                    New Post
-                  </Button>
+                  <>
+                    <Button onClick={() => handleNewPost("article")} data-action="new-post">
+                      <Newspaper className="w-4 h-4 mr-2" />
+                      New Article
+                    </Button>
+                    <Button variant="outline" onClick={() => handleNewPost("quote")}>
+                      <Quote className="w-4 h-4 mr-2" />
+                      New Quote
+                    </Button>
+                  </>
                 )}
               </div>
             </div>
@@ -293,48 +324,60 @@ const AdminDashboard = () => {
         {showForm && (
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>
-                {editingPost ? "Edit Post" : "Create New Post"}
+              <CardTitle className="flex items-center gap-2">
+                {isQuoteForm ? <Quote className="w-5 h-5" /> : <Newspaper className="w-5 h-5" />}
+                {editingPost ? (isQuoteForm ? "Edit Quote" : "Edit Post") : (isQuoteForm ? "Create New Quote" : "Create New Post")}
               </CardTitle>
+              {isQuoteForm && (
+                <CardDescription>
+                  Quotes only need the quote text and an optional author image.
+                </CardDescription>
+              )}
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="title">Title</Label>
-                  <Input
+                  <Label htmlFor="title">{isQuoteForm ? "Quote Text" : "Title"}</Label>
+                  <Textarea
                     id="title"
                     value={formData.title}
                     onChange={(e) =>
                       setFormData({ ...formData, title: e.target.value })
                     }
+                    placeholder={isQuoteForm ? "Enter the quote text..." : "Enter the article title..."}
+                    rows={isQuoteForm ? 4 : 1}
                     required
                   />
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="excerpt">Excerpt</Label>
-                  <Textarea
-                    id="excerpt"
-                    value={formData.excerpt}
-                    onChange={(e) =>
-                      setFormData({ ...formData, excerpt: e.target.value })
-                    }
-                    required
-                  />
-                </div>
+                {!isQuoteForm && (
+                  <>
+                    <div className="space-y-2">
+                      <Label htmlFor="excerpt">Excerpt</Label>
+                      <Textarea
+                        id="excerpt"
+                        value={formData.excerpt}
+                        onChange={(e) =>
+                          setFormData({ ...formData, excerpt: e.target.value })
+                        }
+                        required
+                      />
+                    </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="content">Content</Label>
-                  <Textarea
-                    id="content"
-                    value={formData.content}
-                    onChange={(e) =>
-                      setFormData({ ...formData, content: e.target.value })
-                    }
-                    rows={10}
-                    required
-                  />
-                </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="content">Content</Label>
+                      <Textarea
+                        id="content"
+                        value={formData.content}
+                        onChange={(e) =>
+                          setFormData({ ...formData, content: e.target.value })
+                        }
+                        rows={10}
+                        required
+                      />
+                    </div>
+                  </>
+                )}
 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
@@ -349,28 +392,36 @@ const AdminDashboard = () => {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="fitness">Fitness & Wellness</SelectItem>
-                        <SelectItem value="health">Health & Education</SelectItem>
-                        <SelectItem value="lifestyle">Lifestyle & Inspiration</SelectItem>
-                        <SelectItem value="politics">Politics & Leadership</SelectItem>
-                        <SelectItem value="education">Education</SelectItem>
-                        <SelectItem value="inspiration">Inspiration</SelectItem>
-                        <SelectItem value="quotes">Quotes</SelectItem>
+                        {isQuoteForm ? (
+                          <SelectItem value="quotes">Quotes</SelectItem>
+                        ) : (
+                          <>
+                            <SelectItem value="fitness">Fitness & Wellness</SelectItem>
+                            <SelectItem value="health">Health & Education</SelectItem>
+                            <SelectItem value="lifestyle">Lifestyle & Inspiration</SelectItem>
+                            <SelectItem value="politics">Politics & Leadership</SelectItem>
+                            <SelectItem value="education">Education</SelectItem>
+                            <SelectItem value="inspiration">Inspiration</SelectItem>
+                            <SelectItem value="quotes">Quotes</SelectItem>
+                          </>
+                        )}
                       </SelectContent>
                     </Select>
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="readTime">Read Time</Label>
-                    <Input
-                      id="readTime"
-                      value={formData.read_time}
-                      onChange={(e) =>
-                        setFormData({ ...formData, read_time: e.target.value })
-                      }
-                      required
-                    />
-                  </div>
+                  {!isQuoteForm && (
+                    <div className="space-y-2">
+                      <Label htmlFor="readTime">Read Time</Label>
+                      <Input
+                        id="readTime"
+                        value={formData.read_time}
+                        onChange={(e) =>
+                          setFormData({ ...formData, read_time: e.target.value })
+                        }
+                        required
+                      />
+                    </div>
+                  )}
                 </div>
 
                 <ImageUpload
@@ -378,11 +429,13 @@ const AdminDashboard = () => {
                   onImageUploaded={(url) => setFormData({ ...formData, image: url })}
                 />
 
-                <MediaUpload
-                  currentMedia={formData.media_files}
-                  onMediaChange={(media) => setFormData({ ...formData, media_files: media })}
-                  maxFiles={10}
-                />
+                {!isQuoteForm && (
+                  <MediaUpload
+                    currentMedia={formData.media_files}
+                    onMediaChange={(media) => setFormData({ ...formData, media_files: media })}
+                    maxFiles={10}
+                  />
+                )}
 
                 <div className="flex items-center space-x-6">
                   <div className="flex items-center space-x-2">
