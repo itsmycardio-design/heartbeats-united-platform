@@ -215,6 +215,47 @@
     @apply rounded my-4;
   }
 
+  /* Newspaper decorative borders */
+  .newspaper-border {
+    @apply border-4 border-double border-foreground relative;
+    box-shadow: 
+      inset 0 0 0 4px hsl(var(--background)),
+      inset 0 0 0 5px hsl(var(--foreground) / 0.3);
+  }
+
+  .newspaper-divider {
+    @apply relative h-px bg-foreground;
+  }
+
+  .newspaper-divider::before {
+    content: '§';
+    @apply absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-background px-4 font-newspaper text-muted-foreground;
+  }
+
+  .newspaper-column-divider {
+    @apply w-full h-px bg-gradient-to-r from-transparent via-foreground/50 to-transparent;
+  }
+
+  .newspaper-header {
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 2px,
+      hsl(var(--foreground) / 0.03) 2px,
+      hsl(var(--foreground) / 0.03) 4px
+    );
+  }
+
+  .newspaper-footer {
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 2px,
+      hsl(var(--foreground) / 0.03) 2px,
+      hsl(var(--foreground) / 0.03) 4px
+    );
+  }
+
   /* Featured card hover effect */
   .featured-card {
     @apply transition-all duration-300;
