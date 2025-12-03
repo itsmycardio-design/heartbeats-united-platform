@@ -21,6 +21,7 @@ export default {
         poppins: ['Poppins', 'sans-serif'],
         inter: ['Inter', 'sans-serif'],
         serif: ['Georgia', 'Cambria', 'Times New Roman', 'serif'],
+        newspaper: ['"Times New Roman"', 'Georgia', 'serif'],
       },
       colors: {
         border: "hsl(var(--border))",

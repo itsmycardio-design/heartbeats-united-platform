@@ -117,28 +117,16 @@ const BlogPost = () => {
         </Link>
       </div>
 
-      {/* Hero Image */}
-      <section className="container mx-auto px-4 mb-8">
-        <div className="relative h-64 md:h-96 lg:h-[500px] rounded-xl overflow-hidden">
-          <img
-            src={post.image}
-            alt={post.title}
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-overlay" />
-        </div>
-      </section>
-
-      {/* Article Content */}
+      {/* Newspaper Style Article */}
       <article className="container mx-auto px-4">
-        <div className="max-w-3xl mx-auto">
-          {/* Category & Meta */}
-          <div className="flex flex-wrap items-center gap-4 mb-6">
-            <Badge className={`${getCategoryClass(post.category)} font-inter text-xs font-medium`}>
+        <div className="max-w-4xl mx-auto">
+          {/* Category & Meta - Top Line */}
+          <div className="flex flex-wrap items-center gap-4 mb-4 pb-4 border-b-2 border-foreground">
+            <Badge className={`${getCategoryClass(post.category)} font-newspaper text-xs font-medium`}>
               <Tag className="w-3 h-3 mr-1" />
               {post.category.charAt(0).toUpperCase() + post.category.slice(1)}
             </Badge>
-            <div className="flex items-center gap-4 text-sm text-muted-foreground font-inter">
+            <div className="flex items-center gap-4 text-sm text-muted-foreground font-newspaper">
               <div className="flex items-center gap-1">
                 <Calendar className="w-4 h-4" />
                 <span>{formatDate(post.created_at)}</span>
@@ -150,101 +138,112 @@ const BlogPost = () => {
             </div>
           </div>
 
-          {/* Title */}
-          <h1 className="font-poppins font-bold text-3xl md:text-4xl lg:text-5xl mb-6 leading-tight">
+          {/* Newspaper Headline - Large, Bold, Times New Roman */}
+          <h1 className="font-newspaper font-bold text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-6 leading-tight tracking-tight text-foreground uppercase">
             {post.title}
           </h1>
 
-          {/* Excerpt */}
-          <p className="font-inter text-xl text-muted-foreground mb-8 leading-relaxed border-l-4 border-primary pl-6">
-            {post.excerpt}
-          </p>
-
-          {/* Author & Share Row */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 py-6 border-y border-border mb-10">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                <User className="w-6 h-6 text-primary" />
-              </div>
-              <div>
-                <p className="font-poppins font-semibold text-sm">
-                  {post.author_name || "Ukweli Media Team"}
-                </p>
-                <p className="text-xs text-muted-foreground">Contributing Writer</p>
-              </div>
-            </div>
-
-            {/* Share Buttons */}
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-muted-foreground mr-2">Share:</span>
-              <Button
-                variant="outline"
-                size="icon"
-                className="w-9 h-9"
-                onClick={() => handleShare("facebook")}
-              >
-                <Facebook className="w-4 h-4" />
-              </Button>
-              <Button
-                variant="outline"
-                size="icon"
-                className="w-9 h-9"
-                onClick={() => handleShare("twitter")}
-              >
-                <Twitter className="w-4 h-4" />
-              </Button>
-              <Button
-                variant="outline"
-                size="icon"
-                className="w-9 h-9"
-                onClick={() => handleShare("whatsapp")}
-              >
-                <MessageCircle className="w-4 h-4" />
-              </Button>
-              <Button
-                variant="outline"
-                size="icon"
-                className="w-9 h-9"
-                onClick={() => handleShare("linkedin")}
-              >
-                <Linkedin className="w-4 h-4" />
-              </Button>
-              <Button
-                variant="outline"
-                size="icon"
-                className="w-9 h-9"
-                onClick={() => handleShare("copy")}
-              >
-                <Copy className="w-4 h-4" />
-              </Button>
-            </div>
+          {/* Byline */}
+          <div className="flex items-center gap-3 mb-6 pb-4 border-b border-border">
+            <span className="font-newspaper text-sm italic text-muted-foreground">By</span>
+            <span className="font-newspaper font-semibold text-sm">
+              {post.author_name || "Ukweli Media Team"}
+            </span>
+            <span className="text-muted-foreground">|</span>
+            <span className="font-newspaper text-sm text-muted-foreground italic">Contributing Writer</span>
           </div>
 
-          {/* Article Body */}
-          <div className="prose-magazine mb-16">
+          {/* Share Buttons Row */}
+          <div className="flex items-center gap-2 mb-8">
+            <span className="text-sm text-muted-foreground mr-2 font-newspaper">Share:</span>
+            <Button
+              variant="outline"
+              size="icon"
+              className="w-9 h-9"
+              onClick={() => handleShare("facebook")}
+            >
+              <Facebook className="w-4 h-4" />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              className="w-9 h-9"
+              onClick={() => handleShare("twitter")}
+            >
+              <Twitter className="w-4 h-4" />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              className="w-9 h-9"
+              onClick={() => handleShare("whatsapp")}
+            >
+              <MessageCircle className="w-4 h-4" />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              className="w-9 h-9"
+              onClick={() => handleShare("linkedin")}
+            >
+              <Linkedin className="w-4 h-4" />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              className="w-9 h-9"
+              onClick={() => handleShare("copy")}
+            >
+              <Copy className="w-4 h-4" />
+            </Button>
+          </div>
+
+          {/* Newspaper Body - Image floated left with text wrapping */}
+          <div className="newspaper-body font-newspaper text-lg leading-8 text-foreground mb-16 text-justify">
+            {/* Floated Image */}
+            <figure className="float-left mr-6 mb-4 w-full sm:w-1/2 lg:w-2/5">
+              <img
+                src={post.image}
+                alt={post.title}
+                className="w-full h-auto rounded shadow-card"
+              />
+              <figcaption className="text-sm text-muted-foreground italic mt-2 font-newspaper">
+                {post.title}
+              </figcaption>
+            </figure>
+
+            {/* Lead Excerpt - Drop Cap Style */}
+            <p className="first-letter:text-6xl first-letter:font-bold first-letter:float-left first-letter:mr-3 first-letter:mt-1 first-letter:leading-none first-letter:font-newspaper mb-6">
+              {post.excerpt}
+            </p>
+
+            {/* Article Content */}
             <div
-              className="font-inter"
+              className="font-newspaper prose-newspaper"
               dangerouslySetInnerHTML={{ __html: post.content }}
             />
+
+            {/* Clear float */}
+            <div className="clear-both"></div>
           </div>
 
           {/* Author Bio */}
-          <div className="bg-muted rounded-xl p-6 md:p-8 mb-12">
+          <div className="bg-muted rounded p-6 md:p-8 mb-12 border-t-2 border-b-2 border-foreground">
             <div className="flex flex-col sm:flex-row items-start gap-6">
               <div className="w-20 h-20 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
-                <span className="font-poppins font-bold text-2xl text-primary">
+                <span className="font-newspaper font-bold text-2xl text-primary">
                   {post.author_name?.charAt(0).toUpperCase() || "U"}
                 </span>
               </div>
               <div className="flex-1">
-                <h3 className="font-poppins font-bold text-xl mb-2">
+                <h3 className="font-newspaper font-bold text-xl mb-2 uppercase tracking-tight">
                   About {post.author_name || "Ukweli Media Team"}
                 </h3>
-                <p className="font-inter text-muted-foreground mb-4 leading-relaxed">
+                <p className="font-newspaper text-muted-foreground mb-4 leading-relaxed text-justify">
                   A passionate contributor dedicated to sharing authentic stories, wellness insights, and thought leadership. Committed to empowering readers with truth and inspiration.
                 </p>
                 <Link to="/about">
-                  <Button variant="outline" size="sm">
+                  <Button variant="outline" size="sm" className="font-newspaper">
                     Learn More
                   </Button>
                 </Link>
@@ -263,7 +262,7 @@ const BlogPost = () => {
       {relatedPosts.length > 0 && (
         <section className="bg-muted py-12 md:py-16">
           <div className="container mx-auto px-4">
-            <h2 className="font-poppins font-bold text-2xl md:text-3xl mb-8">
+            <h2 className="font-newspaper font-bold text-2xl md:text-3xl mb-8 uppercase tracking-tight">
               Related <span className="text-primary">Articles</span>
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
