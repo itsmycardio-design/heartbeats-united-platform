@@ -42,11 +42,11 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {/* About Column */}
           <div className="lg:col-span-1">
-            <Link to="/" className="flex items-center gap-2 font-poppins font-bold text-xl mb-4">
+            <Link to="/" className="flex items-center gap-2 font-bold text-xl mb-4">
               <Heart className="w-6 h-6 text-primary" />
               <span className="text-background">Ukweli Media</span>
             </Link>
-            <p className="font-inter text-sm text-background/70 mb-6 leading-relaxed">
+            <p className="text-sm text-background/70 mb-6 leading-relaxed">
               Kenya's trusted platform delivering authentic news, insightful analysis, and empowering stories across fitness, health, politics, and lifestyle.
             </p>
             <div className="flex gap-2">
@@ -83,10 +83,10 @@ export const Footer = () => {
 
           {/* Categories */}
           <div>
-            <h3 className="font-poppins font-semibold text-sm uppercase tracking-wider mb-4 text-background">
+            <h3 className="font-semibold text-sm uppercase tracking-wider mb-4 text-background">
               Categories
             </h3>
-            <ul className="space-y-3 font-inter text-sm">
+            <ul className="space-y-3 text-sm">
               <li>
                 <Link to="/health" className="text-background/70 hover:text-primary transition-colors">
                   Health & Education
@@ -117,10 +117,10 @@ export const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="font-poppins font-semibold text-sm uppercase tracking-wider mb-4 text-background">
+            <h3 className="font-semibold text-sm uppercase tracking-wider mb-4 text-background">
               Quick Links
             </h3>
-            <ul className="space-y-3 font-inter text-sm">
+            <ul className="space-y-3 text-sm">
               <li>
                 <Link to="/blog" className="text-background/70 hover:text-primary transition-colors">
                   Blog
@@ -151,17 +151,17 @@ export const Footer = () => {
 
           {/* Newsletter & Contact */}
           <div>
-            <h3 className="font-poppins font-semibold text-sm uppercase tracking-wider mb-4 text-background">
+            <h3 className="font-semibold text-sm uppercase tracking-wider mb-4 text-background">
               Stay Updated
             </h3>
-            <p className="font-inter text-sm text-background/70 mb-4">
+            <p className="text-sm text-background/70 mb-4">
               Get weekly insights delivered to your inbox.
             </p>
             <form onSubmit={handleNewsletterSubmit} className="flex gap-2 mb-6">
               <Input
                 type="email"
                 placeholder="Your email"
-                className="flex-1 font-inter text-sm bg-background/10 border-background/20 text-background placeholder:text-background/50"
+                className="flex-1 text-sm bg-background/10 border-background/20 text-background placeholder:text-background/50"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -200,10 +200,10 @@ export const Footer = () => {
       <div className="border-t border-background/10">
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-background/60">
-            <p className="font-inter">
+            <p>
               © {new Date().getFullYear()} Ukweli Media Hub. All rights reserved.
             </p>
-            <p className="font-inter text-xs">
+            <p className="text-xs">
               Developed by <span className="text-primary">Laban Panda Khisa</span>
             </p>
           </div>

@@ -58,21 +58,21 @@ export const PostCard = ({
               loading="lazy"
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
-            <Badge className={`absolute top-3 left-3 ${getCategoryClass(category)} font-inter text-xs`}>
+            <Badge className={`absolute top-3 left-3 ${getCategoryClass(category)} text-xs`}>
               {category.charAt(0).toUpperCase() + category.slice(1)}
             </Badge>
           </div>
           <div className="flex flex-col justify-between p-5 flex-1">
             <div>
-              <h3 className="font-poppins font-bold text-lg mb-2 line-clamp-2 group-hover:text-primary transition-colors">
+              <h3 className="font-bold text-lg mb-2 line-clamp-2 group-hover:text-primary transition-colors">
                 {title}
               </h3>
-              <p className="font-inter text-sm text-muted-foreground line-clamp-2 mb-3">
+              <p className="text-sm text-muted-foreground line-clamp-2 mb-3">
                 {excerpt}
               </p>
             </div>
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3 text-xs text-muted-foreground font-inter">
+              <div className="flex items-center gap-3 text-xs text-muted-foreground">
                 <span>{formatDate(created_at)}</span>
                 <span>•</span>
                 <span>{read_time}</span>
@@ -98,7 +98,7 @@ export const PostCard = ({
             className="w-20 h-20 rounded-md object-cover flex-shrink-0"
           />
           <div className="flex-1 min-w-0">
-            <h4 className="font-inter text-sm font-medium line-clamp-2 group-hover:text-primary transition-colors">
+            <h4 className="text-sm font-medium line-clamp-2 group-hover:text-primary transition-colors">
               {title}
             </h4>
             <p className="text-xs text-muted-foreground mt-1.5">
@@ -121,7 +121,7 @@ export const PostCard = ({
             loading="lazy"
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
-          <Badge className={`absolute top-3 left-3 ${getCategoryClass(category)} font-inter text-xs font-medium`}>
+          <Badge className={`absolute top-3 left-3 ${getCategoryClass(category)} text-xs font-medium`}>
             {category.charAt(0).toUpperCase() + category.slice(1)}
           </Badge>
         </div>
@@ -129,7 +129,7 @@ export const PostCard = ({
         {/* Content */}
         <div className="p-5">
           {/* Meta */}
-          <div className="flex items-center gap-3 mb-2 font-inter text-xs text-muted-foreground">
+          <div className="flex items-center gap-3 mb-2 text-xs text-muted-foreground">
             <div className="flex items-center gap-1">
               <Calendar className="w-3 h-3" />
               <span>{formatDate(created_at)}</span>
@@ -141,21 +141,21 @@ export const PostCard = ({
           </div>
 
           {/* Title */}
-          <h3 className="font-poppins font-bold text-lg mb-2 line-clamp-2 group-hover:text-primary transition-colors leading-tight">
+          <h3 className="font-bold text-lg mb-2 line-clamp-2 group-hover:text-primary transition-colors leading-tight">
             {title}
           </h3>
 
           {/* Excerpt */}
-          <p className="font-inter text-sm text-muted-foreground line-clamp-2 mb-4">
+          <p className="text-sm text-muted-foreground line-clamp-2 mb-4">
             {excerpt}
           </p>
 
           {/* Footer */}
           <div className="flex items-center justify-between pt-3 border-t border-border">
-            <span className="font-inter text-xs text-muted-foreground">
+            <span className="text-xs text-muted-foreground">
               {author_name || "Ukweli Media"}
             </span>
-            <span className="flex items-center gap-1 text-primary font-inter text-xs font-medium group-hover:gap-2 transition-all">
+            <span className="flex items-center gap-1 text-primary text-xs font-medium group-hover:gap-2 transition-all">
               Read More
               <ArrowRight className="w-3 h-3" />
             </span>

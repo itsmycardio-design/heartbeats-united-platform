@@ -496,7 +496,7 @@ const AdminDashboard = () => {
                       />
                     )}
                     <div className="flex-1">
-                      <h3 className="font-poppins font-semibold text-xl mb-2">
+                      <h3 className="font-semibold text-xl mb-2">
                         {post.title}
                       </h3>
                       <p className="text-muted-foreground mb-3 line-clamp-2">{post.excerpt}</p>

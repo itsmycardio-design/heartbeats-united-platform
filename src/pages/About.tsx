@@ -67,10 +67,10 @@ const About = () => {
         <div className="container mx-auto px-4 lg:px-8">
           <div className="max-w-3xl mx-auto text-center">
             <Heart className="w-16 h-16 mx-auto mb-6 text-primary" />
-            <h1 className="font-poppins font-bold text-5xl lg:text-6xl mb-6">
+            <h1 className="font-bold text-5xl lg:text-6xl mb-6">
               About Ukweli Media Hub
             </h1>
-            <p className="font-inter text-xl">
+            <p className="text-xl">
               Kenya's trusted source for authentic news, empowering stories, and community transformation
             </p>
           </div>
@@ -81,23 +81,23 @@ const About = () => {
       <section className="container mx-auto px-4 lg:px-8 py-16 lg:py-24">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="order-2 lg:order-1">
-            <h2 className="font-poppins font-bold text-4xl mb-6">
+            <h2 className="font-bold text-4xl mb-6">
               {founder.name}
             </h2>
-            <p className="font-poppins text-2xl text-primary mb-6">
+            <p className="text-2xl text-primary mb-6">
               {founder.title}
             </p>
-            <div className="space-y-4 font-inter text-lg text-muted-foreground">
+            <div className="space-y-4 text-lg text-muted-foreground">
               <p style={{ whiteSpace: 'pre-wrap' }}>{founder.bio}</p>
             </div>
             <div className="mt-8 flex gap-4">
               <Link to="/speaker">
-                <Button className="bg-gradient-to-r from-primary to-primary-dark hover:opacity-90 font-poppins font-semibold">
+                <Button className="bg-gradient-to-r from-primary to-primary-dark hover:opacity-90 font-semibold">
                   Book Me for Speaking
                 </Button>
               </Link>
               <Link to="/media-kit">
-                <Button variant="outline" className="font-poppins font-semibold">
+                <Button variant="outline" className="font-semibold">
                   View Media Kit
                 </Button>
               </Link>
@@ -118,7 +118,7 @@ const About = () => {
       {/* Mission & Values */}
       <section className="bg-muted py-16 lg:py-24">
         <div className="container mx-auto px-4 lg:px-8">
-          <h2 className="font-poppins font-bold text-4xl text-center mb-16">
+          <h2 className="font-bold text-4xl text-center mb-16">
             Our <span className="text-primary">Mission & Vision</span>
           </h2>
           
@@ -130,8 +130,8 @@ const About = () => {
                   <Target className="w-6 h-6 text-primary" />
                 </div>
                 <div>
-                  <h3 className="font-poppins font-bold text-2xl mb-4">Our Mission</h3>
-                  <p className="font-inter text-lg text-muted-foreground leading-relaxed">
+                  <h3 className="font-bold text-2xl mb-4">Our Mission</h3>
+                  <p className="text-lg text-muted-foreground leading-relaxed">
                     Ukweli Media Hub is committed to delivering truth-centered journalism and empowering content that transforms lives across Kenya. We provide authentic, well-researched stories covering fitness, health, politics, and lifestyle—fostering informed communities, inspiring positive action, and amplifying voices that matter. Our mission is to be the trusted platform where Kenyans find reliable information, meaningful perspectives, and the tools to build healthier, more engaged communities.
                   </p>
                 </div>
@@ -147,8 +147,8 @@ const About = () => {
                   <Heart className="w-6 h-6 text-secondary" />
                 </div>
                 <div>
-                  <h3 className="font-poppins font-bold text-2xl mb-4">Our Vision</h3>
-                  <p className="font-inter text-lg text-muted-foreground leading-relaxed">
+                  <h3 className="font-bold text-2xl mb-4">Our Vision</h3>
+                  <p className="text-lg text-muted-foreground leading-relaxed">
                     To be East Africa's leading media platform for truth, empowerment, and community transformation. We envision a Kenya where every citizen has access to reliable, unbiased information that enables informed decision-making, promotes wellness, and drives positive social change. Through authentic storytelling and impactful journalism, we aim to create a ripple effect of transformation—building stronger communities, inspiring leadership, and shaping a brighter, more equitable future for all Kenyans.
                   </p>
                 </div>
@@ -157,7 +157,7 @@ const About = () => {
           </div>
 
           {/* Core Values */}
-          <h3 className="font-poppins font-bold text-3xl text-center mb-8">
+          <h3 className="font-bold text-3xl text-center mb-8">
             Our Core <span className="text-primary">Values</span>
           </h3>
           <div className="grid md:grid-cols-3 gap-8">
@@ -165,8 +165,8 @@ const About = () => {
               <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
                 <Heart className="w-7 h-7 text-primary" />
               </div>
-              <h3 className="font-poppins font-semibold text-xl mb-3">Empowerment</h3>
-              <p className="font-inter text-muted-foreground">
+              <h3 className="font-semibold text-xl mb-3">Empowerment</h3>
+              <p className="text-muted-foreground">
                 We believe in empowering every individual with knowledge, inspiration, and tools to transform their lives and communities.
               </p>
             </div>
@@ -174,8 +174,8 @@ const About = () => {
               <div className="w-14 h-14 rounded-full bg-secondary/10 flex items-center justify-center mx-auto mb-4">
                 <Award className="w-7 h-7 text-secondary" />
               </div>
-              <h3 className="font-poppins font-semibold text-xl mb-3">Excellence</h3>
-              <p className="font-inter text-muted-foreground">
+              <h3 className="font-semibold text-xl mb-3">Excellence</h3>
+              <p className="text-muted-foreground">
                 We are committed to delivering high-quality, well-researched, and impactful content that sets the standard for excellence.
               </p>
             </div>
@@ -183,8 +183,8 @@ const About = () => {
               <div className="w-14 h-14 rounded-full bg-pink-500/10 flex items-center justify-center mx-auto mb-4">
                 <Users className="w-7 h-7 text-pink-500" />
               </div>
-              <h3 className="font-poppins font-semibold text-xl mb-3">Community</h3>
-              <p className="font-inter text-muted-foreground">
+              <h3 className="font-semibold text-xl mb-3">Community</h3>
+              <p className="text-muted-foreground">
                 We foster a vibrant, inclusive community of readers, contributors, and partners united in the pursuit of wellness and positive change.
               </p>
             </div>
@@ -194,7 +194,7 @@ const About = () => {
 
       {/* Achievements */}
       <section className="container mx-auto px-4 lg:px-8 py-16 lg:py-24">
-        <h2 className="font-poppins font-bold text-4xl text-center mb-12">
+        <h2 className="font-bold text-4xl text-center mb-12">
           Impact & <span className="text-primary">Achievements</span>
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
@@ -205,10 +205,10 @@ const About = () => {
             { value: "10K+", label: "Newsletter Subscribers" },
           ].map((stat) => (
             <div key={stat.label} className="text-center">
-              <div className="font-poppins font-bold text-5xl text-primary mb-2">
+              <div className="font-bold text-5xl text-primary mb-2">
                 {stat.value}
               </div>
-              <div className="font-inter text-muted-foreground">{stat.label}</div>
+              <div className="text-muted-foreground">{stat.label}</div>
             </div>
           ))}
         </div>

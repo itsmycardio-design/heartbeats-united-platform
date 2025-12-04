@@ -25,7 +25,7 @@ export const RecentPostsWidget = ({ posts }: { posts: BlogPost[] }) => {
 
   return (
     <div className="bg-card border border-border rounded-lg p-5 shadow-sm">
-      <h3 className="font-poppins font-bold text-lg mb-4 flex items-center gap-2">
+      <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
         <Calendar className="w-4 h-4 text-primary" />
         Recent Posts
       </h3>
@@ -43,7 +43,7 @@ export const RecentPostsWidget = ({ posts }: { posts: BlogPost[] }) => {
               className="w-16 h-16 rounded-md object-cover flex-shrink-0"
             />
             <div className="flex-1 min-w-0">
-              <h4 className="font-inter text-sm font-medium line-clamp-2 group-hover:text-primary transition-colors">
+              <h4 className="text-sm font-medium line-clamp-2 group-hover:text-primary transition-colors">
                 {post.title}
               </h4>
               <p className="text-xs text-muted-foreground mt-1">
@@ -64,7 +64,7 @@ export const PopularPostsWidget = ({ posts }: { posts: BlogPost[] }) => {
 
   return (
     <div className="bg-card border border-border rounded-lg p-5 shadow-sm">
-      <h3 className="font-poppins font-bold text-lg mb-4 flex items-center gap-2">
+      <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
         <TrendingUp className="w-4 h-4 text-primary" />
         Popular Posts
       </h3>
@@ -75,11 +75,11 @@ export const PopularPostsWidget = ({ posts }: { posts: BlogPost[] }) => {
             to={`/blog/${post.id}`}
             className="flex items-start gap-3 group"
           >
-            <span className="font-poppins font-bold text-2xl text-muted-foreground/50 group-hover:text-primary transition-colors">
+            <span className="font-bold text-2xl text-muted-foreground/50 group-hover:text-primary transition-colors">
               {String(index + 1).padStart(2, "0")}
             </span>
             <div className="flex-1 min-w-0">
-              <h4 className="font-inter text-sm font-medium line-clamp-2 group-hover:text-primary transition-colors">
+              <h4 className="text-sm font-medium line-clamp-2 group-hover:text-primary transition-colors">
                 {post.title}
               </h4>
               <p className="text-xs text-muted-foreground mt-1">{post.read_time}</p>
@@ -117,7 +117,7 @@ export const CategoriesWidget = ({
 
   return (
     <div className="bg-card border border-border rounded-lg p-5 shadow-sm">
-      <h3 className="font-poppins font-bold text-lg mb-4 flex items-center gap-2">
+      <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
         <Tag className="w-4 h-4 text-primary" />
         Categories
       </h3>
@@ -186,7 +186,7 @@ export const NewsletterWidget = () => {
   return (
     <div className="bg-primary text-primary-foreground rounded-lg p-5 shadow-card">
       <Mail className="w-8 h-8 mb-3" />
-      <h3 className="font-poppins font-bold text-lg mb-2">Newsletter</h3>
+      <h3 className="font-bold text-lg mb-2">Newsletter</h3>
       <p className="text-sm opacity-90 mb-4">
         Get the latest stories delivered to your inbox weekly.
       </p>
@@ -202,7 +202,7 @@ export const NewsletterWidget = () => {
         <Button
           type="submit"
           disabled={loading}
-          className="w-full bg-white text-primary hover:bg-white/90 font-poppins font-semibold"
+          className="w-full bg-white text-primary hover:bg-white/90 font-semibold"
         >
           {loading ? (
             <>

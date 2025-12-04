@@ -72,7 +72,7 @@ const Blog = () => {
       <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="text-center">
           <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-muted-foreground font-inter">Loading articles...</p>
+          <p className="text-muted-foreground">Loading articles...</p>
         </div>
       </div>
     );
@@ -84,10 +84,10 @@ const Blog = () => {
       <section className="bg-muted border-b border-border py-10 md:py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto text-center">
-            <h1 className="font-poppins font-bold text-4xl md:text-5xl mb-4">
+            <h1 className="font-bold text-4xl md:text-5xl mb-4">
               Our <span className="text-primary">Blog</span>
             </h1>
-            <p className="font-inter text-muted-foreground mb-8">
+            <p className="text-muted-foreground mb-8">
               Discover stories, insights, and inspiration across health, fitness, politics, and lifestyle.
             </p>
 
@@ -97,7 +97,7 @@ const Blog = () => {
               <Input
                 type="search"
                 placeholder="Search articles..."
-                className="pl-12 h-12 font-inter bg-card"
+                className="pl-12 h-12 bg-card"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -114,7 +114,7 @@ const Blog = () => {
               <Badge
                 key={cat}
                 variant={selectedCategory === cat ? "default" : "outline"}
-                className={`cursor-pointer shrink-0 font-inter text-xs px-4 py-1.5 transition-all ${
+                className={`cursor-pointer shrink-0 text-xs px-4 py-1.5 transition-all ${
                   selectedCategory === cat
                     ? "bg-primary hover:bg-primary/90 text-primary-foreground"
                     : "hover:bg-muted"
@@ -136,7 +136,7 @@ const Blog = () => {
             {/* Results Header */}
             <div className="flex items-center justify-between mb-6">
               <div>
-                <h2 className="font-poppins font-semibold text-xl">
+                <h2 className="font-semibold text-xl">
                   {filteredPosts.length} {selectedCategory !== "All" ? selectedCategory : ""} Articles
                 </h2>
                 {searchQuery && (

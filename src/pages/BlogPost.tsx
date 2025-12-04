@@ -20,7 +20,7 @@ const BlogPost = () => {
       <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="text-center">
           <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-muted-foreground font-inter">Loading article...</p>
+          <p className="text-muted-foreground">Loading article...</p>
         </div>
       </div>
     );
@@ -30,8 +30,8 @@ const BlogPost = () => {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="text-center">
-          <h1 className="font-poppins font-bold text-4xl mb-4">Article Not Found</h1>
-          <p className="font-inter text-muted-foreground mb-6">
+          <h1 className="font-bold text-4xl mb-4">Article Not Found</h1>
+          <p className="text-muted-foreground mb-6">
             The article you're looking for doesn't exist or has been removed.
           </p>
           <Link to="/blog">
@@ -132,7 +132,7 @@ const BlogPost = () => {
               </div>
 
               {/* Quote Text */}
-              <blockquote className="font-newspaper text-2xl md:text-3xl lg:text-4xl text-center leading-relaxed mb-8 italic text-foreground">
+              <blockquote className="text-2xl md:text-3xl lg:text-4xl text-center leading-relaxed mb-8 italic text-foreground">
                 "{post.title}"
               </blockquote>
 
@@ -147,10 +147,10 @@ const BlogPost = () => {
                   />
                 )}
                 <div className="text-center">
-                  <p className="font-newspaper font-bold text-lg">
+                  <p className="font-bold text-lg">
                     — {post.author_name || "Unknown Author"}
                   </p>
-                  <p className="text-sm text-muted-foreground font-newspaper">
+                  <p className="text-sm text-muted-foreground">
                     {formatDate(post.created_at)}
                   </p>
                 </div>
@@ -158,7 +158,7 @@ const BlogPost = () => {
 
               {/* Share Buttons */}
               <div className="flex items-center justify-center gap-2 mt-8 pt-6 border-t border-border">
-                <span className="text-sm text-muted-foreground mr-2 font-newspaper">Share:</span>
+                <span className="text-sm text-muted-foreground mr-2">Share:</span>
                 <Button variant="outline" size="icon" className="w-9 h-9" onClick={() => handleShare("facebook")}>
                   <Facebook className="w-4 h-4" />
                 </Button>
@@ -185,7 +185,7 @@ const BlogPost = () => {
         {relatedPosts.length > 0 && (
           <section className="bg-muted py-12 md:py-16">
             <div className="container mx-auto px-4">
-              <h2 className="font-newspaper font-bold text-2xl md:text-3xl mb-8 uppercase tracking-tight text-center">
+              <h2 className="font-bold text-2xl md:text-3xl mb-8 uppercase tracking-tight text-center">
                 More <span className="text-primary">Quotes</span>
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -218,7 +218,7 @@ const BlogPost = () => {
         <div className="w-full bg-card">
           {/* Newspaper Header */}
           <div className="newspaper-header text-center py-4 border-b-4 border-double border-foreground">
-            <p className="font-newspaper text-xs uppercase tracking-widest text-muted-foreground">
+            <p className="text-xs uppercase tracking-widest text-muted-foreground">
               Ukweli Media • Truth in Every Story
             </p>
           </div>
@@ -226,11 +226,11 @@ const BlogPost = () => {
           <div className="p-6 md:p-8 lg:p-10">
             {/* Category & Meta - Top Line */}
             <div className="flex flex-wrap items-center justify-between gap-4 mb-4 pb-4 border-b-2 border-foreground">
-              <Badge className={`${getCategoryClass(post.category)} font-newspaper text-xs font-medium`}>
+              <Badge className={`${getCategoryClass(post.category)} text-xs font-medium`}>
                 <Tag className="w-3 h-3 mr-1" />
                 {post.category.charAt(0).toUpperCase() + post.category.slice(1)}
               </Badge>
-              <div className="flex items-center gap-4 text-sm text-muted-foreground font-newspaper">
+              <div className="flex items-center gap-4 text-sm text-muted-foreground">
                 <div className="flex items-center gap-1">
                   <Calendar className="w-4 h-4" />
                   <span>{formatDate(post.created_at)}</span>
@@ -243,23 +243,23 @@ const BlogPost = () => {
             </div>
 
             {/* Newspaper Headline */}
-            <h1 className="font-newspaper font-bold text-3xl md:text-4xl lg:text-5xl mb-6 leading-tight tracking-tight text-foreground uppercase text-center">
+            <h1 className="font-bold text-3xl md:text-4xl lg:text-5xl mb-6 leading-tight tracking-tight text-foreground uppercase text-center">
               {post.title}
             </h1>
 
             {/* Byline */}
             <div className="flex items-center justify-center gap-3 mb-6 pb-4 border-b border-border">
-              <span className="font-newspaper text-sm italic text-muted-foreground">By</span>
-              <span className="font-newspaper font-semibold text-sm">
+              <span className="text-sm italic text-muted-foreground">By</span>
+              <span className="font-semibold text-sm">
                 {post.author_name || "Ukweli Media Team"}
               </span>
               <span className="text-muted-foreground">|</span>
-              <span className="font-newspaper text-sm text-muted-foreground italic">Contributing Writer</span>
+              <span className="text-sm text-muted-foreground italic">Contributing Writer</span>
             </div>
 
             {/* Share Buttons Row */}
             <div className="flex items-center justify-center gap-2 mb-8">
-              <span className="text-sm text-muted-foreground mr-2 font-newspaper">Share:</span>
+              <span className="text-sm text-muted-foreground mr-2">Share:</span>
               <Button variant="outline" size="icon" className="w-9 h-9" onClick={() => handleShare("facebook")}>
                 <Facebook className="w-4 h-4" />
               </Button>
@@ -281,7 +281,7 @@ const BlogPost = () => {
             <div className="newspaper-divider mb-8"></div>
 
             {/* Newspaper Body - Image floated left with text wrapping */}
-            <div className="newspaper-body font-newspaper text-lg leading-8 text-foreground mb-8">
+            <div className="newspaper-body text-lg leading-8 text-foreground mb-8">
               {/* Floated Image */}
               <figure className="float-left mr-6 mb-4 w-full sm:w-1/2 lg:w-2/5">
                 <div className="border-2 border-foreground p-1">
@@ -292,13 +292,13 @@ const BlogPost = () => {
                     loading="lazy"
                   />
                 </div>
-                <figcaption className="text-sm text-muted-foreground italic mt-2 font-newspaper text-center border-b border-border pb-2">
+                <figcaption className="text-sm text-muted-foreground italic mt-2 text-center border-b border-border pb-2">
                   {post.title}
                 </figcaption>
               </figure>
 
               {/* Lead Excerpt - Drop Cap Style */}
-              <p className="first-letter:text-6xl first-letter:font-bold first-letter:float-left first-letter:mr-3 first-letter:mt-1 first-letter:leading-none first-letter:font-newspaper mb-6 text-justify">
+              <p className="first-letter:text-6xl first-letter:font-bold first-letter:float-left first-letter:mr-3 first-letter:mt-1 first-letter:leading-none mb-6 text-justify">
                 {post.excerpt}
               </p>
 
@@ -308,7 +308,7 @@ const BlogPost = () => {
 
               {/* Article Content */}
               <div
-                className="font-newspaper prose-newspaper text-justify columns-1 md:columns-2 gap-8"
+                className="prose-newspaper text-justify columns-1 md:columns-2 gap-8"
                 style={{ columnRule: '1px solid hsl(var(--border))' }}
                 dangerouslySetInnerHTML={{ __html: post.content }}
               />
@@ -324,19 +324,19 @@ const BlogPost = () => {
             <div className="bg-muted rounded p-6 md:p-8 border-2 border-foreground">
               <div className="flex flex-col sm:flex-row items-start gap-6">
                 <div className="w-20 h-20 rounded-full bg-primary/20 flex items-center justify-center shrink-0 border-2 border-primary">
-                  <span className="font-newspaper font-bold text-2xl text-primary">
+                  <span className="font-bold text-2xl text-primary">
                     {post.author_name?.charAt(0).toUpperCase() || "U"}
                   </span>
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-newspaper font-bold text-xl mb-2 uppercase tracking-tight">
+                  <h3 className="font-bold text-xl mb-2 uppercase tracking-tight">
                     About {post.author_name || "Ukweli Media Team"}
                   </h3>
-                  <p className="font-newspaper text-muted-foreground mb-4 leading-relaxed text-justify">
+                  <p className="text-muted-foreground mb-4 leading-relaxed text-justify">
                     A passionate contributor dedicated to sharing authentic stories, wellness insights, and thought leadership. Committed to empowering readers with truth and inspiration.
                   </p>
                   <Link to="/about">
-                    <Button variant="outline" size="sm" className="font-newspaper">
+                    <Button variant="outline" size="sm">
                       Learn More
                     </Button>
                   </Link>
@@ -347,7 +347,7 @@ const BlogPost = () => {
 
           {/* Newspaper Footer */}
           <div className="newspaper-footer text-center py-3 border-t-2 border-foreground bg-muted">
-            <p className="font-newspaper text-xs text-muted-foreground">
+            <p className="text-xs text-muted-foreground">
               © {new Date().getFullYear()} Ukweli Media. All Rights Reserved.
             </p>
           </div>
@@ -363,7 +363,7 @@ const BlogPost = () => {
       {relatedPosts.length > 0 && (
         <section className="bg-muted py-12 md:py-16">
           <div className="container mx-auto px-4">
-            <h2 className="font-newspaper font-bold text-2xl md:text-3xl mb-8 uppercase tracking-tight">
+            <h2 className="font-bold text-2xl md:text-3xl mb-8 uppercase tracking-tight">
               Related <span className="text-primary">Articles</span>
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

@@ -36,7 +36,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <AuthProvider>
-          <div className="flex flex-col min-h-screen font-inter">
+          <div className="flex flex-col min-h-screen">
             <Header />
             <main className="flex-1">
               <Routes>
