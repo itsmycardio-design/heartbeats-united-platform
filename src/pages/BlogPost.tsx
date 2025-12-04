@@ -119,7 +119,7 @@ const BlogPost = () => {
         <article className="container mx-auto px-4 pb-16">
           <div className="max-w-3xl mx-auto">
             {/* Decorative Quote Card */}
-            <div className="newspaper-border bg-card p-8 md:p-12 relative">
+            <div className="bg-card p-8 md:p-12 relative">
               {/* Decorative corners */}
               <div className="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-primary"></div>
               <div className="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-primary"></div>
@@ -215,7 +215,7 @@ const BlogPost = () => {
 
       {/* Newspaper Style Article */}
       <article className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto newspaper-border bg-card">
+        <div className="w-full bg-card">
           {/* Newspaper Header */}
           <div className="newspaper-header text-center py-4 border-b-4 border-double border-foreground">
             <p className="font-newspaper text-xs uppercase tracking-widest text-muted-foreground">
@@ -354,7 +354,7 @@ const BlogPost = () => {
         </div>
 
         {/* Comments Section */}
-        <div className="max-w-4xl mx-auto my-12">
+        <div className="w-full my-12">
           <Comments postId={post.id} />
         </div>
       </article>
