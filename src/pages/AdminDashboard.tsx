@@ -18,7 +18,7 @@ import { MediaUpload } from "@/components/MediaUpload";
 import { Analytics } from "@/components/Analytics";
 import { MessagesTab } from "@/components/admin/MessagesTab";
 import { SubscribersTab } from "@/components/admin/SubscribersTab";
-import { WritersTab } from "@/components/admin/WritersTab";
+import { RolesTab } from "@/components/admin/RolesTab";
 import { CommentsTab } from "@/components/admin/CommentsTab";
 import { ThemeSettingsTab } from "@/components/admin/ThemeSettingsTab";
 import { FounderSettingsTab } from "@/components/admin/FounderSettingsTab";
@@ -279,7 +279,7 @@ const AdminDashboard = () => {
                 <TabsTrigger value="comments">Comments</TabsTrigger>
                 <TabsTrigger value="messages">Messages</TabsTrigger>
                 <TabsTrigger value="subscribers">Subscribers</TabsTrigger>
-                <TabsTrigger value="writers">Writers</TabsTrigger>
+                <TabsTrigger value="roles">User Roles</TabsTrigger>
                 <TabsTrigger value="analytics">
                   <BarChart className="w-4 h-4 mr-2" />
                   Analytics
@@ -573,8 +573,8 @@ const AdminDashboard = () => {
                 <SubscribersTab />
               </TabsContent>
 
-              <TabsContent value="writers">
-                <WritersTab />
+              <TabsContent value="roles">
+                <RolesTab />
               </TabsContent>
 
               <TabsContent value="analytics">
