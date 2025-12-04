@@ -54,7 +54,7 @@ export const Header = () => {
       {/* Top Bar */}
       <div className="border-b border-border bg-muted/50">
         <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between h-10 text-xs font-inter">
+          <div className="flex items-center justify-between h-10 text-xs">
             <div className="hidden md:flex items-center gap-4 text-muted-foreground">
               <span>{new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" })}</span>
             </div>
@@ -77,7 +77,7 @@ export const Header = () => {
       <nav className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 font-poppins font-bold text-xl group">
+          <Link to="/" className="flex items-center gap-2 font-bold text-xl group">
             <Heart className="w-7 h-7 text-primary transition-transform group-hover:scale-110" />
             <span className="hidden sm:inline bg-gradient-to-r from-primary to-primary-dark bg-clip-text text-transparent">
               Ukweli Media
@@ -90,7 +90,7 @@ export const Header = () => {
               <Link
                 key={item.path}
                 to={item.path}
-                className={`px-4 py-2 rounded-md font-inter text-sm font-medium transition-colors ${
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                   isActive(item.path)
                     ? "text-primary bg-primary/10"
                     : "text-foreground hover:text-primary hover:bg-muted"
@@ -103,7 +103,7 @@ export const Header = () => {
             {/* Categories Dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className="px-4 py-2 rounded-md font-inter text-sm font-medium transition-colors text-foreground hover:text-primary hover:bg-muted flex items-center gap-1">
+                <button className="px-4 py-2 rounded-md text-sm font-medium transition-colors text-foreground hover:text-primary hover:bg-muted flex items-center gap-1">
                   Categories
                   <ChevronDown className="w-4 h-4" />
                 </button>
@@ -196,7 +196,7 @@ export const Header = () => {
                   </DropdownMenuContent>
                 </DropdownMenu>
               ) : (
-                <Button asChild variant="default" size="sm" className="font-poppins font-semibold">
+                <Button asChild variant="default" size="sm" className="font-semibold">
                   <Link to="/auth">Sign In</Link>
                 </Button>
               )}
@@ -219,7 +219,7 @@ export const Header = () => {
               <Link
                 key={cat.path}
                 to={cat.path}
-                className={`px-3 py-1.5 rounded-md font-inter text-xs font-medium transition-colors whitespace-nowrap ${
+                className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors whitespace-nowrap ${
                   isActive(cat.path)
                     ? "text-primary bg-primary/10"
                     : "text-muted-foreground hover:text-primary hover:bg-muted"
@@ -254,7 +254,7 @@ export const Header = () => {
                   key={item.path}
                   to={item.path}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`px-4 py-3 rounded-md font-inter text-sm font-medium transition-colors ${
+                  className={`px-4 py-3 rounded-md text-sm font-medium transition-colors ${
                     isActive(item.path)
                       ? "text-primary bg-primary/10"
                       : "text-foreground hover:text-primary hover:bg-muted"
@@ -273,7 +273,7 @@ export const Header = () => {
                     key={cat.path}
                     to={cat.path}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`px-4 py-2 block font-inter text-sm transition-colors ${
+                    className={`px-4 py-2 block text-sm transition-colors ${
                       isActive(cat.path)
                         ? "text-primary"
                         : "text-foreground hover:text-primary"
@@ -290,7 +290,7 @@ export const Header = () => {
                     <Link
                       to="/admin"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="px-4 py-3 rounded-md font-inter text-sm font-medium text-foreground hover:text-primary hover:bg-muted"
+                      className="px-4 py-3 rounded-md text-sm font-medium text-foreground hover:text-primary hover:bg-muted"
                     >
                       Admin Dashboard
                     </Link>
@@ -299,7 +299,7 @@ export const Header = () => {
                     <Link
                       to="/writer"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="px-4 py-3 rounded-md font-inter text-sm font-medium text-foreground hover:text-primary hover:bg-muted"
+                      className="px-4 py-3 rounded-md text-sm font-medium text-foreground hover:text-primary hover:bg-muted"
                     >
                       Writer Dashboard
                     </Link>
@@ -307,7 +307,7 @@ export const Header = () => {
                   <Link
                     to="/settings"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="px-4 py-3 rounded-md font-inter text-sm font-medium text-foreground hover:text-primary hover:bg-muted"
+                    className="px-4 py-3 rounded-md text-sm font-medium text-foreground hover:text-primary hover:bg-muted"
                   >
                     Settings
                   </Link>
@@ -323,7 +323,7 @@ export const Header = () => {
                   </Button>
                 </>
               ) : (
-                <Button asChild className="mt-2 w-full font-poppins font-semibold">
+                <Button asChild className="mt-2 w-full font-semibold">
                   <Link to="/auth" onClick={() => setMobileMenuOpen(false)}>
                     Sign In
                   </Link>

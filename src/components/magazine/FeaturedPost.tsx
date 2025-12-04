@@ -70,12 +70,12 @@ export const FeaturedPost = ({
 
         {/* Content */}
         <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-          <Badge className={`${getCategoryClass(category)} mb-3 font-inter text-xs font-medium`}>
+          <Badge className={`${getCategoryClass(category)} mb-3 text-xs font-medium`}>
             {category.charAt(0).toUpperCase() + category.slice(1)}
           </Badge>
 
           <h2
-            className={`font-poppins font-bold text-white mb-3 leading-tight ${
+            className={`font-bold text-white mb-3 leading-tight ${
               size === "large"
                 ? "text-2xl md:text-4xl"
                 : size === "medium"
@@ -87,12 +87,12 @@ export const FeaturedPost = ({
           </h2>
 
           {size !== "small" && (
-            <p className="font-inter text-white/80 text-sm md:text-base mb-4 line-clamp-2">
+            <p className="text-white/80 text-sm md:text-base mb-4 line-clamp-2">
               {excerpt}
             </p>
           )}
 
-          <div className="flex items-center gap-4 text-white/70 text-xs md:text-sm font-inter">
+          <div className="flex items-center gap-4 text-white/70 text-xs md:text-sm">
             <div className="flex items-center gap-1">
               <Calendar className="w-3.5 h-3.5" />
               <span>{formatDate(created_at)}</span>

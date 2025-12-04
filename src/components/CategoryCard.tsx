@@ -24,10 +24,10 @@ export const CategoryCard = ({
       <div className={`w-14 h-14 rounded-lg ${color} flex items-center justify-center mb-4 transition-transform group-hover:scale-110`}>
         <Icon className="w-7 h-7 text-background" />
       </div>
-      <h3 className="font-poppins font-bold text-xl mb-2 group-hover:text-primary transition-colors">
+      <h3 className="font-bold text-xl mb-2 group-hover:text-primary transition-colors">
         {title}
       </h3>
-      <p className="font-inter text-sm text-muted-foreground">
+      <p className="text-sm text-muted-foreground">
         {description}
       </p>
     </Link>

@@ -115,7 +115,7 @@ export const Comments = ({ postId }: CommentsProps) => {
     <div className="space-y-6">
       <div className="flex items-center gap-2 mb-6">
         <MessageCircle className="w-6 h-6 text-primary" />
-        <h3 className="font-poppins font-bold text-2xl">
+        <h3 className="font-bold text-2xl">
           Comments ({comments.length})
         </h3>
       </div>
@@ -129,7 +129,7 @@ export const Comments = ({ postId }: CommentsProps) => {
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
               disabled={loading}
-              className="min-h-[100px] font-inter"
+              className="min-h-[100px]"
             />
             <div className="flex justify-end">
               <Button type="submit" disabled={loading} className="gap-2">
@@ -141,7 +141,7 @@ export const Comments = ({ postId }: CommentsProps) => {
         </Card>
       ) : (
         <Card className="p-6 text-center">
-          <p className="font-inter text-muted-foreground mb-4">
+          <p className="text-muted-foreground mb-4">
             Please sign in to leave a comment
           </p>
           <Button asChild>
@@ -162,21 +162,21 @@ export const Comments = ({ postId }: CommentsProps) => {
               <div className="flex items-start justify-between mb-2">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                    <span className="font-poppins font-semibold text-primary">
+                    <span className="font-semibold text-primary">
                       {comment.author_name.charAt(0).toUpperCase()}
                     </span>
                   </div>
                   <div>
-                    <p className="font-poppins font-semibold">
+                    <p className="font-semibold">
                       {comment.author_name}
                     </p>
-                    <p className="font-inter text-xs text-muted-foreground">
+                    <p className="text-xs text-muted-foreground">
                       {format(new Date(comment.created_at), "PPP 'at' p")}
                     </p>
                   </div>
                 </div>
               </div>
-              <p className="font-inter text-muted-foreground ml-[52px]">
+              <p className="text-muted-foreground ml-[52px]">
                 {comment.content}
               </p>
             </Card>
