@@ -18,9 +18,10 @@ export default {
     },
     extend: {
       fontFamily: {
+        sans: ['"Times New Roman"', 'Georgia', 'serif'],
         poppins: ['Poppins', 'sans-serif'],
         inter: ['Inter', 'sans-serif'],
-        serif: ['Georgia', 'Cambria', 'Times New Roman', 'serif'],
+        serif: ['"Times New Roman"', 'Georgia', 'serif'],
         newspaper: ['"Times New Roman"', 'Georgia', 'serif'],
       },
       colors: {
