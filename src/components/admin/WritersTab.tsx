@@ -61,7 +61,14 @@ export const WritersTab = () => {
 
       if (profilesError) throw profilesError;
 
-      const profilesMap = new Map((profiles || []).map((p: any) => [p.id, p]));
+      interface ProfileData {
+        id: string;
+        email: string;
+        full_name: string;
+        created_at: string;
+      }
+      
+      const profilesMap = new Map((profiles || []).map((p: ProfileData) => [p.id, p]));
 
       const writersData: Writer[] = userIds
         .map((id: string) => {

@@ -2,128 +2,136 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Magazine Theme Design System - Clean, Professional, Modern */
+/* Classic Editorial Design System - Timeless, Elegant, Premium */
 
 @layer base {
   :root {
-    --background: 0 0% 98%;
-    --foreground: 220 20% 10%;
+    /* Warm Off-White Background */
+    --background: 40 20% 97%;
+    --foreground: 220 25% 12%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 220 20% 10%;
+    /* Classic Cream Cards */
+    --card: 40 30% 99%;
+    --card-foreground: 220 25% 12%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 20% 10%;
+    --popover: 40 30% 99%;
+    --popover-foreground: 220 25% 12%;
 
-    /* Deep Blue - Primary Brand Color for Magazine */
-    --primary: 220 90% 45%;
-    --primary-foreground: 0 0% 100%;
-    --primary-light: 220 90% 55%;
-    --primary-dark: 220 90% 35%;
+    /* Muted Navy - Primary Brand Color */
+    --primary: 220 45% 25%;
+    --primary-foreground: 40 30% 98%;
+    --primary-light: 220 45% 35%;
+    --primary-dark: 220 45% 18%;
 
-    /* Slate Gray - Secondary */
-    --secondary: 220 15% 40%;
-    --secondary-foreground: 0 0% 100%;
-    --secondary-light: 220 15% 55%;
+    /* Warm Gold - Accent */
+    --secondary: 38 70% 50%;
+    --secondary-foreground: 220 25% 12%;
+    --secondary-light: 38 70% 60%;
 
-    --muted: 220 15% 95%;
-    --muted-foreground: 220 10% 45%;
+    /* Muted Tones */
+    --muted: 40 15% 93%;
+    --muted-foreground: 220 15% 45%;
 
-    --accent: 220 90% 45%;
-    --accent-foreground: 0 0% 100%;
+    /* Gold Accent */
+    --accent: 38 70% 50%;
+    --accent-foreground: 220 25% 12%;
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 0 65% 50%;
+    --destructive-foreground: 40 30% 98%;
 
-    --border: 220 15% 90%;
-    --input: 220 15% 90%;
-    --ring: 220 90% 45%;
+    /* Classic Borders */
+    --border: 40 20% 88%;
+    --input: 40 20% 88%;
+    --ring: 220 45% 25%;
 
-    --radius: 0.5rem;
+    --radius: 0.375rem;
 
-    /* Magazine Design Tokens */
-    --gradient-hero: linear-gradient(135deg, hsl(220 90% 45%), hsl(220 90% 35%));
-    --gradient-card: linear-gradient(180deg, transparent, hsl(0 0% 0% / 0.02));
-    --gradient-overlay: linear-gradient(to top, hsl(0 0% 0% / 0.8), hsl(0 0% 0% / 0.2), transparent);
-    --shadow-sm: 0 1px 3px hsl(0 0% 0% / 0.06);
-    --shadow-card: 0 2px 8px hsl(0 0% 0% / 0.06);
-    --shadow-hover: 0 8px 24px hsl(0 0% 0% / 0.1);
-    --shadow-featured: 0 12px 40px hsl(0 0% 0% / 0.12);
+    /* Classic Design Tokens */
+    --gradient-hero: linear-gradient(135deg, hsl(220 45% 25%), hsl(220 45% 18%));
+    --gradient-card: linear-gradient(180deg, transparent, hsl(40 20% 95% / 0.5));
+    --gradient-overlay: linear-gradient(to top, hsl(0 0% 0% / 0.7), hsl(0 0% 0% / 0.2), transparent);
+    --gradient-gold: linear-gradient(135deg, hsl(38 70% 50%), hsl(38 70% 40%));
+    
+    --shadow-sm: 0 1px 2px hsl(220 25% 12% / 0.04);
+    --shadow-card: 0 2px 8px hsl(220 25% 12% / 0.06), 0 1px 3px hsl(220 25% 12% / 0.04);
+    --shadow-hover: 0 8px 24px hsl(220 25% 12% / 0.1);
+    --shadow-featured: 0 12px 40px hsl(220 25% 12% / 0.12);
+    --shadow-classic: 0 4px 12px hsl(220 25% 12% / 0.08);
+    
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
+    /* Status Colors */
+    --success: 142 55% 40%;
+    --success-foreground: 40 30% 98%;
+    --warning: 38 90% 50%;
+    --warning-foreground: 220 25% 12%;
+    --info: 200 70% 45%;
+    --info-foreground: 40 30% 98%;
+
     /* Category Colors */
-    --category-health: 142 70% 40%;
-    --category-fitness: 220 90% 50%;
-    --category-politics: 280 70% 50%;
-    --category-lifestyle: 340 70% 50%;
-    --category-education: 45 90% 50%;
-    --category-inspiration: 30 90% 50%;
+    --category-health: 142 55% 40%;
+    --category-fitness: 200 70% 45%;
+    --category-politics: 280 50% 45%;
+    --category-lifestyle: 340 55% 50%;
+    --category-education: 38 70% 50%;
+    --category-inspiration: 20 70% 50%;
 
-    /* Footer Colors */
-    --footer-red: 0 85% 60%;
-    --footer-gold: 45 100% 50%;
-
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 220 15% 30%;
-    --sidebar-primary: 220 90% 45%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 15% 95%;
-    --sidebar-accent-foreground: 220 15% 30%;
-    --sidebar-border: 220 15% 90%;
-    --sidebar-ring: 220 90% 45%;
+    /* Sidebar */
+    --sidebar-background: 220 45% 22%;
+    --sidebar-foreground: 40 20% 95%;
+    --sidebar-primary: 38 70% 50%;
+    --sidebar-primary-foreground: 220 25% 12%;
+    --sidebar-accent: 220 45% 30%;
+    --sidebar-accent-foreground: 40 20% 95%;
+    --sidebar-border: 220 45% 28%;
+    --sidebar-ring: 38 70% 50%;
   }
 
   .dark {
-    --background: 220 20% 8%;
-    --foreground: 0 0% 95%;
+    --background: 220 25% 8%;
+    --foreground: 40 20% 95%;
 
-    --card: 220 20% 12%;
-    --card-foreground: 0 0% 95%;
+    --card: 220 25% 12%;
+    --card-foreground: 40 20% 95%;
 
-    --popover: 220 20% 12%;
-    --popover-foreground: 0 0% 95%;
+    --popover: 220 25% 12%;
+    --popover-foreground: 40 20% 95%;
 
-    --primary: 220 90% 55%;
-    --primary-foreground: 0 0% 100%;
-    --primary-light: 220 90% 65%;
-    --primary-dark: 220 90% 45%;
+    --primary: 38 70% 55%;
+    --primary-foreground: 220 25% 10%;
+    --primary-light: 38 70% 65%;
+    --primary-dark: 38 70% 45%;
 
-    --secondary: 220 15% 55%;
-    --secondary-foreground: 0 0% 100%;
-    --secondary-light: 220 15% 65%;
+    --secondary: 220 30% 40%;
+    --secondary-foreground: 40 20% 95%;
+    --secondary-light: 220 30% 50%;
 
-    --muted: 220 15% 18%;
-    --muted-foreground: 220 10% 60%;
+    --muted: 220 20% 18%;
+    --muted-foreground: 40 15% 60%;
 
-    --accent: 220 90% 55%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 38 70% 55%;
+    --accent-foreground: 220 25% 10%;
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 0 65% 55%;
+    --destructive-foreground: 40 30% 98%;
 
-    --border: 220 15% 25%;
-    --input: 220 15% 25%;
-    --ring: 220 90% 55%;
+    --border: 220 20% 22%;
+    --input: 220 20% 22%;
+    --ring: 38 70% 55%;
 
-    --gradient-hero: linear-gradient(135deg, hsl(220 90% 55%), hsl(220 90% 45%));
+    --gradient-hero: linear-gradient(135deg, hsl(38 70% 55%), hsl(38 70% 45%));
     --gradient-card: linear-gradient(180deg, transparent, hsl(0 0% 100% / 0.02));
-    --gradient-overlay: linear-gradient(to top, hsl(0 0% 0% / 0.9), hsl(0 0% 0% / 0.4), transparent);
     --shadow-card: 0 2px 8px hsl(0 0% 0% / 0.3);
     --shadow-hover: 0 8px 24px hsl(0 0% 0% / 0.4);
-    --shadow-featured: 0 12px 40px hsl(0 0% 0% / 0.5);
 
-    /* Footer Colors */
-    --footer-red: 0 85% 60%;
-    --footer-gold: 45 100% 50%;
-
-    --sidebar-background: 220 20% 10%;
-    --sidebar-foreground: 0 0% 90%;
-    --sidebar-primary: 220 90% 55%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 15% 18%;
-    --sidebar-accent-foreground: 0 0% 90%;
-    --sidebar-border: 220 15% 25%;
-    --sidebar-ring: 220 90% 55%;
+    --sidebar-background: 220 25% 10%;
+    --sidebar-foreground: 40 20% 90%;
+    --sidebar-primary: 38 70% 55%;
+    --sidebar-primary-foreground: 220 25% 10%;
+    --sidebar-accent: 220 25% 18%;
+    --sidebar-accent-foreground: 40 20% 90%;
+    --sidebar-border: 220 25% 18%;
+    --sidebar-ring: 38 70% 55%;
   }
 }
 
@@ -133,23 +141,140 @@
   }
 
   body {
-    @apply bg-background text-foreground antialiased font-sans;
+    @apply bg-background text-foreground antialiased;
     font-feature-settings: "kern" 1, "liga" 1;
   }
 
-  /* Typography refinements for magazine feel */
+  /* Classic Typography */
   h1, h2, h3, h4, h5, h6 {
-    @apply tracking-tight;
+    @apply font-serif tracking-tight;
   }
 
-  /* Smooth scrolling */
   html {
     scroll-behavior: smooth;
   }
 }
 
 @layer components {
-  /* Magazine article prose styling */
+  /* Classic Card Style */
+  .classic-card {
+    @apply bg-card border border-border rounded-sm shadow-card;
+    background: linear-gradient(180deg, hsl(var(--card)), hsl(var(--card) / 0.95));
+  }
+
+  .classic-card-hover {
+    @apply classic-card transition-all duration-300;
+  }
+
+  .classic-card-hover:hover {
+    @apply shadow-hover;
+    transform: translateY(-2px);
+  }
+
+  /* Classic Borders */
+  .classic-border {
+    @apply border border-border;
+    border-color: hsl(var(--border));
+  }
+
+  .classic-border-accent {
+    @apply border-l-4;
+    border-left-color: hsl(var(--accent));
+  }
+
+  /* Editorial Header Styles */
+  .editorial-header {
+    @apply font-serif text-foreground;
+    letter-spacing: -0.02em;
+  }
+
+  .editorial-subheader {
+    @apply font-sans text-muted-foreground uppercase tracking-widest text-xs;
+  }
+
+  /* Classic Button Variants */
+  .btn-classic {
+    @apply font-sans text-sm tracking-wide transition-all duration-200;
+  }
+
+  .btn-classic-primary {
+    @apply btn-classic bg-primary text-primary-foreground hover:bg-primary-dark;
+  }
+
+  .btn-classic-gold {
+    @apply btn-classic;
+    background: linear-gradient(135deg, hsl(var(--accent)), hsl(38 70% 45%));
+    @apply text-accent-foreground hover:opacity-90;
+  }
+
+  /* Dashboard Sidebar */
+  .dashboard-sidebar {
+    @apply bg-sidebar text-sidebar-foreground;
+    background: linear-gradient(180deg, hsl(var(--sidebar-background)), hsl(220 45% 18%));
+  }
+
+  .sidebar-nav-item {
+    @apply flex items-center gap-3 px-4 py-3 rounded-sm text-sidebar-foreground/80 hover:bg-sidebar-accent hover:text-sidebar-foreground transition-colors;
+  }
+
+  .sidebar-nav-item.active {
+    @apply bg-sidebar-accent text-sidebar-foreground border-l-2 border-sidebar-primary;
+  }
+
+  /* KPI Cards */
+  .kpi-card {
+    @apply classic-card p-6 relative overflow-hidden;
+  }
+
+  .kpi-card::before {
+    content: '';
+    @apply absolute top-0 left-0 w-1 h-full;
+    background: hsl(var(--accent));
+  }
+
+  /* Classic Table */
+  .classic-table {
+    @apply w-full;
+  }
+
+  .classic-table thead {
+    @apply border-b-2 border-border;
+  }
+
+  .classic-table th {
+    @apply font-serif font-semibold text-left py-4 px-4 text-foreground;
+  }
+
+  .classic-table tbody tr {
+    @apply border-b border-border transition-colors;
+  }
+
+  .classic-table tbody tr:nth-child(even) {
+    @apply bg-muted/30;
+  }
+
+  .classic-table tbody tr:hover {
+    @apply bg-muted/50;
+  }
+
+  .classic-table td {
+    @apply py-4 px-4;
+  }
+
+  /* Status Badges */
+  .status-published {
+    @apply bg-success/10 text-success border border-success/20;
+  }
+
+  .status-draft {
+    @apply bg-warning/10 text-warning border border-warning/20;
+  }
+
+  .status-scheduled {
+    @apply bg-info/10 text-info border border-info/20;
+  }
+
+  /* Magazine prose styling */
   .prose-magazine {
     @apply text-foreground leading-relaxed;
   }
@@ -159,110 +284,39 @@
   }
 
   .prose-magazine h2 {
-    @apply font-bold text-2xl mt-10 mb-4;
+    @apply font-serif font-bold text-2xl mt-10 mb-4;
   }
 
   .prose-magazine h3 {
-    @apply font-semibold text-xl mt-8 mb-3;
+    @apply font-serif font-semibold text-xl mt-8 mb-3;
   }
 
   .prose-magazine blockquote {
-    @apply border-l-4 border-primary pl-6 my-8 italic text-muted-foreground;
+    @apply border-l-4 border-accent pl-6 my-8 italic text-muted-foreground font-serif;
   }
 
-  .prose-magazine ul, .prose-magazine ol {
-    @apply my-6 pl-6 space-y-2;
+  /* Classic Form Inputs */
+  .classic-input {
+    @apply bg-background border border-border rounded-sm px-4 py-3 font-sans text-foreground;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary;
   }
 
-  .prose-magazine li {
-    @apply text-lg;
-  }
-
-  .prose-magazine img {
-    @apply rounded-lg my-8;
-  }
-
-  /* Newspaper prose styling */
-  .prose-newspaper {
-    @apply font-newspaper;
-  }
-
-  .prose-newspaper p {
-    @apply mb-6 text-lg leading-8 text-justify;
-  }
-
-  .prose-newspaper h2 {
-    @apply font-newspaper font-bold text-2xl mt-10 mb-4 uppercase tracking-tight;
-  }
-
-  .prose-newspaper h3 {
-    @apply font-newspaper font-semibold text-xl mt-8 mb-3;
-  }
-
-  .prose-newspaper blockquote {
-    @apply border-l-4 border-foreground pl-6 my-8 italic text-muted-foreground font-newspaper;
-  }
-
-  .prose-newspaper ul, .prose-newspaper ol {
-    @apply my-6 pl-6 space-y-2;
-  }
-
-  .prose-newspaper li {
-    @apply text-lg font-newspaper;
-  }
-
-  .prose-newspaper img {
-    @apply rounded my-4;
+  .classic-label {
+    @apply font-sans text-sm font-medium text-foreground mb-2 block;
   }
 
   /* Newspaper decorative borders */
   .newspaper-border {
-    @apply border-4 border-double border-foreground relative;
-    box-shadow: 
-      inset 0 0 0 4px hsl(var(--background)),
-      inset 0 0 0 5px hsl(var(--foreground) / 0.3);
+    @apply border-2 border-double border-foreground/20 relative;
   }
 
   .newspaper-divider {
-    @apply relative h-px bg-foreground;
+    @apply relative h-px bg-border;
   }
 
   .newspaper-divider::before {
     content: '§';
-    @apply absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-background px-4 font-newspaper text-muted-foreground;
-  }
-
-  .newspaper-column-divider {
-    @apply w-full h-px bg-gradient-to-r from-transparent via-foreground/50 to-transparent;
-  }
-
-  .newspaper-header {
-    background: repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 2px,
-      hsl(var(--foreground) / 0.03) 2px,
-      hsl(var(--foreground) / 0.03) 4px
-    );
-  }
-
-  .newspaper-footer {
-    background: repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 2px,
-      hsl(var(--foreground) / 0.03) 2px,
-      hsl(var(--foreground) / 0.03) 4px
-    );
-  }
-
-  /* Featured card hover effect */
-  .featured-card {
-    @apply transition-all duration-300;
-  }
-
-  .featured-card:hover {
-    transform: translateY(-4px);
+    @apply absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-background px-4 font-serif text-muted-foreground;
   }
 
   /* Category badge colors */
@@ -308,6 +362,15 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+
+  /* Featured card hover effect */
+  .featured-card {
+    @apply transition-all duration-300;
+  }
+
+  .featured-card:hover {
+    transform: translateY(-4px);
+  }
 }
 
 @layer utilities {
@@ -319,5 +382,18 @@
 
   .hide-scrollbar::-webkit-scrollbar {
     display: none;
+  }
+
+  /* Classic text styles */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Gold gradient text */
+  .text-gold-gradient {
+    background: linear-gradient(135deg, hsl(38 70% 50%), hsl(38 70% 40%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 }

@@ -18,11 +18,14 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['"Times New Roman"', 'Georgia', 'serif'],
-        poppins: ['Poppins', 'sans-serif'],
-        inter: ['Inter', 'sans-serif'],
-        serif: ['"Times New Roman"', 'Georgia', 'serif'],
-        newspaper: ['"Times New Roman"', 'Georgia', 'serif'],
+        // Classic serif for headings - Playfair Display
+        serif: ['Playfair Display', 'Georgia', 'Times New Roman', 'serif'],
+        // Clean sans-serif for body - DM Sans / Inter
+        sans: ['DM Sans', 'Inter', 'system-ui', 'sans-serif'],
+        // Newspaper font
+        newspaper: ['Playfair Display', 'Georgia', 'serif'],
+        // Display font for special headings
+        display: ['Playfair Display', 'Georgia', 'serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -71,17 +74,32 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        // Status colors
+        success: {
+          DEFAULT: "hsl(var(--success))",
+          foreground: "hsl(var(--success-foreground))",
+        },
+        warning: {
+          DEFAULT: "hsl(var(--warning))",
+          foreground: "hsl(var(--warning-foreground))",
+        },
+        info: {
+          DEFAULT: "hsl(var(--info))",
+          foreground: "hsl(var(--info-foreground))",
+        },
       },
       backgroundImage: {
         'gradient-hero': 'var(--gradient-hero)',
         'gradient-card': 'var(--gradient-card)',
         'gradient-overlay': 'var(--gradient-overlay)',
+        'gradient-gold': 'var(--gradient-gold)',
       },
       boxShadow: {
         'sm': 'var(--shadow-sm)',
         'card': 'var(--shadow-card)',
         'hover': 'var(--shadow-hover)',
         'featured': 'var(--shadow-featured)',
+        'classic': 'var(--shadow-classic)',
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -117,6 +135,10 @@ export default {
           "0%": { transform: "translateX(100%)" },
           "100%": { transform: "translateX(0)" },
         },
+        "pulse-soft": {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.7" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -126,6 +148,7 @@ export default {
         "slide-up": "slide-up 0.5s ease-out",
         "scale-in": "scale-in 0.3s ease-out",
         "slide-in-right": "slide-in-right 0.3s ease-out",
+        "pulse-soft": "pulse-soft 2s ease-in-out infinite",
       },
       typography: {
         DEFAULT: {
