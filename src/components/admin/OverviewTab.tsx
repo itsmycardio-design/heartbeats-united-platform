@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { 
   FileText, Eye, MessageSquare, Users, TrendingUp, Plus, 
-  FolderOpen, Settings, Palette, User, Mail, Bell, 
-  BarChart3, Quote, Newspaper, CheckCircle, Clock, AlertCircle
+  BarChart3, Quote, Newspaper, CheckCircle, Clock, ChevronRight,
+  Mail, Calendar, ArrowUpRight
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -23,7 +23,7 @@ interface DashboardStats {
   totalSubscribers: number;
   pendingComments: number;
   topPosts: Array<{ title: string; views: number; id: string }>;
-  recentPosts: Array<{ title: string; published: boolean; created_at: string; id: string }>;
+  recentPosts: Array<{ title: string; published: boolean; created_at: string; id: string; category: string }>;
 }
 
 export const OverviewTab = () => {
@@ -51,10 +51,9 @@ export const OverviewTab = () => {
 
   const fetchDashboardStats = async () => {
     try {
-      // Fetch posts stats
       const { data: posts } = await supabase
         .from("blog_posts")
-        .select("id, title, published, created_at")
+        .select("id, title, published, created_at, category")
         .order("created_at", { ascending: false });
       
       const totalPosts = posts?.length || 0;
@@ -62,13 +61,10 @@ export const OverviewTab = () => {
       const draftPosts = totalPosts - publishedPosts;
       const recentPosts = posts?.slice(0, 5) || [];
 
-      // Fetch views stats
       const today = new Date();
       today.setHours(0, 0, 0, 0);
-      
       const weekAgo = new Date(today);
       weekAgo.setDate(weekAgo.getDate() - 7);
-      
       const monthAgo = new Date(today);
       monthAgo.setMonth(monthAgo.getMonth() - 1);
 
@@ -93,26 +89,22 @@ export const OverviewTab = () => {
         .gte("viewed_at", monthAgo.toISOString());
       const viewsThisMonth = monthViews?.length || 0;
 
-      // Fetch messages stats
       const { data: messages } = await supabase.from("contact_messages").select("is_read");
       const totalMessages = messages?.length || 0;
       const unreadMessages = messages?.filter((m) => !m.is_read).length || 0;
 
-      // Fetch subscribers
       const { data: subscribers } = await supabase
         .from("subscribers")
         .select("*")
         .eq("is_active", true);
       const totalSubscribers = subscribers?.length || 0;
 
-      // Fetch pending comments
       const { data: comments } = await supabase
         .from("comments")
         .select("is_approved")
         .eq("is_approved", false);
       const pendingComments = comments?.length || 0;
 
-      // Fetch top posts by views
       const { data: topPostsData } = await supabase
         .from("page_views")
         .select("post_id")
@@ -167,233 +159,142 @@ export const OverviewTab = () => {
     }
   };
 
-  const handleQuickAction = (action: string) => {
-    switch (action) {
-      case "new-post":
-        navigate("/admin?tab=posts");
-        setTimeout(() => {
-          const newPostBtn = document.querySelector('[data-action="new-post"]') as HTMLButtonElement;
-          newPostBtn?.click();
-        }, 100);
-        break;
-      case "new-quote":
-        navigate("/admin?tab=posts&type=quote");
-        setTimeout(() => {
-          const newPostBtn = document.querySelector('[data-action="new-post"]') as HTMLButtonElement;
-          newPostBtn?.click();
-        }, 100);
-        break;
-      case "view-posts":
-        navigate("/admin?tab=posts");
-        break;
-      case "view-messages":
-        navigate("/admin?tab=messages");
-        break;
-      case "view-comments":
-        navigate("/admin?tab=comments");
-        break;
-      case "view-subscribers":
-        navigate("/admin?tab=subscribers");
-        break;
-      case "view-analytics":
-        navigate("/admin?tab=analytics");
-        break;
-      case "theme-settings":
-        navigate("/admin?tab=theme");
-        break;
-      case "site-settings":
-        navigate("/admin?tab=site");
-        break;
-      case "founder-settings":
-        navigate("/admin?tab=founder");
-        break;
-      case "manage-writers":
-        navigate("/admin?tab=writers");
-        break;
-    }
-  };
-
   if (loading) {
     return (
       <div className="flex items-center justify-center p-12">
         <div className="text-center">
-          <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-muted-foreground">Loading dashboard...</p>
+          <div className="w-10 h-10 border-2 border-accent border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-muted-foreground font-sans">Loading dashboard...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fade-in">
       {/* Welcome Banner */}
-      <div className="bg-gradient-to-r from-primary to-primary-dark rounded-lg p-6 text-primary-foreground">
-        <h2 className="text-2xl font-bold mb-2">Welcome to Ukweli Media Admin</h2>
-        <p className="opacity-90">Manage your content, engage with readers, and grow your platform.</p>
+      <div className="classic-card p-8 bg-gradient-to-r from-primary to-primary-dark text-primary-foreground">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="font-serif text-3xl font-semibold mb-2">Welcome to Editorial</h2>
+            <p className="text-primary-foreground/80 font-sans">
+              Manage your content, engage with readers, and grow your platform.
+            </p>
+          </div>
+          <div className="hidden md:flex gap-2">
+            <Button 
+              className="bg-accent text-accent-foreground hover:bg-accent/90"
+              onClick={() => navigate("/admin?tab=posts")}
+            >
+              <Plus className="w-4 h-4 mr-2" />
+              New Article
+            </Button>
+          </div>
+        </div>
       </div>
 
-      {/* Quick Actions Grid */}
+      {/* KPI Cards */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card className="cursor-pointer hover:shadow-lg transition-shadow border-l-4 border-l-primary" onClick={() => handleQuickAction("new-post")}>
-          <CardContent className="p-4 flex items-center gap-4">
-            <div className="p-3 bg-primary/10 rounded-full">
-              <Newspaper className="w-6 h-6 text-primary" />
-            </div>
+        <div className="kpi-card">
+          <div className="flex items-start justify-between">
             <div>
-              <p className="font-semibold">New Article</p>
-              <p className="text-sm text-muted-foreground">Create blog post</p>
+              <p className="editorial-subheader mb-1">Total Posts</p>
+              <p className="font-serif text-3xl font-semibold">{stats.totalPosts}</p>
+              <div className="flex gap-3 mt-2">
+                <span className="text-xs text-success flex items-center gap-1">
+                  <CheckCircle className="w-3 h-3" /> {stats.publishedPosts} live
+                </span>
+                <span className="text-xs text-warning flex items-center gap-1">
+                  <Clock className="w-3 h-3" /> {stats.draftPosts} drafts
+                </span>
+              </div>
             </div>
-          </CardContent>
-        </Card>
+            <div className="p-3 bg-accent/10 rounded-sm">
+              <FileText className="w-6 h-6 text-accent" />
+            </div>
+          </div>
+        </div>
 
-        <Card className="cursor-pointer hover:shadow-lg transition-shadow border-l-4 border-l-amber-500" onClick={() => handleQuickAction("new-quote")}>
-          <CardContent className="p-4 flex items-center gap-4">
-            <div className="p-3 bg-amber-500/10 rounded-full">
-              <Quote className="w-6 h-6 text-amber-500" />
-            </div>
+        <div className="kpi-card">
+          <div className="flex items-start justify-between">
             <div>
-              <p className="font-semibold">New Quote</p>
-              <p className="text-sm text-muted-foreground">Add inspiration</p>
+              <p className="editorial-subheader mb-1">Total Views</p>
+              <p className="font-serif text-3xl font-semibold">{stats.totalViews.toLocaleString()}</p>
+              <p className="text-xs text-success mt-2 flex items-center gap-1">
+                <ArrowUpRight className="w-3 h-3" /> +{stats.viewsToday} today
+              </p>
             </div>
-          </CardContent>
-        </Card>
+            <div className="p-3 bg-info/10 rounded-sm">
+              <Eye className="w-6 h-6 text-info" />
+            </div>
+          </div>
+        </div>
 
-        <Card className="cursor-pointer hover:shadow-lg transition-shadow border-l-4 border-l-blue-500" onClick={() => handleQuickAction("view-messages")}>
-          <CardContent className="p-4 flex items-center gap-4">
-            <div className="p-3 bg-blue-500/10 rounded-full relative">
-              <Mail className="w-6 h-6 text-blue-500" />
-              {stats.unreadMessages > 0 && (
-                <Badge className="absolute -top-1 -right-1 w-5 h-5 p-0 flex items-center justify-center text-xs bg-destructive">
-                  {stats.unreadMessages}
-                </Badge>
-              )}
-            </div>
+        <div className="kpi-card">
+          <div className="flex items-start justify-between">
             <div>
-              <p className="font-semibold">Messages</p>
-              <p className="text-sm text-muted-foreground">{stats.unreadMessages} unread</p>
+              <p className="editorial-subheader mb-1">Subscribers</p>
+              <p className="font-serif text-3xl font-semibold">{stats.totalSubscribers}</p>
+              <p className="text-xs text-muted-foreground mt-2">Active readers</p>
             </div>
-          </CardContent>
-        </Card>
+            <div className="p-3 bg-success/10 rounded-sm">
+              <Users className="w-6 h-6 text-success" />
+            </div>
+          </div>
+        </div>
 
-        <Card className="cursor-pointer hover:shadow-lg transition-shadow border-l-4 border-l-green-500" onClick={() => handleQuickAction("view-comments")}>
-          <CardContent className="p-4 flex items-center gap-4">
-            <div className="p-3 bg-green-500/10 rounded-full relative">
-              <MessageSquare className="w-6 h-6 text-green-500" />
-              {stats.pendingComments > 0 && (
-                <Badge className="absolute -top-1 -right-1 w-5 h-5 p-0 flex items-center justify-center text-xs bg-amber-500">
-                  {stats.pendingComments}
-                </Badge>
-              )}
-            </div>
+        <div className="kpi-card">
+          <div className="flex items-start justify-between">
             <div>
-              <p className="font-semibold">Comments</p>
-              <p className="text-sm text-muted-foreground">{stats.pendingComments} pending</p>
+              <p className="editorial-subheader mb-1">Messages</p>
+              <p className="font-serif text-3xl font-semibold">{stats.unreadMessages}</p>
+              <p className="text-xs text-muted-foreground mt-2">Awaiting response</p>
             </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Stats Cards */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Posts</CardTitle>
-            <FileText className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{stats.totalPosts}</div>
-            <div className="flex gap-2 mt-1">
-              <span className="text-xs flex items-center gap-1 text-green-600">
-                <CheckCircle className="w-3 h-3" />
-                {stats.publishedPosts} published
-              </span>
-              <span className="text-xs flex items-center gap-1 text-amber-600">
-                <Clock className="w-3 h-3" />
-                {stats.draftPosts} drafts
-              </span>
+            <div className="p-3 bg-warning/10 rounded-sm">
+              <Mail className="w-6 h-6 text-warning" />
             </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Views</CardTitle>
-            <Eye className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{stats.totalViews.toLocaleString()}</div>
-            <p className="text-xs text-muted-foreground">
-              <span className="text-green-600">+{stats.viewsToday}</span> today
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Subscribers</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{stats.totalSubscribers}</div>
-            <p className="text-xs text-muted-foreground">Active subscribers</p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Messages</CardTitle>
-            <Mail className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{stats.totalMessages}</div>
-            <p className="text-xs text-muted-foreground">
-              {stats.unreadMessages > 0 && (
-                <span className="text-amber-600">{stats.unreadMessages} unread</span>
-              )}
-              {stats.unreadMessages === 0 && "All read"}
-            </p>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
 
       {/* Views Trend */}
       <div className="grid gap-4 md:grid-cols-3">
-        <Card className="bg-gradient-to-br from-blue-50 to-background dark:from-blue-950/20">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium flex items-center gap-2">
-              <TrendingUp className="w-4 h-4 text-blue-500" />
-              Today
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold text-blue-600">{stats.viewsToday}</div>
-            <p className="text-xs text-muted-foreground">page views</p>
+        <Card className="classic-card">
+          <CardContent className="p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="p-2 bg-info/10 rounded-sm">
+                <TrendingUp className="w-4 h-4 text-info" />
+              </div>
+              <p className="editorial-subheader">Today</p>
+            </div>
+            <p className="font-serif text-4xl font-semibold text-info">{stats.viewsToday}</p>
+            <p className="text-sm text-muted-foreground mt-1">page views</p>
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-green-50 to-background dark:from-green-950/20">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium flex items-center gap-2">
-              <TrendingUp className="w-4 h-4 text-green-500" />
-              This Week
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold text-green-600">{stats.viewsThisWeek}</div>
-            <p className="text-xs text-muted-foreground">page views</p>
+        <Card className="classic-card">
+          <CardContent className="p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="p-2 bg-success/10 rounded-sm">
+                <TrendingUp className="w-4 h-4 text-success" />
+              </div>
+              <p className="editorial-subheader">This Week</p>
+            </div>
+            <p className="font-serif text-4xl font-semibold text-success">{stats.viewsThisWeek}</p>
+            <p className="text-sm text-muted-foreground mt-1">page views</p>
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-purple-50 to-background dark:from-purple-950/20">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium flex items-center gap-2">
-              <TrendingUp className="w-4 h-4 text-purple-500" />
-              This Month
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold text-purple-600">{stats.viewsThisMonth}</div>
-            <p className="text-xs text-muted-foreground">page views</p>
+        <Card className="classic-card">
+          <CardContent className="p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="p-2 bg-accent/10 rounded-sm">
+                <TrendingUp className="w-4 h-4 text-accent" />
+              </div>
+              <p className="editorial-subheader">This Month</p>
+            </div>
+            <p className="font-serif text-4xl font-semibold text-accent">{stats.viewsThisMonth}</p>
+            <p className="text-sm text-muted-foreground mt-1">page views</p>
           </CardContent>
         </Card>
       </div>
@@ -401,31 +302,33 @@ export const OverviewTab = () => {
       {/* Two Column Layout */}
       <div className="grid gap-6 lg:grid-cols-2">
         {/* Top Performing Posts */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <BarChart3 className="w-5 h-5 text-primary" />
+        <Card className="classic-card">
+          <CardHeader className="border-b border-border">
+            <CardTitle className="font-serif text-xl flex items-center gap-2">
+              <BarChart3 className="w-5 h-5 text-accent" />
               Top Performing Articles
             </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-0">
             {stats.topPosts.length === 0 ? (
-              <p className="text-muted-foreground text-sm text-center py-4">No view data available yet</p>
+              <p className="text-muted-foreground text-sm text-center py-8 font-sans">No view data available yet</p>
             ) : (
-              <div className="space-y-3">
+              <div className="divide-y divide-border">
                 {stats.topPosts.map((post, index) => (
                   <div
                     key={post.id}
-                    className="flex items-center justify-between p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors cursor-pointer"
+                    className="flex items-center justify-between p-4 hover:bg-muted/30 transition-colors cursor-pointer"
                     onClick={() => navigate(`/blog/${post.id}`)}
                   >
-                    <div className="flex items-center gap-3">
-                      <span className={`text-lg font-bold ${index === 0 ? 'text-amber-500' : index === 1 ? 'text-gray-400' : index === 2 ? 'text-amber-700' : 'text-muted-foreground'}`}>
-                        #{index + 1}
+                    <div className="flex items-center gap-4">
+                      <span className={`font-serif text-lg font-bold w-6 ${
+                        index === 0 ? 'text-accent' : index === 1 ? 'text-muted-foreground' : index === 2 ? 'text-warning' : 'text-muted-foreground/60'
+                      }`}>
+                        {index + 1}
                       </span>
-                      <span className="font-medium line-clamp-1">{post.title}</span>
+                      <span className="font-sans font-medium line-clamp-1">{post.title}</span>
                     </div>
-                    <Badge variant="secondary" className="flex items-center gap-1">
+                    <Badge variant="secondary" className="flex items-center gap-1 font-sans">
                       <Eye className="w-3 h-3" />
                       {post.views}
                     </Badge>
@@ -437,33 +340,40 @@ export const OverviewTab = () => {
         </Card>
 
         {/* Recent Posts */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Clock className="w-5 h-5 text-primary" />
-              Recent Posts
+        <Card className="classic-card">
+          <CardHeader className="border-b border-border">
+            <CardTitle className="font-serif text-xl flex items-center gap-2">
+              <Clock className="w-5 h-5 text-accent" />
+              Recent Articles
             </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-0">
             {stats.recentPosts.length === 0 ? (
-              <p className="text-muted-foreground text-sm text-center py-4">No posts yet</p>
+              <p className="text-muted-foreground text-sm text-center py-8 font-sans">No posts yet</p>
             ) : (
-              <div className="space-y-3">
+              <div className="divide-y divide-border">
                 {stats.recentPosts.map((post) => (
                   <div
                     key={post.id}
-                    className="flex items-center justify-between p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors cursor-pointer"
+                    className="flex items-center justify-between p-4 hover:bg-muted/30 transition-colors cursor-pointer"
                     onClick={() => navigate(`/blog/${post.id}`)}
                   >
                     <div className="flex-1">
-                      <span className="font-medium line-clamp-1">{post.title}</span>
-                      <p className="text-xs text-muted-foreground">
-                        {new Date(post.created_at).toLocaleDateString()}
-                      </p>
+                      <span className="font-sans font-medium line-clamp-1">{post.title}</span>
+                      <div className="flex items-center gap-2 mt-1">
+                        <Badge variant="secondary" className={`category-${post.category} text-xs`}>
+                          {post.category}
+                        </Badge>
+                        <span className="text-xs text-muted-foreground">
+                          {new Date(post.created_at).toLocaleDateString()}
+                        </span>
+                      </div>
                     </div>
-                    <Badge variant={post.published ? "default" : "secondary"}>
-                      {post.published ? "Published" : "Draft"}
-                    </Badge>
+                    {post.published ? (
+                      <Badge className="status-published">Published</Badge>
+                    ) : (
+                      <Badge className="status-draft">Draft</Badge>
+                    )}
                   </div>
                 ))}
               </div>
@@ -472,44 +382,37 @@ export const OverviewTab = () => {
         </Card>
       </div>
 
-      {/* Settings Quick Access */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Settings className="w-5 h-5" />
-            Quick Settings
-          </CardTitle>
+      {/* Quick Actions */}
+      <Card className="classic-card">
+        <CardHeader className="border-b border-border">
+          <CardTitle className="font-serif text-xl">Quick Actions</CardTitle>
+          <CardDescription className="font-sans">Common tasks and shortcuts</CardDescription>
         </CardHeader>
-        <CardContent>
-          <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-4">
-            <Button variant="outline" className="justify-start gap-2 h-auto py-3" onClick={() => handleQuickAction("theme-settings")}>
-              <Palette className="w-4 h-4 text-pink-500" />
-              <div className="text-left">
-                <p className="font-medium">Theme</p>
-                <p className="text-xs text-muted-foreground">Colors & fonts</p>
-              </div>
-            </Button>
-            <Button variant="outline" className="justify-start gap-2 h-auto py-3" onClick={() => handleQuickAction("site-settings")}>
-              <Settings className="w-4 h-4 text-blue-500" />
-              <div className="text-left">
-                <p className="font-medium">Site Settings</p>
-                <p className="text-xs text-muted-foreground">SEO & meta</p>
-              </div>
-            </Button>
-            <Button variant="outline" className="justify-start gap-2 h-auto py-3" onClick={() => handleQuickAction("founder-settings")}>
-              <User className="w-4 h-4 text-green-500" />
-              <div className="text-left">
-                <p className="font-medium">Founder</p>
-                <p className="text-xs text-muted-foreground">Profile info</p>
-              </div>
-            </Button>
-            <Button variant="outline" className="justify-start gap-2 h-auto py-3" onClick={() => handleQuickAction("manage-writers")}>
-              <Users className="w-4 h-4 text-purple-500" />
-              <div className="text-left">
-                <p className="font-medium">Writers</p>
-                <p className="text-xs text-muted-foreground">Manage team</p>
-              </div>
-            </Button>
+        <CardContent className="p-4">
+          <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
+            {[
+              { label: "New Article", icon: Newspaper, href: "/admin?tab=posts", color: "accent" },
+              { label: "New Quote", icon: Quote, href: "/admin?tab=posts&type=quote", color: "warning" },
+              { label: "View Messages", icon: Mail, href: "/admin?tab=messages", badge: stats.unreadMessages, color: "info" },
+              { label: "Moderate Comments", icon: MessageSquare, href: "/admin?tab=comments", badge: stats.pendingComments, color: "success" },
+            ].map((item, idx) => (
+              <Button
+                key={idx}
+                variant="outline"
+                className="h-auto p-4 flex items-center gap-3 justify-start hover:bg-muted/50"
+                onClick={() => navigate(item.href)}
+              >
+                <div className={`p-2 rounded-sm bg-${item.color}/10`}>
+                  <item.icon className={`w-4 h-4 text-${item.color}`} />
+                </div>
+                <div className="text-left">
+                  <p className="font-sans font-medium">{item.label}</p>
+                  {item.badge !== undefined && item.badge > 0 && (
+                    <p className="text-xs text-muted-foreground">{item.badge} pending</p>
+                  )}
+                </div>
+              </Button>
+            ))}
           </div>
         </CardContent>
       </Card>
