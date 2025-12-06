@@ -18,14 +18,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        // Classic serif for headings - Playfair Display
-        serif: ['Playfair Display', 'Georgia', 'Times New Roman', 'serif'],
-        // Clean sans-serif for body - DM Sans / Inter
-        sans: ['DM Sans', 'Inter', 'system-ui', 'sans-serif'],
-        // Newspaper font
-        newspaper: ['Playfair Display', 'Georgia', 'serif'],
-        // Display font for special headings
-        display: ['Playfair Display', 'Georgia', 'serif'],
+        // Times New Roman everywhere
+        serif: ['Times New Roman', 'Times', 'Georgia', 'serif'],
+        sans: ['Times New Roman', 'Times', 'Georgia', 'serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -88,18 +83,10 @@ export default {
           foreground: "hsl(var(--info-foreground))",
         },
       },
-      backgroundImage: {
-        'gradient-hero': 'var(--gradient-hero)',
-        'gradient-card': 'var(--gradient-card)',
-        'gradient-overlay': 'var(--gradient-overlay)',
-        'gradient-gold': 'var(--gradient-gold)',
-      },
       boxShadow: {
         'sm': 'var(--shadow-sm)',
         'card': 'var(--shadow-card)',
         'hover': 'var(--shadow-hover)',
-        'featured': 'var(--shadow-featured)',
-        'classic': 'var(--shadow-classic)',
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -119,50 +106,16 @@ export default {
           "0%": { opacity: "0", transform: "translateY(10px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
-        "fade-in-up": {
-          "0%": { opacity: "0", transform: "translateY(20px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
-        },
-        "slide-up": {
-          "0%": { opacity: "0", transform: "translateY(30px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
-        },
-        "scale-in": {
-          "0%": { opacity: "0", transform: "scale(0.95)" },
-          "100%": { opacity: "1", transform: "scale(1)" },
-        },
-        "slide-in-right": {
-          "0%": { transform: "translateX(100%)" },
-          "100%": { transform: "translateX(0)" },
-        },
-        "pulse-soft": {
+        "pulse": {
           "0%, 100%": { opacity: "1" },
-          "50%": { opacity: "0.7" },
+          "50%": { opacity: "0.5" },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "fade-in": "fade-in 0.5s ease-out",
-        "fade-in-up": "fade-in-up 0.6s ease-out",
-        "slide-up": "slide-up 0.5s ease-out",
-        "scale-in": "scale-in 0.3s ease-out",
-        "slide-in-right": "slide-in-right 0.3s ease-out",
-        "pulse-soft": "pulse-soft 2s ease-in-out infinite",
-      },
-      typography: {
-        DEFAULT: {
-          css: {
-            maxWidth: 'none',
-            color: 'hsl(var(--foreground))',
-            a: {
-              color: 'hsl(var(--primary))',
-              '&:hover': {
-                color: 'hsl(var(--primary-dark))',
-              },
-            },
-          },
-        },
+        "fade-in": "fade-in 0.3s ease-out",
+        "pulse": "pulse 2s ease-in-out infinite",
       },
     },
   },
