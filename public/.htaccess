@@ -2,15 +2,52 @@
   RewriteEngine On
   RewriteBase /
   
-  # Don't rewrite files or directories
+  # Force HTTPS (uncomment if your site has SSL)
+  # RewriteCond %{HTTPS} off
+  # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+  
+  # Handle Authorization Header
+  RewriteCond %{HTTP:Authorization} .
+  RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+  
+  # Don't rewrite files or directories that exist
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   
-  # Rewrite everything else to index.html to allow React Router to handle routes
-  RewriteRule ^ index.html [L]
+  # Rewrite everything else to index.html for React Router
+  RewriteRule ^ index.html [QSA,L]
 </IfModule>
 
-# Set CORS headers (if needed)
+# Fallback for servers that don't support mod_rewrite
+ErrorDocument 404 /index.html
+
+# Enable compression for faster loading
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
+</IfModule>
+
+# Set proper MIME types
+<IfModule mod_mime.c>
+  AddType text/html .html
+  AddType text/css .css
+  AddType application/javascript .js
+  AddType application/json .json
+  AddType image/svg+xml .svg
+  AddType image/webp .webp
+</IfModule>
+
+# Cache static assets
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+</IfModule>
+
+# Set CORS headers
 <IfModule mod_headers.c>
   Header set Access-Control-Allow-Origin "*"
   Header set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
