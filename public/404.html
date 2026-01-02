@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Redirecting...</title>
+  <script>
+    // Single Page App redirect for hosts that don't support proper rewrites
+    // Stores the path and redirects to index.html which will pick it up
+    sessionStorage.redirect = location.href;
+    location.replace(location.origin);
+  </script>
+</head>
+<body>
+  Redirecting...
+</body>
+</html>
