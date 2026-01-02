@@ -100,6 +100,10 @@ const AdminDashboard = () => {
 
   const setActiveTab = (tab: string) => {
     setSearchParams({ tab });
+    // Auto-collapse sidebar on mobile when selecting a menu item
+    if (window.innerWidth < 1024) {
+      setSidebarOpen(false);
+    }
   };
 
   useEffect(() => {
