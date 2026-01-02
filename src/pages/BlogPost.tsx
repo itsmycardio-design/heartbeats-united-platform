@@ -1,10 +1,11 @@
 import { useParams, Link } from "react-router-dom";
-import { Calendar, Clock, ArrowLeft, Facebook, MessageCircle, Twitter, Linkedin, Copy, ChevronRight } from "lucide-react";
+import { Calendar, Clock, Facebook, MessageCircle, Twitter, Linkedin, Copy, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { usePageView } from "@/hooks/usePageView";
 import { useBlogPost, useBlogPosts } from "@/hooks/useBlogPosts";
 import { Comments } from "@/components/Comments";
 import { NewsCard } from "@/components/news/NewsCard";
+import { SEO } from "@/components/SEO";
 import { toast } from "sonner";
 
 const BlogPost = () => {
@@ -57,6 +58,17 @@ const BlogPost = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* SEO Meta Tags */}
+      <SEO
+        title={post.title}
+        description={post.excerpt}
+        image={post.image}
+        type="article"
+        author={post.author_name || "Ukweli Media"}
+        publishedTime={post.created_at}
+        category={post.category}
+      />
+
       {/* Breadcrumb */}
       <div className="border-b border-border">
         <div className="container mx-auto px-4 py-3">
