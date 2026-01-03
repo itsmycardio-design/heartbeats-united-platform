@@ -3,8 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
 import { useState } from "react";
+import { rateLimitedSubmit } from "@/lib/rateLimitedSubmit";
 
 const Contact = () => {
   const [loading, setLoading] = useState(false);
@@ -20,16 +20,22 @@ const Contact = () => {
     setLoading(true);
 
     try {
-      const { error } = await supabase
-        .from("contact_messages")
-        .insert([formData]);
+      const result = await rateLimitedSubmit('contact', formData);
 
-      if (error) throw error;
+      if (!result.success) {
+        if (result.retryAfter) {
+          toast.error(`${result.error} Please wait ${result.retryAfter} seconds.`);
+        } else {
+          toast.error(result.error || "Failed to send message");
+        }
+        return;
+      }
 
       toast.success("Message sent successfully! We'll get back to you soon.");
       setFormData({ name: "", email: "", subject: "", message: "" });
-    } catch (error: any) {
-      toast.error(error.message || "Failed to send message");
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : "Failed to send message";
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -102,6 +108,7 @@ const Contact = () => {
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     disabled={loading}
+                    maxLength={100}
                   />
                 </div>
                 <div>
@@ -115,6 +122,7 @@ const Contact = () => {
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     disabled={loading}
+                    maxLength={255}
                   />
                 </div>
               </div>
@@ -129,6 +137,7 @@ const Contact = () => {
                   value={formData.subject}
                   onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                   disabled={loading}
+                  maxLength={200}
                 />
               </div>
 
@@ -144,6 +153,7 @@ const Contact = () => {
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   disabled={loading}
+                  maxLength={5000}
                 />
               </div>
 

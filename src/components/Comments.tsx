@@ -7,6 +7,7 @@ import { Card } from "@/components/ui/card";
 import { toast } from "sonner";
 import { MessageCircle, Send } from "lucide-react";
 import { format } from "date-fns";
+import { rateLimitedSubmit } from "@/lib/rateLimitedSubmit";
 
 interface Comment {
   id: string;
@@ -80,6 +81,11 @@ export const Comments = ({ postId }: CommentsProps) => {
       return;
     }
 
+    if (newComment.length > 2000) {
+      toast.error("Comment is too long. Maximum 2000 characters.");
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -90,20 +96,26 @@ export const Comments = ({ postId }: CommentsProps) => {
         .eq("id", user.id)
         .single();
 
-      const { error } = await supabase.from("comments").insert({
+      const result = await rateLimitedSubmit('comment', {
         post_id: postId,
         user_id: user.id,
         author_name: profile?.full_name || profile?.email || "Anonymous",
         author_email: profile?.email || user.email || "",
         content: newComment.trim(),
-        is_approved: false, // Requires admin approval
-      });
+      }, user.id);
 
-      if (error) throw error;
+      if (!result.success) {
+        if (result.retryAfter) {
+          toast.error(`${result.error} Please wait ${result.retryAfter} seconds.`);
+        } else {
+          toast.error(result.error || "Failed to post comment. Please try again.");
+        }
+        return;
+      }
 
       toast.success("Comment submitted! It will appear after approval.");
       setNewComment("");
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Error posting comment:", error);
       toast.error("Failed to post comment. Please try again.");
     } finally {
@@ -130,8 +142,12 @@ export const Comments = ({ postId }: CommentsProps) => {
               onChange={(e) => setNewComment(e.target.value)}
               disabled={loading}
               className="min-h-[100px]"
+              maxLength={2000}
             />
-            <div className="flex justify-end">
+            <div className="flex justify-between items-center">
+              <span className="text-xs text-muted-foreground">
+                {newComment.length}/2000 characters
+              </span>
               <Button type="submit" disabled={loading} className="gap-2">
                 <Send className="w-4 h-4" />
                 {loading ? "Posting..." : "Post Comment"}
