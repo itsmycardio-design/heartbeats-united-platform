@@ -4,8 +4,8 @@ import { Calendar, TrendingUp, Tag, Mail, Loader2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { rateLimitedSubmit } from "@/lib/rateLimitedSubmit";
 import type { BlogPost } from "@/hooks/useBlogPosts";
 
 interface SidebarWidgetProps {
@@ -164,18 +164,40 @@ export const NewsletterWidget = () => {
 
     setLoading(true);
     try {
-      const { error } = await supabase.from("subscribers").insert([{ email }]);
-      if (error) throw error;
+      const result = await rateLimitedSubmit('subscribe', { email });
+      
+      if (!result.success) {
+        if (result.error?.includes('subscribed')) {
+          toast({
+            title: "Already subscribed",
+            description: "This email is already on our list.",
+            variant: "destructive",
+          });
+        } else if (result.retryAfter) {
+          toast({
+            title: "Rate limit exceeded",
+            description: `Please wait ${result.retryAfter} seconds before trying again.`,
+            variant: "destructive",
+          });
+        } else {
+          toast({
+            title: "Error",
+            description: result.error || "Failed to subscribe. Please try again.",
+            variant: "destructive",
+          });
+        }
+        return;
+      }
 
       toast({
         title: "Subscribed!",
         description: "You've been added to our newsletter.",
       });
       setEmail("");
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: "Error",
-        description: error.message || "Failed to subscribe. Please try again.",
+        description: "Failed to subscribe. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -198,6 +220,7 @@ export const NewsletterWidget = () => {
           onChange={(e) => setEmail(e.target.value)}
           disabled={loading}
           className="bg-white/10 border-white/20 text-white placeholder:text-white/60 focus:bg-white/20"
+          maxLength={255}
         />
         <Button
           type="submit"

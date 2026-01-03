@@ -6,8 +6,8 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Handshake, Mail, Phone, Building2, CheckCircle } from "lucide-react";
 import { usePageView } from "@/hooks/usePageView";
-import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { rateLimitedSubmit } from "@/lib/rateLimitedSubmit";
 
 const Partnership = () => {
   usePageView("/partnership");
@@ -26,16 +26,29 @@ const Partnership = () => {
     setLoading(true);
 
     try {
-      const { error } = await supabase
-        .from("contact_messages")
-        .insert([{
-          name: formData.name,
-          email: formData.email,
-          subject: `Partnership Inquiry from ${formData.organization}`,
-          message: `Organization: ${formData.organization}\nPhone: ${formData.phone}\n\n${formData.message}`
-        }]);
+      const result = await rateLimitedSubmit('contact', {
+        name: formData.name,
+        email: formData.email,
+        subject: `Partnership Inquiry from ${formData.organization}`,
+        message: `Organization: ${formData.organization}\nPhone: ${formData.phone}\n\n${formData.message}`
+      });
 
-      if (error) throw error;
+      if (!result.success) {
+        if (result.retryAfter) {
+          toast({
+            title: "Rate limit exceeded",
+            description: `Please wait ${result.retryAfter} seconds before trying again.`,
+            variant: "destructive",
+          });
+        } else {
+          toast({
+            title: "Failed to send inquiry",
+            description: result.error || "Something went wrong. Please try again.",
+            variant: "destructive",
+          });
+        }
+        return;
+      }
 
       toast({
         title: "Partnership inquiry sent!",
@@ -49,10 +62,11 @@ const Partnership = () => {
         phone: "",
         message: "",
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : "Something went wrong. Please try again.";
       toast({
         title: "Failed to send inquiry",
-        description: error.message || "Something went wrong. Please try again.",
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {
@@ -145,6 +159,7 @@ const Partnership = () => {
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         required
                         placeholder="John Doe"
+                        maxLength={100}
                       />
                     </div>
 
@@ -160,6 +175,7 @@ const Partnership = () => {
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         required
                         placeholder="john@example.com"
+                        maxLength={255}
                       />
                     </div>
                   </div>
@@ -176,6 +192,7 @@ const Partnership = () => {
                         onChange={(e) => setFormData({ ...formData, organization: e.target.value })}
                         required
                         placeholder="Your Company"
+                        maxLength={100}
                       />
                     </div>
 
@@ -190,6 +207,7 @@ const Partnership = () => {
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                         placeholder="0712345678"
+                        maxLength={20}
                       />
                     </div>
                   </div>
@@ -203,6 +221,7 @@ const Partnership = () => {
                       rows={6}
                       required
                       placeholder="Tell us about your partnership ideas, goals, and how we can collaborate..."
+                      maxLength={5000}
                     />
                   </div>
 

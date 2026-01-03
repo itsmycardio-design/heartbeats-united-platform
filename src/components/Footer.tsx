@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-import { Facebook, Twitter, Instagram, Youtube, Mail, Phone } from "lucide-react";
+import { Facebook, Twitter, Instagram, Youtube, Mail } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { rateLimitedSubmit } from "@/lib/rateLimitedSubmit";
 
 export const Footer = () => {
   const [email, setEmail] = useState("");
@@ -15,12 +15,23 @@ export const Footer = () => {
     if (!email) return;
     setLoading(true);
     try {
-      const { error } = await supabase.from("subscribers").insert([{ email }]);
-      if (error) throw error;
+      const result = await rateLimitedSubmit('subscribe', { email });
+      
+      if (!result.success) {
+        if (result.error?.includes('subscribed')) {
+          toast.error("Already subscribed!");
+        } else if (result.retryAfter) {
+          toast.error(`${result.error} Please wait ${result.retryAfter} seconds.`);
+        } else {
+          toast.error(result.error || "Failed to subscribe.");
+        }
+        return;
+      }
+      
       toast.success("Successfully subscribed!");
       setEmail("");
-    } catch (error: any) {
-      toast.error(error.message.includes("duplicate") ? "Already subscribed!" : "Failed to subscribe.");
+    } catch (error: unknown) {
+      toast.error("Failed to subscribe.");
     } finally {
       setLoading(false);
     }
@@ -85,6 +96,7 @@ export const Footer = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 disabled={loading}
+                maxLength={255}
               />
               <Button type="submit" disabled={loading} className="bg-primary hover:bg-primary-dark">
                 <Mail className="w-4 h-4" />

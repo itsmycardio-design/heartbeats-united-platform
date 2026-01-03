@@ -3,8 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
 import { Mic, Calendar, Users, Mail, Phone, Building } from "lucide-react";
+import { rateLimitedSubmit } from "@/lib/rateLimitedSubmit";
 
 const Speaker = () => {
   const [formData, setFormData] = useState({
@@ -24,13 +24,11 @@ const Speaker = () => {
     setLoading(true);
 
     try {
-      const { error } = await supabase
-        .from("contact_messages")
-        .insert([{
-          name: formData.name,
-          email: formData.email,
-          subject: `Speaking Engagement Request - ${formData.event_type}`,
-          message: `
+      const result = await rateLimitedSubmit('contact', {
+        name: formData.name,
+        email: formData.email,
+        subject: `Speaking Engagement Request - ${formData.event_type}`,
+        message: `
 Event Type: ${formData.event_type}
 Organization: ${formData.organization}
 Phone: ${formData.phone}
@@ -39,10 +37,17 @@ Expected Audience Size: ${formData.audience_size}
 
 Additional Details:
 ${formData.message}
-          `.trim()
-        }]);
+        `.trim()
+      });
 
-      if (error) throw error;
+      if (!result.success) {
+        if (result.retryAfter) {
+          toast.error(`Rate limit exceeded. Please wait ${result.retryAfter} seconds.`);
+        } else {
+          toast.error(result.error || "Failed to submit request. Please try again.");
+        }
+        return;
+      }
 
       toast.success("Your booking request has been submitted successfully!");
       setFormData({
@@ -55,7 +60,7 @@ ${formData.message}
         audience_size: "",
         message: ""
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast.error("Failed to submit request. Please try again.");
       console.error("Error:", error);
     } finally {
@@ -140,6 +145,7 @@ ${formData.message}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       placeholder="John Doe"
                       className="pl-10"
+                      maxLength={100}
                     />
                   </div>
                 </div>
@@ -154,6 +160,7 @@ ${formData.message}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       placeholder="john@example.com"
                       className="pl-10"
+                      maxLength={255}
                     />
                   </div>
                 </div>
@@ -170,6 +177,7 @@ ${formData.message}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       placeholder="+254 700 000 000"
                       className="pl-10"
+                      maxLength={20}
                     />
                   </div>
                 </div>
@@ -183,6 +191,7 @@ ${formData.message}
                       onChange={(e) => setFormData({ ...formData, organization: e.target.value })}
                       placeholder="Your Company"
                       className="pl-10"
+                      maxLength={100}
                     />
                   </div>
                 </div>
@@ -209,6 +218,7 @@ ${formData.message}
                     value={formData.event_type}
                     onChange={(e) => setFormData({ ...formData, event_type: e.target.value })}
                     placeholder="Conference, Workshop, etc."
+                    maxLength={100}
                   />
                 </div>
               </div>
@@ -219,6 +229,7 @@ ${formData.message}
                   value={formData.audience_size}
                   onChange={(e) => setFormData({ ...formData, audience_size: e.target.value })}
                   placeholder="e.g., 50-100 attendees"
+                  maxLength={50}
                 />
               </div>
 
@@ -229,6 +240,7 @@ ${formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   placeholder="Tell us about your event, desired topics, duration, and any other relevant information..."
                   rows={6}
+                  maxLength={5000}
                 />
               </div>
 
