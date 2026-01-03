@@ -7,6 +7,7 @@ import { Comments } from "@/components/Comments";
 import { NewsCard } from "@/components/news/NewsCard";
 import { SEO } from "@/components/SEO";
 import { toast } from "sonner";
+import DOMPurify from "isomorphic-dompurify";
 
 const BlogPost = () => {
   const { id } = useParams();
@@ -127,7 +128,10 @@ const BlogPost = () => {
             </div>
 
             {/* Article Content */}
-            <div className="prose-news" dangerouslySetInnerHTML={{ __html: post.content }} />
+            <div className="prose-news" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content, { 
+              ALLOWED_TAGS: ['p', 'br', 'b', 'i', 'em', 'strong', 'a', 'ul', 'ol', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'img', 'figure', 'figcaption', 'pre', 'code', 'span', 'div', 'table', 'thead', 'tbody', 'tr', 'th', 'td'],
+              ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class', 'target', 'rel', 'width', 'height']
+            }) }} />
 
             {/* Tags */}
             <div className="mt-8 pt-6 border-t border-border">
